@@ -1,282 +1,678 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APP BETAGEN</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<title>นมเปรี้ยว บีทาเก้น</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #080d18;
-            color: #ffffff;
-            min-height: 100vh;
-        }
+<style>
 
-        .header {
-            padding: 24px 20px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 12px;
-            border-radius: 20px;
-            background: #111a2c;
-            color: #8fa3c7;
-            font-size: 12px;
-        }
+body {
+    font-family: Arial, "Tahoma", sans-serif;
+    background: #0F172A;
+    color: #FFFFFF;
+    min-height: 100vh;
+}
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #22c55e;
-            box-shadow: 0 0 10px #22c55e;
-        }
+/* HEADER */
 
-        .hero {
-            margin: 10px 16px 22px;
-            padding: 28px 22px;
-            border-radius: 24px;
-            background: linear-gradient(135deg, #172554, #0f172a 65%);
-            border: 1px solid rgba(255,255,255,0.07);
-            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
-        }
+.header {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    background: #0F172A;
+    border-bottom: 1px solid #17243A;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
-        .hero-small {
-            color: #8fa3c7;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-        .hero h1 {
-            font-size: 30px;
-            line-height: 1.2;
-            margin-bottom: 12px;
-        }
+.back-button {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 12px;
+    background: #111D32;
+    color: #FFFFFF;
+    font-size: 25px;
+    cursor: pointer;
+}
 
-        .hero p {
-            color: #a9b7d0;
-            font-size: 14px;
-            line-height: 1.7;
-        }
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
 
-        .section {
-            padding: 0 16px;
-        }
+.cart-button {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 13px;
+    background: #111D32;
+    color: #FFFFFF;
+    font-size: 22px;
+    cursor: pointer;
+    position: relative;
+}
 
-        .section-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 20px;
+    background: #3B82F6;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+/* TITLE */
 
-        .card {
-            padding: 20px 16px;
-            min-height: 125px;
-            border-radius: 20px;
-            background: #101827;
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: 0.2s;
-        }
+.title-section {
+    text-align: center;
+    padding: 38px 20px 28px;
+}
 
-        .card:active {
-            transform: scale(0.97);
-            background: #162033;
-        }
+.brand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    height: 62px;
+    padding: 0 25px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 5px solid #E31B23;
+    color: #E31B23;
+    font-size: 25px;
+    font-weight: 900;
+    font-style: italic;
+    margin-bottom: 20px;
+}
 
-        .icon {
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 13px;
-            background: #172554;
-            font-size: 20px;
-            margin-bottom: 14px;
-        }
+.title-section h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 9px;
+}
 
-        .card h3 {
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
+.title-section p {
+    color: #94A3B8;
+    font-size: 16px;
+}
 
-        .card p {
-            color: #7f90ad;
-            font-size: 12px;
-            line-height: 1.5;
-        }
+/* PRODUCTS */
 
-        .system {
-            margin-top: 22px;
-            padding: 18px;
-            border-radius: 20px;
-            background: #101827;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
+.container {
+    width: 100%;
+    max-width: 1050px;
+    margin: auto;
+    padding: 0 16px 50px;
+}
 
-        .system-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.products {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
 
-        .system-title {
-            font-size: 14px;
-            font-weight: 700;
-        }
+/* PRODUCT CARD */
 
-        .system-value {
-            color: #22c55e;
-            font-size: 13px;
-        }
+.product {
+    background: #101D32;
+    border: 1px solid #1D3A61;
+    border-radius: 22px;
+    overflow: hidden;
+    transition: transform 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
 
-        .footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #52617a;
-            font-size: 11px;
-        }
+.product:hover {
+    transform: translateY(-4px);
+    border-color: #2563EB;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
 
-        @media (min-width: 600px) {
-            .hero,
-            .section {
-                max-width: 700px;
-                margin-left: auto;
-                margin-right: auto;
-            }
+/* IMAGE */
 
-            .header {
-                max-width: 700px;
-                margin: auto;
-            }
-        }
-    </style>
+.product-image {
+    width: calc(100% - 20px);
+    margin: 10px;
+    aspect-ratio: 16 / 10;
+    border-radius: 17px;
+    overflow: hidden;
+    background: #17243A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-placeholder {
+    color: #64748B;
+    font-size: 14px;
+}
+
+/* PRODUCT INFO */
+
+.product-info {
+    padding: 5px 18px 18px;
+    text-align: center;
+}
+
+.product-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.product-detail {
+    color: #8FA8C9;
+    font-size: 14px;
+    margin-top: 8px;
+    min-height: 20px;
+}
+
+/* BOTTOM */
+
+.product-bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 17px;
+}
+
+.price {
+    flex: 1;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-radius: 24px;
+    background: #0D1A2E;
+    border: 1px solid #193454;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 800;
+    text-align: left;
+}
+
+.select-button {
+    flex: 1;
+    min-height: 45px;
+    border: 0;
+    border-radius: 24px;
+    background: #3B82F6;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.select-button:hover {
+    background: #2563EB;
+}
+
+.select-button:active {
+    transform: scale(0.96);
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    padding: 25px 20px 35px;
+    color: #64748B;
+    font-size: 12px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .header {
+        height: 64px;
+        padding: 0 14px;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+
+    .back-button,
+    .cart-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .title-section {
+        padding: 30px 15px 24px;
+    }
+
+    .brand {
+        min-width: 150px;
+        height: 52px;
+        font-size: 21px;
+        margin-bottom: 17px;
+    }
+
+    .title-section h1 {
+        font-size: 27px;
+    }
+
+    .title-section p {
+        font-size: 14px;
+    }
+
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .products {
+        gap: 10px;
+    }
+
+    .product {
+        border-radius: 17px;
+    }
+
+    .product-image {
+        width: calc(100% - 12px);
+        margin: 6px;
+        border-radius: 13px;
+    }
+
+    .product-info {
+        padding: 4px 9px 11px;
+    }
+
+    .product-name {
+        font-size: 15px;
+    }
+
+    .product-detail {
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+    .product-bottom {
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .price {
+        min-height: 37px;
+        padding: 0 9px;
+        font-size: 14px;
+    }
+
+    .select-button {
+        min-height: 37px;
+        font-size: 12px;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-    <header class="header">
-        <div class="logo">APP BETAGEN</div>
+<header class="header">
 
-        <div class="status">
-            <span class="status-dot"></span>
-            Online
+    <div class="header-left">
+
+        <button class="back-button" onclick="goBack()">
+            ‹
+        </button>
+
+        <div class="logo">
+            APP BETAGEN
         </div>
-    </header>
 
-    <main>
+    </div>
 
-        <section class="hero">
-            <div class="hero-small">WELCOME TO</div>
+    <button class="cart-button" onclick="openCart()">
 
-            <h1>APP BETAGEN</h1>
+        🛒
 
-            <p>
-                ยินดีต้อนรับเข้าสู่ระบบ
-                พร้อมใช้งานบนอุปกรณ์ของคุณ
-            </p>
-        </section>
+        <span class="cart-count" id="cartCount">
+            0
+        </span>
 
-        <section class="section">
+    </button>
 
-            <div class="section-title">
-                เมนูหลัก
+</header>
+
+
+<section class="title-section">
+
+    <div class="brand">
+        Betagen
+    </div>
+
+    <h1>
+        นมเปรี้ยว บีทาเก้น
+    </h1>
+
+    <p>
+        เลือกสินค้าและรสชาติที่คุณชื่นชอบ
+    </p>
+
+</section>
+
+
+<main class="container">
+
+    <div class="products">
+
+
+        <!-- สินค้า 1 -->
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="image-placeholder">
+                    รูปสินค้า
+                </div>
             </div>
 
-            <div class="menu">
+            <div class="product-info">
 
-                <div class="card">
-                    <div class="icon">🚀</div>
-
-                    <h3>เริ่มต้นใช้งาน</h3>
-
-                    <p>
-                        เข้าสู่ระบบหลัก
-                    </p>
+                <div class="product-name">
+                    รสดั้งเดิม
                 </div>
 
-                <div class="card">
-                    <div class="icon">📢</div>
-
-                    <h3>ข่าวสาร</h3>
-
-                    <p>
-                        ข่าวสารและประกาศล่าสุด
-                    </p>
+                <div class="product-detail">
+                    หอม อร่อย ได้ประโยชน์
                 </div>
 
-                <div class="card">
-                    <div class="icon">🔄</div>
+                <div class="product-bottom">
 
-                    <h3>ระบบอัปเดต</h3>
-
-                    <p>
-                        ตรวจสอบเวอร์ชันล่าสุด
-                    </p>
-                </div>
-
-                <div class="card">
-                    <div class="icon">⚙️</div>
-
-                    <h3>ตั้งค่า</h3>
-
-                    <p>
-                        จัดการการตั้งค่าระบบ
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="system">
-
-                <div class="system-row">
-
-                    <div class="system-title">
-                        System Status
+                    <div class="price">
+                        ? ฿
                     </div>
 
-                    <div class="system-value">
-                        ● Online
-                    </div>
+                    <button
+                        class="select-button"
+                        onclick="selectProduct('รสดั้งเดิม')">
+                        เลือก
+                    </button>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
 
-    <footer class="footer">
-        APP BETAGEN
-        <br>
-        All systems operational
-    </footer>
+        <!-- สินค้า 2 -->
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="image-placeholder">
+                    รูปสินค้า
+                </div>
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    รสสตรอว์เบอร์รี่
+                </div>
+
+                <div class="product-detail">
+                    หอมหวาน สดชื่น
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="price">
+                        ? ฿
+                    </div>
+
+                    <button
+                        class="select-button"
+                        onclick="selectProduct('รสสตรอว์เบอร์รี่')">
+                        เลือก
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- สินค้า 3 -->
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="image-placeholder">
+                    รูปสินค้า
+                </div>
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    รสพีช
+                </div>
+
+                <div class="product-detail">
+                    หอมละมุน กลมกล่อม
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="price">
+                        ? ฿
+                    </div>
+
+                    <button
+                        class="select-button"
+                        onclick="selectProduct('รสพีช')">
+                        เลือก
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- สินค้า 4 -->
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="image-placeholder">
+                    รูปสินค้า
+                </div>
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    รสแอปเปิ้ล
+                </div>
+
+                <div class="product-detail">
+                    หอมสดชื่น เปรี้ยวหวานลงตัว
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="price">
+                        ? ฿
+                    </div>
+
+                    <button
+                        class="select-button"
+                        onclick="selectProduct('รสแอปเปิ้ล')">
+                        เลือก
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- สินค้า 5 -->
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="image-placeholder">
+                    รูปสินค้า
+                </div>
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    รสบลูเบอร์รี่
+                </div>
+
+                <div class="product-detail">
+                    หอมอร่อย สดชื่น
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="price">
+                        ? ฿
+                    </div>
+
+                    <button
+                        class="select-button"
+                        onclick="selectProduct('รสบลูเบอร์รี่')">
+                        เลือก
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- สินค้า 6 -->
+
+        <div class="product">
+
+            <div class="product-image">
+                <div class="image-placeholder">
+                    รูปสินค้า
+                </div>
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    รสผลไม้รวม
+                </div>
+
+                <div class="product-detail">
+                    รวมความอร่อยจากผลไม้
+                </div>
+
+                <div class="product-bottom">
+
+                    <div class="price">
+                        ? ฿
+                    </div>
+
+                    <button
+                        class="select-button"
+                        onclick="selectProduct('รสผลไม้รวม')">
+                        เลือก
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+    APP BETAGEN
+</footer>
+
+
+<script>
+
+var cartCount = 0;
+
+function selectProduct(name) {
+
+    cartCount++;
+
+    document.getElementById("cartCount").innerText = cartCount;
+
+    alert("เลือก " + name + " แล้ว");
+
+}
+
+function openCart() {
+
+    alert("สินค้าในตะกร้า: " + cartCount + " รายการ");
+
+}
+
+function goBack() {
+
+    if (history.length > 1) {
+        history.back();
+    }
+
+}
+
+</script>
 
 </body>
 </html>
