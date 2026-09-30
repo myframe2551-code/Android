@@ -3,1023 +3,919 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>APP BETAGEN</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html {
-    scroll-behavior: smooth;
+body{
+    font-family:Arial,sans-serif;
+    background:#0F172A;
+    color:#fff;
 }
 
-body {
-    font-family: Arial, Tahoma, sans-serif;
-    background: #0F172A;
-    color: #FFFFFF;
-    min-height: 100vh;
+button,input,textarea{
+    font-family:inherit;
 }
 
-/* =========================
-   HEADER
-========================= */
-
-.header {
-    height: 68px;
-    padding: 0 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #0F172A;
-    border-bottom: 1px solid #17243A;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+button{
+    cursor:pointer;
 }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.header{
+    height:64px;
+    background:#111827;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 16px;
+    position:sticky;
+    top:0;
+    z-index:20;
+    border-bottom:1px solid #1f2937;
 }
 
-.logo {
-    font-size: 19px;
-    font-weight: 800;
+.logo{
+    font-size:20px;
+    font-weight:800;
 }
 
-.back-button {
-    width: 40px;
-    height: 40px;
-    border: 0;
-    border-radius: 12px;
-    background: #111D32;
-    color: #FFFFFF;
-    font-size: 27px;
-    cursor: pointer;
-    display: none;
+.header-actions{
+    display:flex;
+    gap:8px;
 }
 
-.cart-button {
-    width: 43px;
-    height: 43px;
-    border: 0;
-    border-radius: 13px;
-    background: #111D32;
-    color: #FFFFFF;
-    font-size: 21px;
-    cursor: pointer;
-    position: relative;
+.icon-btn{
+    border:0;
+    background:#1e293b;
+    color:#fff;
+    border-radius:12px;
+    width:44px;
+    height:44px;
+    font-size:19px;
+    position:relative;
 }
 
-.cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 5px;
-    border-radius: 20px;
-    background: #3B82F6;
-    color: #FFFFFF;
-    font-size: 11px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.cart-count{
+    position:absolute;
+    top:-4px;
+    right:-4px;
+    min-width:19px;
+    height:19px;
+    border-radius:50%;
+    background:#2563eb;
+    font-size:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-/* =========================
-   PAGE
-========================= */
-
-.page {
-    display: none;
+.page{
+    display:none;
+    padding:18px;
+    max-width:700px;
+    margin:auto;
 }
 
-.page.active {
-    display: block;
+.page.active{
+    display:block;
 }
 
-/* =========================
-   PRODUCT TITLE
-========================= */
-
-.title-section {
-    text-align: center;
-    padding: 35px 18px 25px;
+.section-title{
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:16px;
 }
 
-.brand {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 170px;
-    height: 58px;
-
-    padding: 0 25px;
-
-    border-radius: 50%;
-
-    background: #FFFFFF;
-    border: 5px solid #E31B23;
-
-    color: #E31B23;
-
-    font-size: 24px;
-    font-weight: 900;
-    font-style: italic;
-
-    margin-bottom: 18px;
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
 }
 
-.title-section h1 {
-    font-size: 31px;
-    font-weight: 800;
+.product{
+    background:#111827;
+    border:1px solid #1f2937;
+    border-radius:18px;
+    padding:14px;
 }
 
-.title-section p {
-    margin-top: 8px;
-    color: #94A3B8;
-    font-size: 14px;
+.product-image{
+    width:100%;
+    height:150px;
+    border-radius:14px;
+    background:#1e293b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+    margin-bottom:12px;
 }
 
-/* =========================
-   PRODUCTS
-========================= */
-
-.container {
-    width: 100%;
-    max-width: 1050px;
-    margin: auto;
-    padding: 0 15px 45px;
+.product-name{
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:6px;
 }
 
-.products {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 15px;
+.product-price{
+    color:#60a5fa;
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:10px;
 }
 
-.product {
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 21px;
-    overflow: hidden;
-    transition: 0.2s;
+.primary-btn{
+    width:100%;
+    border:0;
+    border-radius:13px;
+    padding:13px;
+    background:#2563eb;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
 }
 
-.product:hover {
-    border-color: #2563EB;
-    transform: translateY(-3px);
+.secondary-btn{
+    width:100%;
+    border:1px solid #334155;
+    border-radius:13px;
+    padding:13px;
+    background:#1e293b;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
 }
 
-.product-image {
-    width: calc(100% - 16px);
-    margin: 8px;
-
-    aspect-ratio: 16 / 10;
-
-    border-radius: 16px;
-
-    background: #17243A;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
+.danger-btn{
+    width:100%;
+    border:0;
+    border-radius:13px;
+    padding:13px;
+    background:#dc2626;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
 }
 
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.form-group{
+    margin-bottom:14px;
 }
 
-.image-placeholder {
-    color: #64748B;
-    font-size: 13px;
+.form-label{
+    display:block;
+    margin-bottom:7px;
+    color:#cbd5e1;
+    font-size:14px;
 }
 
-.product-info {
-    padding: 5px 16px 16px;
+.input{
+    width:100%;
+    border:1px solid #334155;
+    background:#111827;
+    color:#fff;
+    border-radius:13px;
+    padding:14px;
+    outline:none;
+    font-size:15px;
 }
 
-.product-name {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 800;
+.input:focus{
+    border-color:#3b82f6;
 }
 
-.product-detail {
-    text-align: center;
-    color: #8FA8C9;
-    font-size: 13px;
-    margin-top: 7px;
-    min-height: 18px;
+.card{
+    background:#111827;
+    border:1px solid #1f2937;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:14px;
 }
 
-.product-bottom {
-    display: flex;
-    gap: 8px;
-    margin-top: 14px;
+.cart-item{
+    display:flex;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px solid #1f2937;
 }
 
-.price {
-    flex: 1;
-
-    min-height: 43px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 13px;
-
-    border-radius: 22px;
-
-    background: #0D1A2E;
-    border: 1px solid #193454;
-
-    font-size: 16px;
-    font-weight: 800;
+.cart-item:last-child{
+    border-bottom:0;
 }
 
-.select-button {
-    flex: 1;
-
-    min-height: 43px;
-
-    border: 0;
-    border-radius: 22px;
-
-    background: #3B82F6;
-    color: #FFFFFF;
-
-    font-size: 14px;
-    font-weight: 800;
-
-    cursor: pointer;
+.cart-info{
+    flex:1;
 }
 
-.select-button:active {
-    transform: scale(0.96);
+.cart-name{
+    font-weight:700;
+    margin-bottom:5px;
 }
 
-/* =========================
-   CART
-========================= */
-
-.cart-container {
-    width: 100%;
-    max-width: 850px;
-    margin: auto;
-    padding: 25px 15px 50px;
+.cart-price{
+    color:#60a5fa;
+    font-weight:700;
 }
 
-.cart-title {
-    margin-bottom: 20px;
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:9px;
 }
 
-.cart-title h1 {
-    font-size: 28px;
+.quantity button{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:9px;
+    background:#334155;
+    color:#fff;
+    font-size:18px;
 }
 
-.cart-title p {
-    color: #94A3B8;
-    font-size: 14px;
-    margin-top: 6px;
+.remove-btn{
+    background:none;
+    border:0;
+    color:#f87171;
+    margin-top:8px;
 }
 
-/* CART ITEM */
-
-.cart-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.total{
+    display:flex;
+    justify-content:space-between;
+    font-size:19px;
+    font-weight:800;
+    padding:15px 0;
 }
 
-.cart-item {
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 18px;
-    padding: 12px;
-
-    display: flex;
-    align-items: center;
-    gap: 13px;
+.payment-option{
+    border:1px solid #334155;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:10px;
+    cursor:pointer;
 }
 
-.cart-image {
-    width: 75px;
-    height: 75px;
-
-    flex-shrink: 0;
-
-    border-radius: 13px;
-
-    background: #17243A;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
+.payment-option.selected{
+    border-color:#3b82f6;
+    background:#172554;
 }
 
-.cart-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.payment-title{
+    font-weight:800;
+    margin-bottom:5px;
 }
 
-.cart-info {
-    flex: 1;
-    min-width: 0;
+.payment-description{
+    color:#94a3b8;
+    font-size:13px;
 }
 
-.cart-name {
-    font-size: 16px;
-    font-weight: 800;
+.qr-box{
+    text-align:center;
+    padding:15px;
+    background:#fff;
+    border-radius:15px;
+    margin-top:12px;
 }
 
-.cart-flavor {
-    color: #8FA8C9;
-    font-size: 12px;
-    margin-top: 4px;
+.qr-box img{
+    width:100%;
+    max-width:300px;
 }
 
-.cart-unit-price {
-    color: #CBD5E1;
-    font-size: 12px;
-    margin-top: 5px;
+.success{
+    text-align:center;
+    padding:40px 10px;
 }
 
-/* QUANTITY */
-
-.quantity {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    margin-top: 9px;
+.success-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#16a34a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 18px;
+    font-size:36px;
 }
 
-.quantity button {
-    width: 28px;
-    height: 28px;
-
-    border: 1px solid #29466B;
-    border-radius: 8px;
-
-    background: #0D1A2E;
-    color: #FFFFFF;
-
-    font-size: 17px;
-    cursor: pointer;
+.success h2{
+    margin-bottom:10px;
 }
 
-.quantity span {
-    min-width: 20px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 800;
+.muted{
+    color:#94a3b8;
 }
 
-.cart-total {
-    text-align: right;
-    min-width: 90px;
+.seller-status{
+    background:#172554;
+    border:1px solid #1d4ed8;
+    padding:14px;
+    border-radius:15px;
+    margin-bottom:14px;
 }
 
-.cart-total-label {
-    color: #64748B;
-    font-size: 11px;
+.seller-email{
+    color:#93c5fd;
+    word-break:break-all;
+    margin-top:5px;
 }
 
-.cart-total-price {
-    margin-top: 4px;
-    font-size: 17px;
-    font-weight: 800;
+.info-row{
+    padding:9px 0;
+    border-bottom:1px solid #1f2937;
 }
 
-.remove-button {
-    margin-top: 7px;
-
-    border: 0;
-    background: transparent;
-
-    color: #EF4444;
-
-    font-size: 11px;
-    cursor: pointer;
+.info-row:last-child{
+    border-bottom:0;
 }
 
-/* =========================
-   EMPTY CART
-========================= */
-
-.empty-cart {
-    text-align: center;
-    padding: 70px 20px;
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 20px;
+.info-label{
+    color:#94a3b8;
+    font-size:13px;
+    margin-bottom:3px;
 }
 
-.empty-icon {
-    font-size: 45px;
-    margin-bottom: 15px;
+.info-value{
+    word-break:break-word;
 }
 
-.empty-cart h2 {
-    font-size: 21px;
+.empty{
+    text-align:center;
+    color:#94a3b8;
+    padding:50px 10px;
 }
 
-.empty-cart p {
-    color: #94A3B8;
-    font-size: 13px;
-    margin-top: 7px;
+.button-space{
+    margin-top:10px;
 }
 
-/* =========================
-   CART SUMMARY
-========================= */
-
-.summary {
-    margin-top: 18px;
-
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 20px;
-
-    padding: 20px;
-}
-
-.summary-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 8px 0;
-
-    color: #CBD5E1;
-    font-size: 14px;
-}
-
-.summary-total {
-    margin-top: 10px;
-    padding-top: 16px;
-
-    border-top: 1px solid #263B56;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.summary-total span:first-child {
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.total-price {
-    color: #3B82F6;
-    font-size: 25px;
-    font-weight: 900;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.cart-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.continue-button,
-.checkout-button {
-    flex: 1;
-
-    min-height: 48px;
-
-    border-radius: 14px;
-
-    font-size: 14px;
-    font-weight: 800;
-
-    cursor: pointer;
-}
-
-.continue-button {
-    border: 1px solid #29466B;
-    background: #111D32;
-    color: #FFFFFF;
-}
-
-.checkout-button {
-    border: 0;
-    background: #3B82F6;
-    color: #FFFFFF;
-}
-
-.checkout-button:active,
-.continue-button:active {
-    transform: scale(0.98);
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer {
-    text-align: center;
-    color: #64748B;
-    font-size: 12px;
-    padding: 25px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-    .header {
-        height: 62px;
-        padding: 0 13px;
+@media(max-width:420px){
+    .product-grid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .logo {
-        font-size: 17px;
-    }
-
-    .title-section {
-        padding: 28px 12px 22px;
-    }
-
-    .brand {
-        min-width: 145px;
-        height: 50px;
-        font-size: 21px;
-    }
-
-    .title-section h1 {
-        font-size: 26px;
-    }
-
-    .products {
-        gap: 9px;
-    }
-
-    .product {
-        border-radius: 17px;
-    }
-
-    .product-image {
-        width: calc(100% - 12px);
-        margin: 6px;
-        border-radius: 13px;
-    }
-
-    .product-info {
-        padding: 3px 9px 11px;
-    }
-
-    .product-name {
-        font-size: 14px;
-    }
-
-    .product-detail {
-        font-size: 10px;
-        margin-top: 4px;
-    }
-
-    .product-bottom {
-        gap: 5px;
-        margin-top: 9px;
-    }
-
-    .price {
-        min-height: 36px;
-        padding: 0 8px;
-        font-size: 13px;
-    }
-
-    .select-button {
-        min-height: 36px;
-        font-size: 11px;
-    }
-
-    .cart-container {
-        padding: 20px 11px 40px;
-    }
-
-    .cart-item {
-        padding: 10px;
-        gap: 9px;
-    }
-
-    .cart-image {
-        width: 62px;
-        height: 62px;
-    }
-
-    .cart-name {
-        font-size: 14px;
-    }
-
-    .cart-flavor {
-        font-size: 10px;
-    }
-
-    .cart-unit-price {
-        font-size: 10px;
-    }
-
-    .cart-total {
-        min-width: 65px;
-    }
-
-    .cart-total-price {
-        font-size: 14px;
-    }
-
-    .cart-actions {
-        flex-direction: column;
+    .product-image{
+        height:125px;
     }
 }
-
 </style>
 </head>
 
 <body>
 
-
-<!-- =========================
-     HEADER
-========================= -->
-
 <header class="header">
 
-    <div class="header-left">
+    <div class="logo">APP BETAGEN</div>
+
+    <div class="header-actions">
 
         <button
-            id="backButton"
-            class="back-button"
-            onclick="showProducts()">
-            ‹
+            class="icon-btn"
+            onclick="showSeller()">
+            👤
         </button>
 
-        <div class="logo">
-            APP BETAGEN
-        </div>
+        <button
+            class="icon-btn"
+            onclick="showCart()">
+            🛒
+            <span
+                class="cart-count"
+                id="cartCount">
+                0
+            </span>
+        </button>
 
     </div>
 
-
-    <button
-        class="cart-button"
-        onclick="showCart()">
-
-        🛒
-
-        <span
-            id="cartCount"
-            class="cart-count">
-            0
-        </span>
-
-    </button>
-
 </header>
-
-
-<!-- =========================
-     PRODUCT PAGE
-========================= -->
 
 <section
     id="productPage"
     class="page active">
 
-    <div class="title-section">
-
-        <div class="brand">
-            Betagen
-        </div>
-
-        <h1>
-            นมเปรี้ยว บีทาเก้น
-        </h1>
-
-        <p>
-            เลือกสินค้าและรสชาติที่คุณชื่นชอบ
-        </p>
-
+    <div class="section-title">
+        สินค้า
     </div>
 
-
-    <main class="container">
-
-        <div
-            id="productList"
-            class="products">
-        </div>
-
-    </main>
-
-
-    <footer class="footer">
-        APP BETAGEN
-    </footer>
+    <div
+        id="productList"
+        class="product-grid">
+    </div>
 
 </section>
-
-
-<!-- =========================
-     CART PAGE
-========================= -->
 
 <section
     id="cartPage"
     class="page">
 
-    <main class="cart-container">
+    <div class="section-title">
+        ตะกร้าสินค้า
+    </div>
 
-        <div class="cart-title">
+    <div
+        id="cartList">
+    </div>
 
-            <h1>
-                รถเข็นสินค้า
-            </h1>
+    <div
+        id="cartTotal">
+    </div>
 
-            <p>
-                ตรวจสอบรายการสินค้าและราคารวม
-            </p>
+    <button
+        class="primary-btn"
+        onclick="showCheckout()">
+        ดำเนินการสั่งซื้อ
+    </button>
 
-        </div>
+    <div class="button-space">
 
+        <button
+            class="secondary-btn"
+            onclick="showProducts()">
+            เลือกซื้อสินค้าเพิ่ม
+        </button>
 
-        <div id="cartContent">
-        </div>
-
-    </main>
-
-
-    <footer class="footer">
-        APP BETAGEN
-    </footer>
+    </div>
 
 </section>
 
+<section
+    id="checkoutPage"
+    class="page">
+
+    <div class="section-title">
+        ข้อมูลการจัดส่ง
+    </div>
+
+    <div class="card">
+
+        <div class="form-group">
+
+            <label class="form-label">
+                ชื่อลูกค้า
+            </label>
+
+            <input
+                id="customerName"
+                class="input"
+                type="text"
+                placeholder="กรอกชื่อของคุณ">
+
+        </div>
+
+        <div class="form-group">
+
+            <label class="form-label">
+                เบอร์โทร
+            </label>
+
+            <input
+                id="customerPhone"
+                class="input"
+                type="tel"
+                placeholder="08xxxxxxxx">
+
+        </div>
+
+        <div class="form-group">
+
+            <label class="form-label">
+                ที่อยู่
+            </label>
+
+            <textarea
+                id="customerAddress"
+                class="input"
+                rows="4"
+                placeholder="กรอกที่อยู่สำหรับจัดส่ง"></textarea>
+
+        </div>
+
+        <button
+            class="secondary-btn"
+            onclick="clearCustomerData()">
+            ลบข้อมูลลูกค้าที่บันทึกไว้
+        </button>
+
+    </div>
+
+    <div class="section-title">
+        วิธีชำระเงิน
+    </div>
+
+    <div
+        class="card">
+
+        <div
+            id="codPayment"
+            class="payment-option"
+            onclick="selectPayment('cod')">
+
+            <div class="payment-title">
+                💵 ชำระเงินปลายทาง
+            </div>
+
+            <div class="payment-description">
+                ชำระเงินเมื่อได้รับสินค้า
+            </div>
+
+        </div>
+
+        <div
+            id="qrPayment"
+            class="payment-option"
+            onclick="selectPayment('qr')">
+
+            <div class="payment-title">
+                📱 QR Payment
+            </div>
+
+            <div class="payment-description">
+                สแกน QR เพื่อชำระเงิน
+            </div>
+
+        </div>
+
+        <div
+            id="qrArea"
+            style="display:none">
+
+            <div class="qr-box">
+
+                <img
+                    id="qrImage"
+                    src=""
+                    alt="QR">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="section-title">
+            สรุปคำสั่งซื้อ
+        </div>
+
+        <div
+            id="checkoutSummary">
+        </div>
+
+    </div>
+
+    <button
+        class="primary-btn"
+        onclick="createOrder()">
+        ยืนยันคำสั่งซื้อ
+    </button>
+
+</section>
+
+<section
+    id="successPage"
+    class="page">
+
+    <div class="card success">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            สั่งซื้อสำเร็จ
+        </h2>
+
+        <p
+            id="successOrder"
+            class="muted">
+        </p>
+
+        <div class="button-space">
+
+            <button
+                class="primary-btn"
+                onclick="showProducts()">
+                กลับหน้าสินค้า
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section
+    id="sellerPage"
+    class="page">
+
+    <div class="section-title">
+        ระบบเซลล์
+    </div>
+
+    <div
+        id="sellerLoggedIn"
+        style="display:none">
+
+        <div class="seller-status">
+
+            <div>
+                👤 เซลล์ที่เข้าสู่ระบบ
+            </div>
+
+            <div
+                id="sellerNicknameView"
+                style="font-weight:800;margin-top:7px">
+            </div>
+
+            <div
+                id="sellerEmailView"
+                class="seller-email">
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    อีเมลเซลล์
+                </label>
+
+                <input
+                    id="loggedSellerEmail"
+                    class="input"
+                    type="email">
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    ชื่อเล่น
+                </label>
+
+                <input
+                    id="loggedSellerNickname"
+                    class="input"
+                    type="text">
+
+            </div>
+
+            <button
+                class="primary-btn"
+                onclick="updateSeller()">
+                บันทึกการเปลี่ยนแปลง
+            </button>
+
+            <div class="button-space">
+
+                <button
+                    class="secondary-btn"
+                    onclick="logoutSeller()">
+                    ออกจากระบบ
+                </button>
+
+            </div>
+
+            <div class="button-space">
+
+                <button
+                    class="danger-btn"
+                    onclick="deleteSeller()">
+                    ลบข้อมูลเซลล์
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        id="sellerLogin">
+
+        <div class="card">
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    อีเมล
+                </label>
+
+                <input
+                    id="sellerEmail"
+                    class="input"
+                    type="email"
+                    placeholder="seller@example.com">
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    ชื่อเล่น
+                </label>
+
+                <input
+                    id="sellerNickname"
+                    class="input"
+                    type="text"
+                    placeholder="ชื่อเล่นของเซลล์">
+
+            </div>
+
+            <button
+                class="primary-btn"
+                onclick="registerSeller()">
+                สมัคร / เข้าสู่ระบบ
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="muted">
+                ระบบจะจดจำอีเมลและชื่อเล่นของเซลล์ไว้ในเครื่องนี้ จนกว่าจะเปลี่ยนหรือลบข้อมูล
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 <script>
-
-/* =========================
-   PRODUCT DATA
-========================= */
 
 var products = [
 
     {
-        id: 1,
-        name: "รสดั้งเดิม",
-        detail: "หอม อร่อย ได้ประโยชน์",
-        price: 15,
-        image: ""
+        id:1,
+        name:"รสดั้งเดิม",
+        price:15,
+        image:""
     },
 
     {
-        id: 2,
-        name: "รสสตรอว์เบอร์รี่",
-        detail: "หอมหวาน สดชื่น",
-        price: 15,
-        image: ""
+        id:2,
+        name:"รสสตรอว์เบอร์รี่",
+        price:15,
+        image:""
     },
 
     {
-        id: 3,
-        name: "รสพีช",
-        detail: "หอมละมุน กลมกล่อม",
-        price: 15,
-        image: ""
+        id:3,
+        name:"รสพีช",
+        price:15,
+        image:""
     },
 
     {
-        id: 4,
-        name: "รสแอปเปิ้ล",
-        detail: "หอมสดชื่น เปรี้ยวหวานลงตัว",
-        price: 15,
-        image: ""
+        id:4,
+        name:"รสแอปเปิ้ล",
+        price:15,
+        image:""
     },
 
     {
-        id: 5,
-        name: "รสบลูเบอร์รี่",
-        detail: "หอมอร่อย สดชื่น",
-        price: 15,
-        image: ""
+        id:5,
+        name:"รสบลูเบอร์รี่",
+        price:15,
+        image:""
     },
 
     {
-        id: 6,
-        name: "รสผลไม้รวม",
-        detail: "รวมความอร่อยจากผลไม้",
-        price: 15,
-        image: ""
+        id:6,
+        name:"รสผลไม้รวม",
+        price:15,
+        image:""
     }
 
 ];
 
+var cart = JSON.parse(
+    localStorage.getItem("betagen_cart") || "[]"
+);
 
-/* =========================
-   CART
-========================= */
+var orders = JSON.parse(
+    localStorage.getItem("betagen_orders") || "[]"
+);
 
-var cart = [];
+var seller = JSON.parse(
+    localStorage.getItem("betagen_seller") || "null"
+);
 
-try {
+var customer = JSON.parse(
+    localStorage.getItem("betagen_customer") || "null"
+);
 
-    var savedCart = localStorage.getItem("betagen_cart");
+var selectedPayment = "";
 
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
+function saveCart(){
 
-    if (!Array.isArray(cart)) {
-        cart = [];
-    }
-
-} catch (e) {
-
-    cart = [];
-
-}
-
-
-/* =========================
-   SAVE CART
-========================= */
-
-function saveCart() {
-
-    try {
-
-        localStorage.setItem(
-            "betagen_cart",
-            JSON.stringify(cart)
-        );
-
-    } catch (e) {
-
-    }
+    localStorage.setItem(
+        "betagen_cart",
+        JSON.stringify(cart)
+    );
 
 }
 
+function saveOrders(){
 
-/* =========================
-   PRODUCT LIST
-========================= */
+    localStorage.setItem(
+        "betagen_orders",
+        JSON.stringify(orders)
+    );
 
-function renderProducts() {
+}
+
+function saveSeller(){
+
+    localStorage.setItem(
+        "betagen_seller",
+        JSON.stringify(seller)
+    );
+
+}
+
+function saveCustomer(){
+
+    customer = {
+
+        name:document.getElementById("customerName").value.trim(),
+
+        phone:document.getElementById("customerPhone").value.trim(),
+
+        address:document.getElementById("customerAddress").value.trim()
+
+    };
+
+    localStorage.setItem(
+        "betagen_customer",
+        JSON.stringify(customer)
+    );
+
+}
+
+function renderProducts(){
 
     var html = "";
 
-    for (var i = 0; i < products.length; i++) {
+    for(var i=0;i<products.length;i++){
 
-        var product = products[i];
-
-        var imageHTML = "";
-
-        if (product.image) {
-
-            imageHTML =
-                '<img src="' +
-                product.image +
-                '" alt="' +
-                product.name +
-                '">';
-
-        } else {
-
-            imageHTML =
-                '<div class="image-placeholder">' +
-                'รูปสินค้า' +
-                '</div>';
-
-        }
-
+        var p = products[i];
 
         html +=
+        '<div class="product">' +
 
-            '<div class="product">' +
+            '<div class="product-image">' +
+                '🥛' +
+            '</div>' +
 
-                '<div class="product-image">' +
-                    imageHTML +
-                '</div>' +
+            '<div class="product-name">' +
+                p.name +
+            '</div>' +
 
-                '<div class="product-info">' +
+            '<div class="product-price">' +
+                formatPrice(p.price) +
+                ' บาท' +
+            '</div>' +
 
-                    '<div class="product-name">' +
-                        product.name +
-                    '</div>' +
+            '<button class="primary-btn" onclick="addToCart(' +
+                p.id +
+            ')">' +
+                'เพิ่มลงตะกร้า' +
+            '</button>' +
 
-                    '<div class="product-detail">' +
-                        product.detail +
-                    '</div>' +
-
-                    '<div class="product-bottom">' +
-
-                        '<div class="price">' +
-                            formatPrice(product.price) +
-                        ' ฿</div>' +
-
-                        '<button ' +
-                            'class="select-button" ' +
-                            'onclick="addToCart(' +
-                                product.id +
-                            ')">' +
-                            'เลือก' +
-                        '</button>' +
-
-                    '</div>' +
-
-                '</div>' +
-
-            '</div>';
+        '</div>';
 
     }
 
-    document.getElementById("productList").innerHTML = html;
+    document.getElementById(
+        "productList"
+    ).innerHTML = html;
 
 }
 
+function findProduct(id){
 
-/* =========================
-   ADD TO CART
-========================= */
+    for(var i=0;i<products.length;i++){
 
-function addToCart(id) {
+        if(products[i].id == id){
 
-    var product = findProduct(id);
-
-    if (!product) {
-        return;
-    }
-
-
-    var found = false;
-
-    for (var i = 0; i < cart.length; i++) {
-
-        if (cart[i].id === id) {
-
-            cart[i].quantity++;
-
-            found = true;
-
-            break;
-        }
-
-    }
-
-
-    if (!found) {
-
-        cart.push({
-
-            id: id,
-
-            quantity: 1
-
-        });
-
-    }
-
-
-    saveCart();
-
-    updateCartCount();
-
-}
-
-
-/* =========================
-   FIND PRODUCT
-========================= */
-
-function findProduct(id) {
-
-    for (var i = 0; i < products.length; i++) {
-
-        if (products[i].id === id) {
             return products[i];
+
         }
 
     }
@@ -1028,448 +924,868 @@ function findProduct(id) {
 
 }
 
+function addToCart(id){
 
-/* =========================
-   UPDATE CART COUNT
-========================= */
+    var item = null;
 
-function updateCartCount() {
+    for(var i=0;i<cart.length;i++){
+
+        if(cart[i].id == id){
+
+            item = cart[i];
+            break;
+
+        }
+
+    }
+
+    if(item){
+
+        item.quantity++;
+
+    }else{
+
+        cart.push({
+            id:id,
+            quantity:1
+        });
+
+    }
+
+    saveCart();
+    updateCartCount();
+
+}
+
+function updateCartCount(){
 
     var count = 0;
 
-    for (var i = 0; i < cart.length; i++) {
+    for(var i=0;i<cart.length;i++){
 
         count += cart[i].quantity;
 
     }
 
-
-    document.getElementById("cartCount").innerText = count;
+    document.getElementById(
+        "cartCount"
+    ).innerText = count;
 
 }
 
+function renderCart(){
 
-/* =========================
-   CART PAGE
-========================= */
+    var box = document.getElementById(
+        "cartList"
+    );
 
-function renderCart() {
+    if(cart.length === 0){
 
-    var container =
-        document.getElementById("cartContent");
-
-
-    if (cart.length === 0) {
-
-        container.innerHTML =
-
-            '<div class="empty-cart">' +
-
-                '<div class="empty-icon">' +
-                    '🛒' +
-                '</div>' +
-
-                '<h2>' +
-                    'ยังไม่มีสินค้าในรถเข็น' +
-                '</h2>' +
-
-                '<p>' +
-                    'เลือกสินค้าที่ต้องการเพื่อเพิ่มลงรถเข็น' +
-                '</p>' +
-
+        box.innerHTML =
+            '<div class="empty">' +
+            'ยังไม่มีสินค้าในตะกร้า' +
             '</div>';
+
+        document.getElementById(
+            "cartTotal"
+        ).innerHTML = "";
 
         return;
 
     }
 
+    var html = "";
+    var total = 0;
 
-    var html =
-        '<div class="cart-list">';
-
-
-    var totalItems = 0;
-    var totalPrice = 0;
-
-
-    for (var i = 0; i < cart.length; i++) {
+    for(var i=0;i<cart.length;i++){
 
         var item = cart[i];
 
-        var product =
-            findProduct(item.id);
+        var p = findProduct(item.id);
 
-
-        if (!product) {
+        if(!p){
             continue;
         }
 
+        var subtotal =
+            p.price * item.quantity;
 
-        var itemTotal =
-            product.price *
-            item.quantity;
-
-
-        totalItems +=
-            item.quantity;
-
-
-        totalPrice +=
-            itemTotal;
-
-
-        var imageHTML = "";
-
-        if (product.image) {
-
-            imageHTML =
-                '<img src="' +
-                product.image +
-                '" alt="' +
-                product.name +
-                '">';
-
-        } else {
-
-            imageHTML =
-                '<div class="image-placeholder">' +
-                'รูป' +
-                '</div>';
-
-        }
-
+        total += subtotal;
 
         html +=
+        '<div class="card cart-item">' +
 
-            '<div class="cart-item">' +
+            '<div class="cart-info">' +
 
-                '<div class="cart-image">' +
-                    imageHTML +
+                '<div class="cart-name">' +
+                    p.name +
                 '</div>' +
 
+                '<div class="cart-price">' +
+                    formatPrice(p.price) +
+                    ' บาท' +
+                '</div>' +
 
-                '<div class="cart-info">' +
+                '<div class="quantity">' +
 
-                    '<div class="cart-name">' +
-                        product.name +
-                    '</div>' +
+                    '<button onclick="changeQuantity(' +
+                        p.id +
+                        ',-1)">−</button>' +
 
-                    '<div class="cart-flavor">' +
-                        product.detail +
-                    '</div>' +
+                    '<span>' +
+                        item.quantity +
+                    '</span>' +
 
-                    '<div class="cart-unit-price">' +
-                        'ราคา ' +
-                        formatPrice(product.price) +
-                        ' ฿ / ชิ้น' +
-                    '</div>' +
-
-
-                    '<div class="quantity">' +
-
-                        '<button ' +
-                            'onclick="changeQuantity(' +
-                                product.id +
-                                ', -1)">' +
-                            '−' +
-                        '</button>' +
-
-                        '<span>' +
-                            item.quantity +
-                        '</span>' +
-
-                        '<button ' +
-                            'onclick="changeQuantity(' +
-                                product.id +
-                                ', 1)">' +
-                            '+' +
-                        '</button>' +
-
-                    '</div>' +
+                    '<button onclick="changeQuantity(' +
+                        p.id +
+                        ',1)">+</button>' +
 
                 '</div>' +
 
+                '<button class="remove-btn" onclick="removeFromCart(' +
+                    p.id +
+                ')">' +
+                    'ลบสินค้า' +
+                '</button>' +
 
-                '<div class="cart-total">' +
+            '</div>' +
 
-                    '<div class="cart-total-label">' +
-                        'รวม' +
-                    '</div>' +
-
-                    '<div class="cart-total-price">' +
-                        formatPrice(itemTotal) +
-                        ' ฿' +
-                    '</div>' +
-
-                    '<button ' +
-                        'class="remove-button" ' +
-                        'onclick="removeFromCart(' +
-                            product.id +
-                        ')">' +
-                        'ลบ' +
-                    '</button>' +
-
-                '</div>' +
-
-            '</div>';
+        '</div>';
 
     }
 
+    box.innerHTML = html;
 
-    html +=
-        '</div>';
+    document.getElementById(
+        "cartTotal"
+    ).innerHTML =
+        '<div class="card total">' +
 
+            '<span>รวมทั้งหมด</span>' +
 
-    /* =========================
-       SUMMARY
-    ========================= */
-
-    html +=
-
-        '<div class="summary">' +
-
-            '<div class="summary-row">' +
-
-                '<span>จำนวนสินค้า</span>' +
-
-                '<span>' +
-                    totalItems +
-                    ' ชิ้น' +
-                '</span>' +
-
-            '</div>' +
-
-
-            '<div class="summary-row">' +
-
-                '<span>ราคาสินค้ารวม</span>' +
-
-                '<span>' +
-                    formatPrice(totalPrice) +
-                    ' ฿' +
-                '</span>' +
-
-            '</div>' +
-
-
-            '<div class="summary-total">' +
-
-                '<span>ราคารวมทั้งหมด</span>' +
-
-                '<span class="total-price">' +
-                    formatPrice(totalPrice) +
-                    ' ฿' +
-                '</span>' +
-
-            '</div>' +
-
-
-            '<div class="cart-actions">' +
-
-                '<button ' +
-                    'class="continue-button" ' +
-                    'onclick="showProducts()">' +
-                    'เลือกสินค้าต่อ' +
-                '</button>' +
-
-                '<button ' +
-                    'class="checkout-button" ' +
-                    'onclick="checkout()">' +
-                    'ดำเนินการต่อ' +
-                '</button>' +
-
-            '</div>' +
+            '<span>' +
+                formatPrice(total) +
+                ' บาท' +
+            '</span>' +
 
         '</div>';
-
-
-    container.innerHTML = html;
 
 }
 
+function changeQuantity(id,value){
 
-/* =========================
-   CHANGE QUANTITY
-========================= */
+    for(var i=0;i<cart.length;i++){
 
-function changeQuantity(id, amount) {
+        if(cart[i].id == id){
 
-    for (var i = 0; i < cart.length; i++) {
+            cart[i].quantity += value;
 
-        if (cart[i].id === id) {
+            if(cart[i].quantity <= 0){
 
-            cart[i].quantity += amount;
-
-
-            if (cart[i].quantity <= 0) {
-
-                cart.splice(i, 1);
+                cart.splice(i,1);
 
             }
 
-
             break;
 
         }
 
     }
 
-
     saveCart();
-
     updateCartCount();
-
     renderCart();
 
 }
 
+function removeFromCart(id){
 
-/* =========================
-   REMOVE
-========================= */
+    for(var i=0;i<cart.length;i++){
 
-function removeFromCart(id) {
+        if(cart[i].id == id){
 
-    for (var i = 0; i < cart.length; i++) {
-
-        if (cart[i].id === id) {
-
-            cart.splice(i, 1);
-
+            cart.splice(i,1);
             break;
 
         }
 
     }
 
-
     saveCart();
-
     updateCartCount();
-
     renderCart();
 
 }
 
+function showPage(id){
 
-/* =========================
-   PAGE PRODUCTS
-========================= */
+    var pages =
+        document.querySelectorAll(".page");
 
-function showProducts() {
+    for(var i=0;i<pages.length;i++){
 
-    document
-        .getElementById("cartPage")
-        .classList.remove("active");
+        pages[i].classList.remove("active");
 
+    }
 
-    document
-        .getElementById("productPage")
-        .classList.add("active");
+    document.getElementById(
+        id
+    ).classList.add("active");
 
-
-    document
-        .getElementById("backButton")
-        .style.display = "none";
-
-
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
 
 }
 
+function showProducts(){
 
-/* =========================
-   PAGE CART
-========================= */
+    showPage("productPage");
 
-function showCart() {
+}
 
-    document
-        .getElementById("productPage")
-        .classList.remove("active");
-
-
-    document
-        .getElementById("cartPage")
-        .classList.add("active");
-
-
-    document
-        .getElementById("backButton")
-        .style.display = "block";
-
+function showCart(){
 
     renderCart();
 
-    window.scrollTo(0, 0);
+    showPage("cartPage");
 
 }
 
+function loadCustomer(){
 
-/* =========================
-   CHECKOUT
-========================= */
+    customer = JSON.parse(
+        localStorage.getItem(
+            "betagen_customer"
+        ) || "null"
+    );
 
-function checkout() {
-
-    if (cart.length === 0) {
+    if(!customer){
         return;
     }
 
+    document.getElementById(
+        "customerName"
+    ).value = customer.name || "";
+
+    document.getElementById(
+        "customerPhone"
+    ).value = customer.phone || "";
+
+    document.getElementById(
+        "customerAddress"
+    ).value = customer.address || "";
+
+}
+
+function clearCustomerData(){
+
+    if(!confirm(
+        "ต้องการลบข้อมูลลูกค้าที่บันทึกไว้หรือไม่?"
+    )){
+        return;
+    }
+
+    localStorage.removeItem(
+        "betagen_customer"
+    );
+
+    document.getElementById(
+        "customerName"
+    ).value = "";
+
+    document.getElementById(
+        "customerPhone"
+    ).value = "";
+
+    document.getElementById(
+        "customerAddress"
+    ).value = "";
+
+}
+
+function showCheckout(){
+
+    if(cart.length === 0){
+
+        alert("กรุณาเพิ่มสินค้าลงตะกร้าก่อน");
+
+        return;
+
+    }
+
+    loadCustomer();
+
+    selectedPayment = "";
+
+    document.getElementById(
+        "codPayment"
+    ).classList.remove("selected");
+
+    document.getElementById(
+        "qrPayment"
+    ).classList.remove("selected");
+
+    document.getElementById(
+        "qrArea"
+    ).style.display = "none";
+
+    renderCheckoutSummary();
+
+    showPage("checkoutPage");
+
+}
+
+function selectPayment(type){
+
+    selectedPayment = type;
+
+    document.getElementById(
+        "codPayment"
+    ).classList.remove("selected");
+
+    document.getElementById(
+        "qrPayment"
+    ).classList.remove("selected");
+
+    if(type === "cod"){
+
+        document.getElementById(
+            "codPayment"
+        ).classList.add("selected");
+
+        document.getElementById(
+            "qrArea"
+        ).style.display = "none";
+
+    }
+
+    if(type === "qr"){
+
+        document.getElementById(
+            "qrPayment"
+        ).classList.add("selected");
+
+        generateQr();
+
+    }
+
+}
+
+function renderCheckoutSummary(){
+
+    var total = 0;
+    var html = "";
+
+    for(var i=0;i<cart.length;i++){
+
+        var item = cart[i];
+
+        var p = findProduct(item.id);
+
+        if(!p){
+            continue;
+        }
+
+        var subtotal =
+            p.price * item.quantity;
+
+        total += subtotal;
+
+        html +=
+        '<div class="info-row">' +
+
+            '<div class="info-label">' +
+                p.name +
+            '</div>' +
+
+            '<div class="info-value">' +
+                item.quantity +
+                ' × ' +
+                formatPrice(p.price) +
+                ' = ' +
+                formatPrice(subtotal) +
+                ' บาท' +
+            '</div>' +
+
+        '</div>';
+
+    }
+
+    html +=
+        '<div class="total">' +
+            '<span>ยอดรวม</span>' +
+            '<span>' +
+                formatPrice(total) +
+                ' บาท' +
+            '</span>' +
+        '</div>';
+
+    document.getElementById(
+        "checkoutSummary"
+    ).innerHTML = html;
+
+}
+
+function getTotal(){
 
     var total = 0;
 
+    for(var i=0;i<cart.length;i++){
 
-    for (var i = 0; i < cart.length; i++) {
+        var p = findProduct(cart[i].id);
 
-        var product =
-            findProduct(cart[i].id);
-
-
-        if (product) {
+        if(p){
 
             total +=
-                product.price *
+                p.price *
                 cart[i].quantity;
 
         }
 
     }
 
+    return total;
 
-    alert(
-        "ราคารวมทั้งหมด " +
-        formatPrice(total) +
-        " ฿"
+}
+
+function generateQr(){
+
+    var amount = getTotal();
+
+    var payload =
+        "BETAGEN|" +
+        amount +
+        "|" +
+        Date.now();
+
+    var url =
+        "https://api.qrserver.com/v1/create-qr-code/" +
+        "?size=500x500&data=" +
+        encodeURIComponent(payload);
+
+    document.getElementById(
+        "qrImage"
+    ).src = url;
+
+    document.getElementById(
+        "qrArea"
+    ).style.display = "block";
+
+}
+
+function registerSeller(){
+
+    var email =
+        document.getElementById(
+            "sellerEmail"
+        ).value.trim();
+
+    var nickname =
+        document.getElementById(
+            "sellerNickname"
+        ).value.trim();
+
+    if(email.length === 0){
+
+        alert("กรุณากรอกอีเมล");
+
+        return;
+
+    }
+
+    if(!isValidEmail(email)){
+
+        alert("รูปแบบอีเมลไม่ถูกต้อง");
+
+        return;
+
+    }
+
+    if(nickname.length === 0){
+
+        alert("กรุณากรอกชื่อเล่น");
+
+        return;
+
+    }
+
+    seller = {
+
+        email:email,
+
+        nickname:nickname
+
+    };
+
+    saveSeller();
+
+    renderSeller();
+
+    alert("บันทึกข้อมูลเซลล์เรียบร้อยแล้ว");
+
+}
+
+function updateSeller(){
+
+    var email =
+        document.getElementById(
+            "loggedSellerEmail"
+        ).value.trim();
+
+    var nickname =
+        document.getElementById(
+            "loggedSellerNickname"
+        ).value.trim();
+
+    if(!isValidEmail(email)){
+
+        alert("รูปแบบอีเมลไม่ถูกต้อง");
+
+        return;
+
+    }
+
+    if(nickname.length === 0){
+
+        alert("กรุณากรอกชื่อเล่น");
+
+        return;
+
+    }
+
+    seller = {
+
+        email:email,
+
+        nickname:nickname
+
+    };
+
+    saveSeller();
+    renderSeller();
+
+    alert("แก้ไขข้อมูลเซลล์เรียบร้อยแล้ว");
+
+}
+
+function logoutSeller(){
+
+    seller = null;
+
+    localStorage.removeItem(
+        "betagen_seller"
+    );
+
+    renderSeller();
+
+}
+
+function deleteSeller(){
+
+    if(!confirm(
+        "ต้องการลบข้อมูลเซลล์หรือไม่?"
+    )){
+        return;
+    }
+
+    seller = null;
+
+    localStorage.removeItem(
+        "betagen_seller"
+    );
+
+    renderSeller();
+
+}
+
+function renderSeller(){
+
+    var logged =
+        document.getElementById(
+            "sellerLoggedIn"
+        );
+
+    var login =
+        document.getElementById(
+            "sellerLogin"
+        );
+
+    if(seller){
+
+        logged.style.display = "block";
+        login.style.display = "none";
+
+        document.getElementById(
+            "sellerNicknameView"
+        ).innerText =
+            seller.nickname;
+
+        document.getElementById(
+            "sellerEmailView"
+        ).innerText =
+            seller.email;
+
+        document.getElementById(
+            "loggedSellerEmail"
+        ).value =
+            seller.email;
+
+        document.getElementById(
+            "loggedSellerNickname"
+        ).value =
+            seller.nickname;
+
+    }else{
+
+        logged.style.display = "none";
+        login.style.display = "block";
+
+    }
+
+}
+
+function isValidEmail(email){
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email
     );
 
 }
 
+function createOrder(){
 
-/* =========================
-   FORMAT PRICE
-========================= */
+    var name =
+        document.getElementById(
+            "customerName"
+        ).value.trim();
 
-function formatPrice(price) {
+    var phone =
+        document.getElementById(
+            "customerPhone"
+        ).value.trim();
 
-    return Number(price).toLocaleString(
-        "th-TH",
-        {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
+    var address =
+        document.getElementById(
+            "customerAddress"
+        ).value.trim();
+
+    if(name.length === 0){
+
+        alert("กรุณากรอกชื่อลูกค้า");
+
+        return;
+
+    }
+
+    if(phone.length === 0){
+
+        alert("กรุณากรอกเบอร์โทร");
+
+        return;
+
+    }
+
+    if(address.length === 0){
+
+        alert("กรุณากรอกที่อยู่");
+
+        return;
+
+    }
+
+    if(selectedPayment === ""){
+
+        alert("กรุณาเลือกวิธีชำระเงิน");
+
+        return;
+
+    }
+
+    if(!seller){
+
+        alert(
+            "กรุณาตั้งค่าอีเมลเซลล์ก่อนสั่งซื้อ"
+        );
+
+        showSeller();
+
+        return;
+
+    }
+
+    saveCustomer();
+
+    var now = new Date();
+
+    var date =
+        String(now.getFullYear()).slice(-2) +
+        String(now.getMonth()+1).padStart(2,"0") +
+        String(now.getDate()).padStart(2,"0");
+
+    var random =
+        Math.floor(
+            1000 +
+            Math.random() * 9000
+        );
+
+    var orderNumber =
+        "BT" +
+        date +
+        random;
+
+    var paymentMethod =
+        selectedPayment === "cod"
+        ? "ชำระเงินปลายทาง"
+        : "QR Payment";
+
+    var total = getTotal();
+
+    var order = {
+
+        id:orderNumber,
+
+        date:now.toISOString(),
+
+        payment:paymentMethod,
+
+        total:total,
+
+        customer:{
+
+            name:name,
+
+            phone:phone,
+
+            address:address
+
+        },
+
+        items:cart.slice(),
+
+        sellerEmail:seller.email,
+
+        sellerNickname:seller.nickname
+
+    };
+
+    orders.push(order);
+
+    saveOrders();
+
+    sendOrderEmail(order);
+
+    cart = [];
+
+    saveCart();
+
+    updateCartCount();
+
+    document.getElementById(
+        "successOrder"
+    ).innerHTML =
+        "เลขที่คำสั่งซื้อ: " +
+        orderNumber;
+
+    showPage("successPage");
+
+}
+
+function sendOrderEmail(order){
+
+    var subject =
+        "APP BETAGEN - คำสั่งซื้อ " +
+        order.id;
+
+    var body = "";
+
+    body +=
+        "APP BETAGEN\n\n";
+
+    body +=
+        "คำสั่งซื้อ: " +
+        order.id +
+        "\n";
+
+    body +=
+        "วิธีชำระเงิน: " +
+        order.payment +
+        "\n";
+
+    body +=
+        "ยอดรวม: " +
+        formatPrice(order.total) +
+        " บาท\n\n";
+
+    body +=
+        "ชื่อลูกค้า: " +
+        order.customer.name +
+        "\n";
+
+    body +=
+        "เบอร์ลูกค้า: " +
+        order.customer.phone +
+        "\n";
+
+    body +=
+        "ที่อยู่: " +
+        order.customer.address +
+        "\n\n";
+
+    body +=
+        "รายการสินค้า:\n";
+
+    for(var i=0;i<order.items.length;i++){
+
+        var item = order.items[i];
+
+        var p =
+            findProduct(item.id);
+
+        if(!p){
+            continue;
         }
-    );
+
+        body +=
+            "- " +
+            p.name +
+            " x " +
+            item.quantity +
+            " = " +
+            formatPrice(
+                p.price *
+                item.quantity
+            ) +
+            " บาท\n";
+
+    }
+
+    body +=
+        "\nส่งจาก APP BETAGEN";
+
+    var mailto =
+        "mailto:" +
+        encodeURIComponent(
+            order.sellerEmail
+        ) +
+        "?subject=" +
+        encodeURIComponent(subject) +
+        "&body=" +
+        encodeURIComponent(body);
+
+    window.location.href = mailto;
 
 }
 
+function formatPrice(value){
 
-/* =========================
-   START
-========================= */
+    return Number(value).toLocaleString(
+        "th-TH"
+    );
+
+}
 
 renderProducts();
-
 updateCartCount();
+renderSeller();
 
 </script>
 
