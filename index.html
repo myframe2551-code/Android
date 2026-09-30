@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>นมเปรี้ยว บีทาเก้น</title>
+<title>APP BETAGEN</title>
 
 <style>
 
@@ -19,20 +19,22 @@ html {
 }
 
 body {
-    font-family: Arial, "Tahoma", sans-serif;
+    font-family: Arial, Tahoma, sans-serif;
     background: #0F172A;
     color: #FFFFFF;
     min-height: 100vh;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 .header {
-    height: 72px;
+    height: 68px;
+    padding: 0 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 22px;
     background: #0F172A;
     border-bottom: 1px solid #17243A;
     position: sticky;
@@ -43,34 +45,34 @@ body {
 .header-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+}
+
+.logo {
+    font-size: 19px;
+    font-weight: 800;
 }
 
 .back-button {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border: 0;
     border-radius: 12px;
     background: #111D32;
     color: #FFFFFF;
-    font-size: 25px;
+    font-size: 27px;
     cursor: pointer;
-}
-
-.logo {
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
+    display: none;
 }
 
 .cart-button {
-    width: 44px;
-    height: 44px;
+    width: 43px;
+    height: 43px;
     border: 0;
     border-radius: 13px;
     background: #111D32;
     color: #FFFFFF;
-    font-size: 22px;
+    font-size: 21px;
     cursor: pointer;
     position: relative;
 }
@@ -86,225 +88,494 @@ body {
     background: #3B82F6;
     color: #FFFFFF;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* TITLE */
+/* =========================
+   PAGE
+========================= */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* =========================
+   PRODUCT TITLE
+========================= */
 
 .title-section {
     text-align: center;
-    padding: 38px 20px 28px;
+    padding: 35px 18px 25px;
 }
 
 .brand {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 180px;
-    height: 62px;
+
+    min-width: 170px;
+    height: 58px;
+
     padding: 0 25px;
+
     border-radius: 50%;
+
     background: #FFFFFF;
     border: 5px solid #E31B23;
+
     color: #E31B23;
-    font-size: 25px;
+
+    font-size: 24px;
     font-weight: 900;
     font-style: italic;
-    margin-bottom: 20px;
+
+    margin-bottom: 18px;
 }
 
 .title-section h1 {
-    font-size: 34px;
+    font-size: 31px;
     font-weight: 800;
-    margin-bottom: 9px;
 }
 
 .title-section p {
+    margin-top: 8px;
     color: #94A3B8;
-    font-size: 16px;
+    font-size: 14px;
 }
 
-/* PRODUCTS */
+/* =========================
+   PRODUCTS
+========================= */
 
 .container {
     width: 100%;
     max-width: 1050px;
     margin: auto;
-    padding: 0 16px 50px;
+    padding: 0 15px 45px;
 }
 
 .products {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 15px;
 }
-
-/* PRODUCT CARD */
 
 .product {
     background: #101D32;
     border: 1px solid #1D3A61;
-    border-radius: 22px;
+    border-radius: 21px;
     overflow: hidden;
-    transition: transform 0.2s ease,
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
+    transition: 0.2s;
 }
 
 .product:hover {
-    transform: translateY(-4px);
     border-color: #2563EB;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    transform: translateY(-3px);
 }
 
-/* IMAGE */
-
 .product-image {
-    width: calc(100% - 20px);
-    margin: 10px;
+    width: calc(100% - 16px);
+    margin: 8px;
+
     aspect-ratio: 16 / 10;
-    border-radius: 17px;
-    overflow: hidden;
+
+    border-radius: 16px;
+
     background: #17243A;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    overflow: hidden;
 }
 
 .product-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
 }
 
 .image-placeholder {
     color: #64748B;
-    font-size: 14px;
+    font-size: 13px;
 }
 
-/* PRODUCT INFO */
-
 .product-info {
-    padding: 5px 18px 18px;
-    text-align: center;
+    padding: 5px 16px 16px;
 }
 
 .product-name {
-    font-size: 20px;
+    text-align: center;
+    font-size: 18px;
     font-weight: 800;
-    margin-top: 5px;
 }
 
 .product-detail {
+    text-align: center;
     color: #8FA8C9;
-    font-size: 14px;
-    margin-top: 8px;
-    min-height: 20px;
+    font-size: 13px;
+    margin-top: 7px;
+    min-height: 18px;
 }
-
-/* BOTTOM */
 
 .product-bottom {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 17px;
+    gap: 8px;
+    margin-top: 14px;
 }
 
 .price {
     flex: 1;
-    min-height: 45px;
+
+    min-height: 43px;
+
     display: flex;
     align-items: center;
-    padding: 0 15px;
-    border-radius: 24px;
+
+    padding: 0 13px;
+
+    border-radius: 22px;
+
     background: #0D1A2E;
     border: 1px solid #193454;
-    color: #FFFFFF;
-    font-size: 18px;
+
+    font-size: 16px;
     font-weight: 800;
-    text-align: left;
 }
 
 .select-button {
     flex: 1;
-    min-height: 45px;
+
+    min-height: 43px;
+
     border: 0;
-    border-radius: 24px;
+    border-radius: 22px;
+
     background: #3B82F6;
     color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.2s;
-}
 
-.select-button:hover {
-    background: #2563EB;
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
 }
 
 .select-button:active {
     transform: scale(0.96);
 }
 
-/* FOOTER */
+/* =========================
+   CART
+========================= */
+
+.cart-container {
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+    padding: 25px 15px 50px;
+}
+
+.cart-title {
+    margin-bottom: 20px;
+}
+
+.cart-title h1 {
+    font-size: 28px;
+}
+
+.cart-title p {
+    color: #94A3B8;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+/* CART ITEM */
+
+.cart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cart-item {
+    background: #101D32;
+    border: 1px solid #1D3A61;
+    border-radius: 18px;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.cart-image {
+    width: 75px;
+    height: 75px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    background: #17243A;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.cart-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.cart-name {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.cart-flavor {
+    color: #8FA8C9;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.cart-unit-price {
+    color: #CBD5E1;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* QUANTITY */
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 9px;
+}
+
+.quantity button {
+    width: 28px;
+    height: 28px;
+
+    border: 1px solid #29466B;
+    border-radius: 8px;
+
+    background: #0D1A2E;
+    color: #FFFFFF;
+
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.quantity span {
+    min-width: 20px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.cart-total {
+    text-align: right;
+    min-width: 90px;
+}
+
+.cart-total-label {
+    color: #64748B;
+    font-size: 11px;
+}
+
+.cart-total-price {
+    margin-top: 4px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.remove-button {
+    margin-top: 7px;
+
+    border: 0;
+    background: transparent;
+
+    color: #EF4444;
+
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* =========================
+   EMPTY CART
+========================= */
+
+.empty-cart {
+    text-align: center;
+    padding: 70px 20px;
+    background: #101D32;
+    border: 1px solid #1D3A61;
+    border-radius: 20px;
+}
+
+.empty-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.empty-cart h2 {
+    font-size: 21px;
+}
+
+.empty-cart p {
+    color: #94A3B8;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+/* =========================
+   CART SUMMARY
+========================= */
+
+.summary {
+    margin-top: 18px;
+
+    background: #101D32;
+    border: 1px solid #1D3A61;
+    border-radius: 20px;
+
+    padding: 20px;
+}
+
+.summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 0;
+
+    color: #CBD5E1;
+    font-size: 14px;
+}
+
+.summary-total {
+    margin-top: 10px;
+    padding-top: 16px;
+
+    border-top: 1px solid #263B56;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.summary-total span:first-child {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.total-price {
+    color: #3B82F6;
+    font-size: 25px;
+    font-weight: 900;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.cart-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.continue-button,
+.checkout-button {
+    flex: 1;
+
+    min-height: 48px;
+
+    border-radius: 14px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.continue-button {
+    border: 1px solid #29466B;
+    background: #111D32;
+    color: #FFFFFF;
+}
+
+.checkout-button {
+    border: 0;
+    background: #3B82F6;
+    color: #FFFFFF;
+}
+
+.checkout-button:active,
+.continue-button:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   FOOTER
+========================= */
 
 .footer {
     text-align: center;
-    padding: 25px 20px 35px;
     color: #64748B;
     font-size: 12px;
+    padding: 25px;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 600px) {
 
     .header {
-        height: 64px;
-        padding: 0 14px;
+        height: 62px;
+        padding: 0 13px;
     }
 
     .logo {
         font-size: 17px;
     }
 
-    .back-button,
-    .cart-button {
-        width: 40px;
-        height: 40px;
-    }
-
     .title-section {
-        padding: 30px 15px 24px;
+        padding: 28px 12px 22px;
     }
 
     .brand {
-        min-width: 150px;
-        height: 52px;
+        min-width: 145px;
+        height: 50px;
         font-size: 21px;
-        margin-bottom: 17px;
     }
 
     .title-section h1 {
-        font-size: 27px;
-    }
-
-    .title-section p {
-        font-size: 14px;
-    }
-
-    .container {
-        padding-left: 10px;
-        padding-right: 10px;
+        font-size: 26px;
     }
 
     .products {
-        gap: 10px;
+        gap: 9px;
     }
 
     .product {
@@ -318,32 +589,70 @@ body {
     }
 
     .product-info {
-        padding: 4px 9px 11px;
+        padding: 3px 9px 11px;
     }
 
     .product-name {
-        font-size: 15px;
-    }
-
-    .product-detail {
-        font-size: 11px;
-        margin-top: 5px;
-    }
-
-    .product-bottom {
-        gap: 6px;
-        margin-top: 10px;
-    }
-
-    .price {
-        min-height: 37px;
-        padding: 0 9px;
         font-size: 14px;
     }
 
+    .product-detail {
+        font-size: 10px;
+        margin-top: 4px;
+    }
+
+    .product-bottom {
+        gap: 5px;
+        margin-top: 9px;
+    }
+
+    .price {
+        min-height: 36px;
+        padding: 0 8px;
+        font-size: 13px;
+    }
+
     .select-button {
-        min-height: 37px;
-        font-size: 12px;
+        min-height: 36px;
+        font-size: 11px;
+    }
+
+    .cart-container {
+        padding: 20px 11px 40px;
+    }
+
+    .cart-item {
+        padding: 10px;
+        gap: 9px;
+    }
+
+    .cart-image {
+        width: 62px;
+        height: 62px;
+    }
+
+    .cart-name {
+        font-size: 14px;
+    }
+
+    .cart-flavor {
+        font-size: 10px;
+    }
+
+    .cart-unit-price {
+        font-size: 10px;
+    }
+
+    .cart-total {
+        min-width: 65px;
+    }
+
+    .cart-total-price {
+        font-size: 14px;
+    }
+
+    .cart-actions {
+        flex-direction: column;
     }
 }
 
@@ -352,11 +661,19 @@ body {
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="header">
 
     <div class="header-left">
 
-        <button class="back-button" onclick="goBack()">
+        <button
+            id="backButton"
+            class="back-button"
+            onclick="showProducts()">
             ‹
         </button>
 
@@ -366,11 +683,16 @@ body {
 
     </div>
 
-    <button class="cart-button" onclick="openCart()">
+
+    <button
+        class="cart-button"
+        onclick="showCart()">
 
         🛒
 
-        <span class="cart-count" id="cartCount">
+        <span
+            id="cartCount"
+            class="cart-count">
             0
         </span>
 
@@ -379,298 +701,775 @@ body {
 </header>
 
 
-<section class="title-section">
+<!-- =========================
+     PRODUCT PAGE
+========================= -->
 
-    <div class="brand">
-        Betagen
+<section
+    id="productPage"
+    class="page active">
+
+    <div class="title-section">
+
+        <div class="brand">
+            Betagen
+        </div>
+
+        <h1>
+            นมเปรี้ยว บีทาเก้น
+        </h1>
+
+        <p>
+            เลือกสินค้าและรสชาติที่คุณชื่นชอบ
+        </p>
+
     </div>
 
-    <h1>
-        นมเปรี้ยว บีทาเก้น
-    </h1>
 
-    <p>
-        เลือกสินค้าและรสชาติที่คุณชื่นชอบ
-    </p>
+    <main class="container">
+
+        <div
+            id="productList"
+            class="products">
+        </div>
+
+    </main>
+
+
+    <footer class="footer">
+        APP BETAGEN
+    </footer>
 
 </section>
 
 
-<main class="container">
+<!-- =========================
+     CART PAGE
+========================= -->
 
-    <div class="products">
+<section
+    id="cartPage"
+    class="page">
 
+    <main class="cart-container">
 
-        <!-- สินค้า 1 -->
+        <div class="cart-title">
 
-        <div class="product">
+            <h1>
+                รถเข็นสินค้า
+            </h1>
 
-            <div class="product-image">
-                <div class="image-placeholder">
-                    รูปสินค้า
-                </div>
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    รสดั้งเดิม
-                </div>
-
-                <div class="product-detail">
-                    หอม อร่อย ได้ประโยชน์
-                </div>
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ? ฿
-                    </div>
-
-                    <button
-                        class="select-button"
-                        onclick="selectProduct('รสดั้งเดิม')">
-                        เลือก
-                    </button>
-
-                </div>
-
-            </div>
+            <p>
+                ตรวจสอบรายการสินค้าและราคารวม
+            </p>
 
         </div>
 
 
-        <!-- สินค้า 2 -->
-
-        <div class="product">
-
-            <div class="product-image">
-                <div class="image-placeholder">
-                    รูปสินค้า
-                </div>
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    รสสตรอว์เบอร์รี่
-                </div>
-
-                <div class="product-detail">
-                    หอมหวาน สดชื่น
-                </div>
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ? ฿
-                    </div>
-
-                    <button
-                        class="select-button"
-                        onclick="selectProduct('รสสตรอว์เบอร์รี่')">
-                        เลือก
-                    </button>
-
-                </div>
-
-            </div>
-
+        <div id="cartContent">
         </div>
 
-
-        <!-- สินค้า 3 -->
-
-        <div class="product">
-
-            <div class="product-image">
-                <div class="image-placeholder">
-                    รูปสินค้า
-                </div>
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    รสพีช
-                </div>
-
-                <div class="product-detail">
-                    หอมละมุน กลมกล่อม
-                </div>
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ? ฿
-                    </div>
-
-                    <button
-                        class="select-button"
-                        onclick="selectProduct('รสพีช')">
-                        เลือก
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
+    </main>
 
 
-        <!-- สินค้า 4 -->
+    <footer class="footer">
+        APP BETAGEN
+    </footer>
 
-        <div class="product">
-
-            <div class="product-image">
-                <div class="image-placeholder">
-                    รูปสินค้า
-                </div>
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    รสแอปเปิ้ล
-                </div>
-
-                <div class="product-detail">
-                    หอมสดชื่น เปรี้ยวหวานลงตัว
-                </div>
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ? ฿
-                    </div>
-
-                    <button
-                        class="select-button"
-                        onclick="selectProduct('รสแอปเปิ้ล')">
-                        เลือก
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- สินค้า 5 -->
-
-        <div class="product">
-
-            <div class="product-image">
-                <div class="image-placeholder">
-                    รูปสินค้า
-                </div>
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    รสบลูเบอร์รี่
-                </div>
-
-                <div class="product-detail">
-                    หอมอร่อย สดชื่น
-                </div>
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ? ฿
-                    </div>
-
-                    <button
-                        class="select-button"
-                        onclick="selectProduct('รสบลูเบอร์รี่')">
-                        เลือก
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- สินค้า 6 -->
-
-        <div class="product">
-
-            <div class="product-image">
-                <div class="image-placeholder">
-                    รูปสินค้า
-                </div>
-            </div>
-
-            <div class="product-info">
-
-                <div class="product-name">
-                    รสผลไม้รวม
-                </div>
-
-                <div class="product-detail">
-                    รวมความอร่อยจากผลไม้
-                </div>
-
-                <div class="product-bottom">
-
-                    <div class="price">
-                        ? ฿
-                    </div>
-
-                    <button
-                        class="select-button"
-                        onclick="selectProduct('รสผลไม้รวม')">
-                        เลือก
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</main>
-
-
-<footer class="footer">
-    APP BETAGEN
-</footer>
+</section>
 
 
 <script>
 
-var cartCount = 0;
+/* =========================
+   PRODUCT DATA
+========================= */
 
-function selectProduct(name) {
+var products = [
 
-    cartCount++;
+    {
+        id: 1,
+        name: "รสดั้งเดิม",
+        detail: "หอม อร่อย ได้ประโยชน์",
+        price: 15,
+        image: ""
+    },
 
-    document.getElementById("cartCount").innerText = cartCount;
+    {
+        id: 2,
+        name: "รสสตรอว์เบอร์รี่",
+        detail: "หอมหวาน สดชื่น",
+        price: 15,
+        image: ""
+    },
 
-    alert("เลือก " + name + " แล้ว");
+    {
+        id: 3,
+        name: "รสพีช",
+        detail: "หอมละมุน กลมกล่อม",
+        price: 15,
+        image: ""
+    },
+
+    {
+        id: 4,
+        name: "รสแอปเปิ้ล",
+        detail: "หอมสดชื่น เปรี้ยวหวานลงตัว",
+        price: 15,
+        image: ""
+    },
+
+    {
+        id: 5,
+        name: "รสบลูเบอร์รี่",
+        detail: "หอมอร่อย สดชื่น",
+        price: 15,
+        image: ""
+    },
+
+    {
+        id: 6,
+        name: "รสผลไม้รวม",
+        detail: "รวมความอร่อยจากผลไม้",
+        price: 15,
+        image: ""
+    }
+
+];
+
+
+/* =========================
+   CART
+========================= */
+
+var cart = [];
+
+try {
+
+    var savedCart = localStorage.getItem("betagen_cart");
+
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+    }
+
+    if (!Array.isArray(cart)) {
+        cart = [];
+    }
+
+} catch (e) {
+
+    cart = [];
 
 }
 
-function openCart() {
 
-    alert("สินค้าในตะกร้า: " + cartCount + " รายการ");
+/* =========================
+   SAVE CART
+========================= */
 
-}
+function saveCart() {
 
-function goBack() {
+    try {
 
-    if (history.length > 1) {
-        history.back();
+        localStorage.setItem(
+            "betagen_cart",
+            JSON.stringify(cart)
+        );
+
+    } catch (e) {
+
     }
 
 }
+
+
+/* =========================
+   PRODUCT LIST
+========================= */
+
+function renderProducts() {
+
+    var html = "";
+
+    for (var i = 0; i < products.length; i++) {
+
+        var product = products[i];
+
+        var imageHTML = "";
+
+        if (product.image) {
+
+            imageHTML =
+                '<img src="' +
+                product.image +
+                '" alt="' +
+                product.name +
+                '">';
+
+        } else {
+
+            imageHTML =
+                '<div class="image-placeholder">' +
+                'รูปสินค้า' +
+                '</div>';
+
+        }
+
+
+        html +=
+
+            '<div class="product">' +
+
+                '<div class="product-image">' +
+                    imageHTML +
+                '</div>' +
+
+                '<div class="product-info">' +
+
+                    '<div class="product-name">' +
+                        product.name +
+                    '</div>' +
+
+                    '<div class="product-detail">' +
+                        product.detail +
+                    '</div>' +
+
+                    '<div class="product-bottom">' +
+
+                        '<div class="price">' +
+                            formatPrice(product.price) +
+                        ' ฿</div>' +
+
+                        '<button ' +
+                            'class="select-button" ' +
+                            'onclick="addToCart(' +
+                                product.id +
+                            ')">' +
+                            'เลือก' +
+                        '</button>' +
+
+                    '</div>' +
+
+                '</div>' +
+
+            '</div>';
+
+    }
+
+    document.getElementById("productList").innerHTML = html;
+
+}
+
+
+/* =========================
+   ADD TO CART
+========================= */
+
+function addToCart(id) {
+
+    var product = findProduct(id);
+
+    if (!product) {
+        return;
+    }
+
+
+    var found = false;
+
+    for (var i = 0; i < cart.length; i++) {
+
+        if (cart[i].id === id) {
+
+            cart[i].quantity++;
+
+            found = true;
+
+            break;
+        }
+
+    }
+
+
+    if (!found) {
+
+        cart.push({
+
+            id: id,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    saveCart();
+
+    updateCartCount();
+
+}
+
+
+/* =========================
+   FIND PRODUCT
+========================= */
+
+function findProduct(id) {
+
+    for (var i = 0; i < products.length; i++) {
+
+        if (products[i].id === id) {
+            return products[i];
+        }
+
+    }
+
+    return null;
+
+}
+
+
+/* =========================
+   UPDATE CART COUNT
+========================= */
+
+function updateCartCount() {
+
+    var count = 0;
+
+    for (var i = 0; i < cart.length; i++) {
+
+        count += cart[i].quantity;
+
+    }
+
+
+    document.getElementById("cartCount").innerText = count;
+
+}
+
+
+/* =========================
+   CART PAGE
+========================= */
+
+function renderCart() {
+
+    var container =
+        document.getElementById("cartContent");
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML =
+
+            '<div class="empty-cart">' +
+
+                '<div class="empty-icon">' +
+                    '🛒' +
+                '</div>' +
+
+                '<h2>' +
+                    'ยังไม่มีสินค้าในรถเข็น' +
+                '</h2>' +
+
+                '<p>' +
+                    'เลือกสินค้าที่ต้องการเพื่อเพิ่มลงรถเข็น' +
+                '</p>' +
+
+            '</div>';
+
+        return;
+
+    }
+
+
+    var html =
+        '<div class="cart-list">';
+
+
+    var totalItems = 0;
+    var totalPrice = 0;
+
+
+    for (var i = 0; i < cart.length; i++) {
+
+        var item = cart[i];
+
+        var product =
+            findProduct(item.id);
+
+
+        if (!product) {
+            continue;
+        }
+
+
+        var itemTotal =
+            product.price *
+            item.quantity;
+
+
+        totalItems +=
+            item.quantity;
+
+
+        totalPrice +=
+            itemTotal;
+
+
+        var imageHTML = "";
+
+        if (product.image) {
+
+            imageHTML =
+                '<img src="' +
+                product.image +
+                '" alt="' +
+                product.name +
+                '">';
+
+        } else {
+
+            imageHTML =
+                '<div class="image-placeholder">' +
+                'รูป' +
+                '</div>';
+
+        }
+
+
+        html +=
+
+            '<div class="cart-item">' +
+
+                '<div class="cart-image">' +
+                    imageHTML +
+                '</div>' +
+
+
+                '<div class="cart-info">' +
+
+                    '<div class="cart-name">' +
+                        product.name +
+                    '</div>' +
+
+                    '<div class="cart-flavor">' +
+                        product.detail +
+                    '</div>' +
+
+                    '<div class="cart-unit-price">' +
+                        'ราคา ' +
+                        formatPrice(product.price) +
+                        ' ฿ / ชิ้น' +
+                    '</div>' +
+
+
+                    '<div class="quantity">' +
+
+                        '<button ' +
+                            'onclick="changeQuantity(' +
+                                product.id +
+                                ', -1)">' +
+                            '−' +
+                        '</button>' +
+
+                        '<span>' +
+                            item.quantity +
+                        '</span>' +
+
+                        '<button ' +
+                            'onclick="changeQuantity(' +
+                                product.id +
+                                ', 1)">' +
+                            '+' +
+                        '</button>' +
+
+                    '</div>' +
+
+                '</div>' +
+
+
+                '<div class="cart-total">' +
+
+                    '<div class="cart-total-label">' +
+                        'รวม' +
+                    '</div>' +
+
+                    '<div class="cart-total-price">' +
+                        formatPrice(itemTotal) +
+                        ' ฿' +
+                    '</div>' +
+
+                    '<button ' +
+                        'class="remove-button" ' +
+                        'onclick="removeFromCart(' +
+                            product.id +
+                        ')">' +
+                        'ลบ' +
+                    '</button>' +
+
+                '</div>' +
+
+            '</div>';
+
+    }
+
+
+    html +=
+        '</div>';
+
+
+    /* =========================
+       SUMMARY
+    ========================= */
+
+    html +=
+
+        '<div class="summary">' +
+
+            '<div class="summary-row">' +
+
+                '<span>จำนวนสินค้า</span>' +
+
+                '<span>' +
+                    totalItems +
+                    ' ชิ้น' +
+                '</span>' +
+
+            '</div>' +
+
+
+            '<div class="summary-row">' +
+
+                '<span>ราคาสินค้ารวม</span>' +
+
+                '<span>' +
+                    formatPrice(totalPrice) +
+                    ' ฿' +
+                '</span>' +
+
+            '</div>' +
+
+
+            '<div class="summary-total">' +
+
+                '<span>ราคารวมทั้งหมด</span>' +
+
+                '<span class="total-price">' +
+                    formatPrice(totalPrice) +
+                    ' ฿' +
+                '</span>' +
+
+            '</div>' +
+
+
+            '<div class="cart-actions">' +
+
+                '<button ' +
+                    'class="continue-button" ' +
+                    'onclick="showProducts()">' +
+                    'เลือกสินค้าต่อ' +
+                '</button>' +
+
+                '<button ' +
+                    'class="checkout-button" ' +
+                    'onclick="checkout()">' +
+                    'ดำเนินการต่อ' +
+                '</button>' +
+
+            '</div>' +
+
+        '</div>';
+
+
+    container.innerHTML = html;
+
+}
+
+
+/* =========================
+   CHANGE QUANTITY
+========================= */
+
+function changeQuantity(id, amount) {
+
+    for (var i = 0; i < cart.length; i++) {
+
+        if (cart[i].id === id) {
+
+            cart[i].quantity += amount;
+
+
+            if (cart[i].quantity <= 0) {
+
+                cart.splice(i, 1);
+
+            }
+
+
+            break;
+
+        }
+
+    }
+
+
+    saveCart();
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+/* =========================
+   REMOVE
+========================= */
+
+function removeFromCart(id) {
+
+    for (var i = 0; i < cart.length; i++) {
+
+        if (cart[i].id === id) {
+
+            cart.splice(i, 1);
+
+            break;
+
+        }
+
+    }
+
+
+    saveCart();
+
+    updateCartCount();
+
+    renderCart();
+
+}
+
+
+/* =========================
+   PAGE PRODUCTS
+========================= */
+
+function showProducts() {
+
+    document
+        .getElementById("cartPage")
+        .classList.remove("active");
+
+
+    document
+        .getElementById("productPage")
+        .classList.add("active");
+
+
+    document
+        .getElementById("backButton")
+        .style.display = "none";
+
+
+    window.scrollTo(0, 0);
+
+}
+
+
+/* =========================
+   PAGE CART
+========================= */
+
+function showCart() {
+
+    document
+        .getElementById("productPage")
+        .classList.remove("active");
+
+
+    document
+        .getElementById("cartPage")
+        .classList.add("active");
+
+
+    document
+        .getElementById("backButton")
+        .style.display = "block";
+
+
+    renderCart();
+
+    window.scrollTo(0, 0);
+
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+function checkout() {
+
+    if (cart.length === 0) {
+        return;
+    }
+
+
+    var total = 0;
+
+
+    for (var i = 0; i < cart.length; i++) {
+
+        var product =
+            findProduct(cart[i].id);
+
+
+        if (product) {
+
+            total +=
+                product.price *
+                cart[i].quantity;
+
+        }
+
+    }
+
+
+    alert(
+        "ราคารวมทั้งหมด " +
+        formatPrice(total) +
+        " ฿"
+    );
+
+}
+
+
+/* =========================
+   FORMAT PRICE
+========================= */
+
+function formatPrice(price) {
+
+    return Number(price).toLocaleString(
+        "th-TH",
+        {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+renderProducts();
+
+updateCartCount();
 
 </script>
 
