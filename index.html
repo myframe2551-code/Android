@@ -4,12 +4,279 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APP BETAGEN</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #080d18;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            padding: 24px 20px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #111a2c;
+            color: #8fa3c7;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+        }
+
+        .hero {
+            margin: 10px 16px 22px;
+            padding: 28px 22px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #172554, #0f172a 65%);
+            border: 1px solid rgba(255,255,255,0.07);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+        }
+
+        .hero-small {
+            color: #8fa3c7;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #a9b7d0;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .section {
+            padding: 0 16px;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .card {
+            padding: 20px 16px;
+            min-height: 125px;
+            border-radius: 20px;
+            background: #101827;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.97);
+            background: #162033;
+        }
+
+        .icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: #172554;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            color: #7f90ad;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .system {
+            margin-top: 22px;
+            padding: 18px;
+            border-radius: 20px;
+            background: #101827;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .system-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .system-title {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .system-value {
+            color: #22c55e;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #52617a;
+            font-size: 11px;
+        }
+
+        @media (min-width: 600px) {
+            .hero,
+            .section {
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .header {
+                max-width: 700px;
+                margin: auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>APP BETAGEN</h1>
-    <p>เว็บไซต์ทดสอบ</p>
+    <header class="header">
+        <div class="logo">APP BETAGEN</div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            Online
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="hero-small">WELCOME TO</div>
+
+            <h1>APP BETAGEN</h1>
+
+            <p>
+                ยินดีต้อนรับเข้าสู่ระบบ
+                พร้อมใช้งานบนอุปกรณ์ของคุณ
+            </p>
+        </section>
+
+        <section class="section">
+
+            <div class="section-title">
+                เมนูหลัก
+            </div>
+
+            <div class="menu">
+
+                <div class="card">
+                    <div class="icon">🚀</div>
+
+                    <h3>เริ่มต้นใช้งาน</h3>
+
+                    <p>
+                        เข้าสู่ระบบหลัก
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📢</div>
+
+                    <h3>ข่าวสาร</h3>
+
+                    <p>
+                        ข่าวสารและประกาศล่าสุด
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🔄</div>
+
+                    <h3>ระบบอัปเดต</h3>
+
+                    <p>
+                        ตรวจสอบเวอร์ชันล่าสุด
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚙️</div>
+
+                    <h3>ตั้งค่า</h3>
+
+                    <p>
+                        จัดการการตั้งค่าระบบ
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="system">
+
+                <div class="system-row">
+
+                    <div class="system-title">
+                        System Status
+                    </div>
+
+                    <div class="system-value">
+                        ● Online
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        APP BETAGEN
+        <br>
+        All systems operational
+    </footer>
 
 </body>
 </html>
