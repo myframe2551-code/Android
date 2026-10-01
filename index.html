@@ -2,900 +2,575 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>APP BETAGEN</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html {
-    scroll-behavior: smooth;
+html,body{
+    width:100%;
+    min-height:100%;
+    font-family:Arial,"Tahoma",sans-serif;
+    background:#f4f7fb;
+    color:#0f172a;
 }
 
-body {
-    font-family: Arial, Tahoma, sans-serif;
-    background: #0F172A;
-    color: #FFFFFF;
-    min-height: 100vh;
+body{
+    overflow-x:hidden;
 }
 
 button,
 input,
-select {
-    font-family: inherit;
+textarea,
+select{
+    font-family:inherit;
 }
 
-button {
-    cursor: pointer;
+button{
+    border:0;
+    cursor:pointer;
 }
 
-.header {
-    height: 68px;
-    padding: 0 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #0F172A;
-    border-bottom: 1px solid #17243A;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+.header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    height:64px;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.12);
 }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.logo{
+    font-size:20px;
+    font-weight:800;
 }
 
-.logo {
-    font-size: 19px;
-    font-weight: 800;
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.header-btn{
+    background:#1e293b;
+    color:white;
+    border-radius:12px;
+    padding:10px 13px;
+    font-size:13px;
 }
 
-.back-button,
-.account-button,
-.cart-button {
-    width: 43px;
-    height: 43px;
-    border: 0;
-    border-radius: 13px;
-    background: #111D32;
-    color: #FFFFFF;
-    cursor: pointer;
+.header-btn:hover{
+    background:#334155;
 }
 
-.back-button {
-    font-size: 27px;
-    display: none;
+.cart-count{
+    display:inline-flex;
+    min-width:20px;
+    height:20px;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#2563eb;
+    font-size:11px;
+    margin-left:4px;
 }
 
-.account-button {
-    font-size: 19px;
+.main{
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:24px 16px 60px;
 }
 
-.cart-button {
-    font-size: 21px;
-    position: relative;
+.page{
+    display:none;
 }
 
-.cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 5px;
-    border-radius: 20px;
-    background: #3B82F6;
-    color: #FFFFFF;
-    font-size: 11px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.page.active{
+    display:block;
 }
 
-.page {
-    display: none;
+.page-title{
+    font-size:28px;
+    font-weight:800;
+    margin-bottom:8px;
 }
 
-.page.active {
-    display: block;
+.page-subtitle{
+    color:#64748b;
+    margin-bottom:22px;
 }
 
-.title-section {
-    text-align: center;
-    padding: 35px 18px 25px;
+.product-list{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
 }
 
-.brand {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 170px;
-    height: 58px;
-    padding: 0 25px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    border: 5px solid #E31B23;
-    color: #E31B23;
-    font-size: 24px;
-    font-weight: 900;
-    font-style: italic;
-    margin-bottom: 18px;
+.product-card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(15,23,42,.08);
+    border:1px solid #e2e8f0;
 }
 
-.title-section h1 {
-    font-size: 31px;
-    font-weight: 800;
+.product-image{
+    width:100%;
+    height:210px;
+    background:#e2e8f0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
 }
 
-.title-section p {
-    margin-top: 8px;
-    color: #94A3B8;
-    font-size: 14px;
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-.container {
-    width: 100%;
-    max-width: 1050px;
-    margin: auto;
-    padding: 0 15px 45px;
+.product-image-placeholder{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    text-align:center;
+    font-size:20px;
+    font-weight:800;
+    color:#475569;
 }
 
-.products {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 15px;
+.product-info{
+    padding:16px;
 }
 
-.product {
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 21px;
-    overflow: hidden;
-    transition: 0.2s;
+.product-name{
+    font-size:18px;
+    font-weight:800;
 }
 
-.product:hover {
-    border-color: #2563EB;
-    transform: translateY(-3px);
+.product-detail{
+    min-height:20px;
+    margin-top:5px;
+    color:#64748b;
+    font-size:13px;
 }
 
-.product-image {
-    width: calc(100% - 16px);
-    margin: 8px;
-    aspect-ratio: 16 / 10;
-    border-radius: 16px;
-    background: #17243A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.product-bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:16px;
 }
 
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.product-price{
+    font-size:18px;
+    font-weight:800;
 }
 
-.image-placeholder {
-    color: #64748B;
-    font-size: 13px;
+.primary-btn{
+    background:#2563eb;
+    color:white;
+    padding:11px 16px;
+    border-radius:12px;
+    font-weight:700;
 }
 
-.product-info {
-    padding: 5px 16px 16px;
+.primary-btn:hover{
+    background:#1d4ed8;
 }
 
-.product-name {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 800;
+.secondary-btn{
+    background:#e2e8f0;
+    color:#0f172a;
+    padding:11px 16px;
+    border-radius:12px;
+    font-weight:700;
 }
 
-.product-detail {
-    text-align: center;
-    color: #8FA8C9;
-    font-size: 13px;
-    margin-top: 7px;
-    min-height: 18px;
+.danger-btn{
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:9px 13px;
+    border-radius:10px;
+    font-weight:700;
 }
 
-.product-bottom {
-    display: flex;
-    gap: 8px;
-    margin-top: 14px;
+.card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 8px 25px rgba(15,23,42,.06);
+    margin-bottom:16px;
 }
 
-.price {
-    flex: 1;
-    min-height: 43px;
-    display: flex;
-    align-items: center;
-    padding: 0 13px;
-    border-radius: 22px;
-    background: #0D1A2E;
-    border: 1px solid #193454;
-    font-size: 16px;
-    font-weight: 800;
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #e2e8f0;
 }
 
-.select-button {
-    flex: 1;
-    min-height: 43px;
-    border: 0;
-    border-radius: 22px;
-    background: #3B82F6;
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 800;
+.cart-item:last-child{
+    border-bottom:0;
 }
 
-.cart-container {
-    width: 100%;
-    max-width: 850px;
-    margin: auto;
-    padding: 25px 15px 50px;
+.cart-item-info{
+    flex:1;
 }
 
-.cart-title {
-    margin-bottom: 20px;
+.cart-item-name{
+    font-weight:800;
 }
 
-.cart-title h1 {
-    font-size: 28px;
+.cart-item-price{
+    color:#64748b;
+    font-size:13px;
+    margin-top:4px;
 }
 
-.cart-title p {
-    color: #94A3B8;
-    font-size: 14px;
-    margin-top: 6px;
+.quantity-box{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 
-.cart-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.quantity-btn{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    background:#e2e8f0;
+    font-weight:800;
 }
 
-.cart-item {
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 18px;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    gap: 13px;
+.quantity-number{
+    min-width:28px;
+    text-align:center;
+    font-weight:800;
 }
 
-.cart-image {
-    width: 75px;
-    height: 75px;
-    flex-shrink: 0;
-    border-radius: 13px;
-    background: #17243A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.cart-total{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:21px;
+    font-weight:800;
+    padding-top:18px;
 }
 
-.cart-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.form-group{
+    margin-bottom:15px;
 }
 
-.cart-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.cart-name {
-    font-size: 16px;
-    font-weight: 800;
-}
-
-.cart-flavor {
-    color: #8FA8C9;
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-.cart-unit-price {
-    color: #CBD5E1;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-.quantity {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    margin-top: 9px;
-}
-
-.quantity button {
-    width: 28px;
-    height: 28px;
-    border: 1px solid #29466B;
-    border-radius: 8px;
-    background: #0D1A2E;
-    color: #FFFFFF;
-    font-size: 17px;
-}
-
-.quantity span {
-    min-width: 20px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.cart-total {
-    text-align: right;
-    min-width: 90px;
-}
-
-.cart-total-label {
-    color: #64748B;
-    font-size: 11px;
-}
-
-.cart-total-price {
-    margin-top: 4px;
-    font-size: 17px;
-    font-weight: 800;
-}
-
-.remove-button {
-    margin-top: 7px;
-    border: 0;
-    background: transparent;
-    color: #EF4444;
-    font-size: 11px;
-}
-
-.empty-cart {
-    text-align: center;
-    padding: 70px 20px;
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 20px;
-}
-
-.empty-icon {
-    font-size: 45px;
-    margin-bottom: 15px;
-}
-
-.empty-cart h2 {
-    font-size: 21px;
-}
-
-.empty-cart p {
-    color: #94A3B8;
-    font-size: 13px;
-    margin-top: 7px;
-}
-
-.summary {
-    margin-top: 18px;
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 20px;
-    padding: 20px;
-}
-
-.summary-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 0;
-    color: #CBD5E1;
-    font-size: 14px;
-}
-
-.summary-total {
-    margin-top: 10px;
-    padding-top: 16px;
-    border-top: 1px solid #263B56;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.summary-total span:first-child {
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.total-price {
-    color: #3B82F6;
-    font-size: 25px;
-    font-weight: 900;
-}
-
-.cart-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.continue-button,
-.checkout-button {
-    flex: 1;
-    min-height: 48px;
-    border-radius: 14px;
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.continue-button {
-    border: 1px solid #29466B;
-    background: #111D32;
-    color: #FFFFFF;
-}
-
-.checkout-button {
-    border: 0;
-    background: #3B82F6;
-    color: #FFFFFF;
-}
-
-.footer {
-    text-align: center;
-    color: #64748B;
-    font-size: 12px;
-    padding: 25px;
-}
-
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.68);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
-    z-index: 500;
-}
-
-.overlay.active {
-    display: flex;
-}
-
-.modal {
-    width: 100%;
-    max-width: 480px;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: #101D32;
-    border: 1px solid #25466F;
-    border-radius: 24px;
-    padding: 22px;
-    box-shadow: 0 25px 70px rgba(0,0,0,.45);
-}
-
-.modal h2 {
-    font-size: 23px;
-}
-
-.modal-subtitle {
-    color: #94A3B8;
-    font-size: 13px;
-    margin-top: 6px;
-}
-
-.form-group {
-    margin-top: 14px;
-}
-
-.form-group label {
-    display: block;
-    color: #CBD5E1;
-    font-size: 13px;
-    margin-bottom: 7px;
+.form-label{
+    display:block;
+    margin-bottom:7px;
+    font-size:14px;
+    font-weight:700;
 }
 
 .form-input,
-.form-select {
-    width: 100%;
-    min-height: 46px;
-    border: 1px solid #29466B;
-    border-radius: 13px;
-    background: #0D1A2E;
-    color: #FFFFFF;
-    padding: 0 13px;
-    outline: none;
+.form-select,
+.form-textarea{
+    width:100%;
+    border:1px solid #cbd5e1;
+    background:white;
+    border-radius:12px;
+    padding:12px 13px;
+    outline:none;
+    font-size:14px;
 }
 
 .form-input:focus,
-.form-select:focus {
-    border-color: #3B82F6;
+.form-select:focus,
+.form-textarea:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.12);
 }
 
-.modal-actions {
-    display: flex;
-    gap: 9px;
-    margin-top: 18px;
+.form-textarea{
+    min-height:90px;
+    resize:vertical;
 }
 
-.modal-button {
-    flex: 1;
-    min-height: 45px;
-    border-radius: 13px;
-    font-size: 14px;
-    font-weight: 800;
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
 }
 
-.modal-button.primary {
-    border: 0;
-    background: #3B82F6;
-    color: #FFFFFF;
+.account-box{
+    display:flex;
+    align-items:center;
+    gap:16px;
 }
 
-.modal-button.secondary {
-    border: 1px solid #29466B;
-    background: #111D32;
-    color: #FFFFFF;
+.account-icon{
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    background:#dbeafe;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:800;
 }
 
-.auth-tabs {
-    display: flex;
-    gap: 8px;
-    margin: 18px 0 4px;
+.account-email{
+    font-weight:800;
 }
 
-.auth-tab {
-    flex: 1;
-    min-height: 42px;
-    border: 1px solid #29466B;
-    border-radius: 12px;
-    background: #0D1A2E;
-    color: #94A3B8;
-    font-weight: 800;
+.account-role{
+    margin-top:4px;
+    color:#64748b;
+    font-size:13px;
 }
 
-.auth-tab.active {
-    background: #3B82F6;
-    border-color: #3B82F6;
-    color: #FFFFFF;
+.empty{
+    text-align:center;
+    padding:50px 20px;
+    color:#64748b;
 }
 
-.auth-box {
-    display: none;
+.order{
+    border:1px solid #e2e8f0;
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:12px;
 }
 
-.auth-box.active {
-    display: block;
+.order-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:12px;
 }
 
-.profile-card,
-.seller-card,
-.order-card {
-    background: #101D32;
-    border: 1px solid #1D3A61;
-    border-radius: 18px;
-    padding: 17px;
-    margin-top: 12px;
+.order-number{
+    font-weight:800;
 }
 
-.profile-email {
-    font-size: 16px;
-    font-weight: 800;
-    word-break: break-word;
+.status{
+    border-radius:999px;
+    padding:5px 10px;
+    font-size:12px;
+    font-weight:800;
+    background:#dbeafe;
+    color:#1d4ed8;
 }
 
-.status {
-    display: inline-flex;
-    margin-top: 9px;
-    padding: 6px 10px;
-    border-radius: 20px;
-    background: #172A45;
-    color: #93C5FD;
-    font-size: 11px;
-    font-weight: 800;
+.order-row{
+    color:#475569;
+    font-size:14px;
+    margin-top:5px;
 }
 
-.status.seller {
-    background: #123B2B;
-    color: #86EFAC;
+.order-items{
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px solid #e2e8f0;
 }
 
-.account-actions {
-    display: flex;
-    gap: 9px;
-    margin-top: 14px;
+.order-item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:7px;
+    font-size:14px;
 }
 
-.account-actions button {
-    flex: 1;
+.order-total{
+    margin-top:12px;
+    text-align:right;
+    font-size:18px;
+    font-weight:800;
 }
 
-.seller-area {
-    border: 1px solid #29466B;
-    background: #0D1A2E;
-    border-radius: 15px;
-    padding: 13px;
-    margin-top: 12px;
+.overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(15,23,42,.65);
+    align-items:center;
+    justify-content:center;
+    padding:15px;
 }
 
-.seller-area-title {
-    font-size: 14px;
-    font-weight: 800;
+.overlay.active{
+    display:flex;
 }
 
-.route-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 10px;
+.modal{
+    width:100%;
+    max-width:480px;
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:24px;
+    padding:24px;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
 }
 
-.route-chip {
-    padding: 7px 9px;
-    border-radius: 10px;
-    background: #172A45;
-    color: #BFDBFE;
-    font-size: 11px;
+.modal-title{
+    font-size:23px;
+    font-weight:800;
+    margin-bottom:6px;
 }
 
-.route-row {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
+.modal-subtitle{
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:20px;
 }
 
-.route-row .form-select {
-    flex: 1;
+.modal-actions{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    margin-top:20px;
 }
 
-.small-button {
-    border: 0;
-    border-radius: 10px;
-    background: #3B82F6;
-    color: #FFFFFF;
-    padding: 0 13px;
-    font-size: 12px;
-    font-weight: 800;
+.tabs{
+    display:flex;
+    gap:8px;
+    background:#f1f5f9;
+    border-radius:13px;
+    padding:5px;
+    margin-bottom:20px;
 }
 
-.danger-button {
-    border: 0;
-    border-radius: 10px;
-    background: #3A1820;
-    color: #FCA5A5;
-    padding: 7px 10px;
-    font-size: 11px;
+.tab{
+    flex:1;
+    padding:10px;
+    border-radius:9px;
+    background:transparent;
+    font-weight:700;
 }
 
-.account-container {
-    width: 100%;
-    max-width: 850px;
-    margin: auto;
-    padding: 25px 15px 50px;
+.tab.active{
+    background:white;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
 }
 
-.account-header h1 {
-    font-size: 28px;
+.auth-panel{
+    display:none;
 }
 
-.account-header p {
-    color: #94A3B8;
-    font-size: 14px;
-    margin-top: 6px;
+.auth-panel.active{
+    display:block;
 }
 
-.checkout-section {
-    margin-top: 15px;
+.otp-box{
+    display:flex;
+    gap:8px;
 }
 
-.checkout-items {
-    background: #0D1A2E;
-    border: 1px solid #29466B;
-    border-radius: 14px;
-    padding: 12px;
+.otp-box input{
+    text-align:center;
+    font-size:22px;
+    letter-spacing:5px;
 }
 
-.checkout-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 7px 0;
-    color: #CBD5E1;
-    font-size: 13px;
+.seller-section{
+    margin-top:20px;
 }
 
-.order-number {
-    color: #60A5FA;
-    font-weight: 800;
+.seller-area{
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:14px;
+    margin-top:10px;
 }
 
-.order-status {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 5px 9px;
-    border-radius: 10px;
-    background: #172A45;
-    color: #BFDBFE;
-    font-size: 11px;
+.seller-area-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
 }
 
-.order-info {
-    margin-top: 9px;
-    color: #94A3B8;
-    font-size: 12px;
-    line-height: 1.7;
+.route-list{
+    margin-top:12px;
 }
 
-.message {
-    margin-top: 12px;
-    padding: 10px 12px;
-    border-radius: 11px;
-    background: #172A45;
-    color: #BFDBFE;
-    font-size: 12px;
-    display: none;
+.route-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 0;
+    border-top:1px solid #e2e8f0;
 }
 
-.message.show {
-    display: block;
+.back-button{
+    display:none;
+    background:#1e293b;
+    color:white;
+    border-radius:10px;
+    padding:8px 11px;
+    margin-right:8px;
 }
 
-.message.error {
-    background: #3A1820;
-    color: #FCA5A5;
+@media(max-width:800px){
+    .product-list{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
-.loading {
-    text-align: center;
-    color: #94A3B8;
-    padding: 30px;
-}
-
-@media (max-width: 600px) {
-
-    .header {
-        height: 62px;
-        padding: 0 13px;
+@media(max-width:560px){
+    .header{
+        padding:0 10px;
     }
 
-    .logo {
-        font-size: 17px;
+    .logo{
+        font-size:17px;
     }
 
-    .header-right {
-        gap: 5px;
+    .header-btn{
+        padding:8px 9px;
+        font-size:12px;
     }
 
-    .account-button,
-    .cart-button {
-        width: 39px;
-        height: 39px;
+    .main{
+        padding:18px 12px 50px;
     }
 
-    .title-section {
-        padding: 28px 12px 22px;
+    .product-list{
+        grid-template-columns:1fr;
     }
 
-    .brand {
-        min-width: 145px;
-        height: 50px;
-        font-size: 21px;
+    .grid-2{
+        grid-template-columns:1fr;
     }
 
-    .title-section h1 {
-        font-size: 26px;
+    .product-image{
+        height:230px;
     }
 
-    .products {
-        gap: 9px;
+    .modal{
+        padding:20px;
+        border-radius:20px;
     }
-
-    .product {
-        border-radius: 17px;
-    }
-
-    .product-image {
-        width: calc(100% - 12px);
-        margin: 6px;
-        border-radius: 13px;
-    }
-
-    .product-info {
-        padding: 3px 9px 11px;
-    }
-
-    .product-name {
-        font-size: 14px;
-    }
-
-    .product-detail {
-        font-size: 10px;
-        margin-top: 4px;
-    }
-
-    .product-bottom {
-        gap: 5px;
-        margin-top: 9px;
-    }
-
-    .price {
-        min-height: 36px;
-        padding: 0 8px;
-        font-size: 13px;
-    }
-
-    .select-button {
-        min-height: 36px;
-        font-size: 11px;
-    }
-
-    .cart-container {
-        padding: 20px 11px 40px;
-    }
-
-    .cart-item {
-        padding: 10px;
-        gap: 9px;
-    }
-
-    .cart-image {
-        width: 62px;
-        height: 62px;
-    }
-
-    .cart-name {
-        font-size: 14px;
-    }
-
-    .cart-flavor {
-        font-size: 10px;
-    }
-
-    .cart-unit-price {
-        font-size: 10px;
-    }
-
-    .cart-total {
-        min-width: 65px;
-    }
-
-    .cart-total-price {
-        font-size: 14px;
-    }
-
-    .cart-actions,
-    .account-actions,
-    .modal-actions {
-        flex-direction: column;
-    }
-
-    .route-row {
-        flex-direction: column;
-    }
-
-    .route-row .small-button {
-        min-height: 43px;
-    }
-
 }
-
 </style>
 </head>
 
@@ -903,139 +578,104 @@ button {
 
 <header class="header">
 
-    <div class="header-left">
-
+    <div class="logo">
         <button
             id="backButton"
             class="back-button"
             onclick="goBackPage()">
-            ‹
+            ←
         </button>
-
-        <div class="logo">
-            APP BETAGEN
-        </div>
-
+        APP BETAGEN
     </div>
 
-    <div class="header-right">
+    <div class="header-actions">
 
         <button
-            class="account-button"
-            onclick="openAccount()">
-            👤
+            class="header-btn"
+            onclick="showProducts()">
+            สินค้า
         </button>
 
         <button
-            class="cart-button"
+            class="header-btn"
             onclick="showCart()">
-
             🛒
-
             <span
                 id="cartCount"
                 class="cart-count">
                 0
             </span>
+        </button>
 
+        <button
+            id="accountHeaderButton"
+            class="header-btn"
+            onclick="openAccount()">
+            บัญชี
         </button>
 
     </div>
 
 </header>
 
-<section
-    id="productPage"
-    class="page active">
+<main class="main">
 
-    <div class="title-section">
+    <section
+        id="productPage"
+        class="page active">
 
-        <div class="brand">
-            Betagen
-        </div>
-
-        <h1>
-            นมเปรี้ยว บีทาเก้น
+        <h1 class="page-title">
+            สินค้า
         </h1>
 
-        <p>
-            เลือกสินค้าและรสชาติที่คุณชื่นชอบ
+        <p class="page-subtitle">
+            เลือกสินค้า BetaGen ที่คุณต้องการ
         </p>
-
-    </div>
-
-    <main class="container">
 
         <div
             id="productList"
-            class="products">
+            class="product-list">
         </div>
 
-    </main>
+    </section>
 
-    <footer class="footer">
-        APP BETAGEN
-    </footer>
+    <section
+        id="cartPage"
+        class="page">
 
-</section>
+        <h1 class="page-title">
+            ตะกร้าสินค้า
+        </h1>
 
-<section
-    id="cartPage"
-    class="page">
+        <p class="page-subtitle">
+            ตรวจสอบสินค้าก่อนสั่งซื้อ
+        </p>
 
-    <main class="cart-container">
-
-        <div class="cart-title">
-
-            <h1>
-                รถเข็นสินค้า
-            </h1>
-
-            <p>
-                ตรวจสอบรายการสินค้าและราคารวม
-            </p>
-
+        <div
+            id="cartContent">
         </div>
 
-        <div id="cartContent">
+    </section>
+
+    <section
+        id="accountPage"
+        class="page">
+
+        <h1 class="page-title">
+            บัญชีของฉัน
+        </h1>
+
+        <p class="page-subtitle">
+            ข้อมูลบัญชีและคำสั่งซื้อ
+        </p>
+
+        <div
+            id="accountContent">
         </div>
 
-    </main>
+    </section>
 
-    <footer class="footer">
-        APP BETAGEN
-    </footer>
-
-</section>
-
-<section
-    id="accountPage"
-    class="page">
-
-    <main class="account-container">
-
-        <div class="account-header">
-
-            <h1>
-                บัญชีของฉัน
-            </h1>
-
-            <p>
-                จัดการบัญชี เซลล์ และรายการสั่งซื้อ
-            </p>
-
-        </div>
-
-        <div id="accountContent">
-        </div>
-
-    </main>
-
-    <footer class="footer">
-        APP BETAGEN
-    </footer>
-
-</section>
+</main>
 
 <div
     id="authOverlay"
@@ -1043,26 +683,26 @@ button {
 
     <div class="modal">
 
-        <h2>
+        <div class="modal-title">
             บัญชี APP BETAGEN
-        </h2>
-
-        <div class="modal-subtitle">
-            สมัครสมาชิกหรือเข้าสู่ระบบ
         </div>
 
-        <div class="auth-tabs">
+        <div class="modal-subtitle">
+            เข้าสู่ระบบหรือสร้างบัญชีใหม่
+        </div>
+
+        <div class="tabs">
 
             <button
                 id="loginTab"
-                class="auth-tab active"
+                class="tab active"
                 onclick="switchAuth('login')">
                 เข้าสู่ระบบ
             </button>
 
             <button
                 id="registerTab"
-                class="auth-tab"
+                class="tab"
                 onclick="switchAuth('register')">
                 สมัครสมาชิก
             </button>
@@ -1070,12 +710,11 @@ button {
         </div>
 
         <div
-            id="loginBox"
-            class="auth-box active">
+            id="loginPanel"
+            class="auth-panel active">
 
             <div class="form-group">
-
-                <label>
+                <label class="form-label">
                     อีเมล
                 </label>
 
@@ -1083,14 +722,11 @@ button {
                     id="loginEmail"
                     class="form-input"
                     type="email"
-                    autocomplete="email"
-                    placeholder="example@email.com">
-
+                    autocomplete="email">
             </div>
 
             <div class="form-group">
-
-                <label>
+                <label class="form-label">
                     รหัสผ่าน
                 </label>
 
@@ -1098,41 +734,24 @@ button {
                     id="loginPassword"
                     class="form-input"
                     type="password"
-                    autocomplete="current-password"
-                    placeholder="รหัสผ่าน">
-
+                    autocomplete="current-password">
             </div>
 
-            <div
-                id="loginMessage"
-                class="message">
-            </div>
-
-            <div class="modal-actions">
-
-                <button
-                    class="modal-button secondary"
-                    onclick="closeAuth()">
-                    ปิด
-                </button>
-
-                <button
-                    class="modal-button primary"
-                    onclick="login()">
-                    เข้าสู่ระบบ
-                </button>
-
-            </div>
+            <button
+                class="primary-btn"
+                style="width:100%"
+                onclick="login()">
+                เข้าสู่ระบบ
+            </button>
 
         </div>
 
         <div
-            id="registerBox"
-            class="auth-box">
+            id="registerPanel"
+            class="auth-panel">
 
             <div class="form-group">
-
-                <label>
+                <label class="form-label">
                     อีเมล
                 </label>
 
@@ -1140,14 +759,11 @@ button {
                     id="registerEmail"
                     class="form-input"
                     type="email"
-                    autocomplete="email"
-                    placeholder="example@email.com">
-
+                    autocomplete="email">
             </div>
 
             <div class="form-group">
-
-                <label>
+                <label class="form-label">
                     รหัสผ่าน
                 </label>
 
@@ -1155,14 +771,11 @@ button {
                     id="registerPassword"
                     class="form-input"
                     type="password"
-                    autocomplete="new-password"
-                    placeholder="อย่างน้อย 6 ตัวอักษร">
-
+                    autocomplete="new-password">
             </div>
 
             <div class="form-group">
-
-                <label>
+                <label class="form-label">
                     ยืนยันรหัสผ่าน
                 </label>
 
@@ -1170,31 +783,25 @@ button {
                     id="registerPasswordConfirm"
                     class="form-input"
                     type="password"
-                    autocomplete="new-password"
-                    placeholder="กรอกรหัสผ่านอีกครั้ง">
-
+                    autocomplete="new-password">
             </div>
 
-            <div
-                id="registerMessage"
-                class="message">
-            </div>
+            <button
+                class="primary-btn"
+                style="width:100%"
+                onclick="registerRequest()">
+                สมัครสมาชิก
+            </button>
 
-            <div class="modal-actions">
+        </div>
 
-                <button
-                    class="modal-button secondary"
-                    onclick="closeAuth()">
-                    ปิด
-                </button>
+        <div class="modal-actions">
 
-                <button
-                    class="modal-button primary"
-                    onclick="registerRequest()">
-                    รับรหัส OTP
-                </button>
-
-            </div>
+            <button
+                class="secondary-btn"
+                onclick="closeAuth()">
+                ปิด
+            </button>
 
         </div>
 
@@ -1208,45 +815,36 @@ button {
 
     <div class="modal">
 
-        <h2>
-            ยืนยันอีเมล
-        </h2>
+        <div class="modal-title">
+            ยืนยัน OTP
+        </div>
 
         <div class="modal-subtitle">
-            ระบบส่งรหัส OTP ไปยังอีเมลของคุณแล้ว
+            กรุณากรอกรหัส OTP 6 หลักที่ส่งไปยังอีเมล
         </div>
 
         <div class="form-group">
 
-            <label>
-                รหัส OTP 6 หลัก
-            </label>
-
             <input
                 id="otpCode"
                 class="form-input"
-                type="text"
-                inputmode="numeric"
                 maxlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
                 placeholder="000000">
 
-        </div>
-
-        <div
-            id="otpMessage"
-            class="message">
         </div>
 
         <div class="modal-actions">
 
             <button
-                class="modal-button secondary"
+                class="secondary-btn"
                 onclick="closeOtp()">
                 ยกเลิก
             </button>
 
             <button
-                class="modal-button primary"
+                class="primary-btn"
                 onclick="registerVerify()">
                 ยืนยัน
             </button>
@@ -1263,140 +861,145 @@ button {
 
     <div class="modal">
 
-        <h2>
-            ข้อมูลการสั่งซื้อ
-        </h2>
-
-        <div class="modal-subtitle">
-            กรอกข้อมูลเพื่อจัดส่งสินค้า
+        <div class="modal-title">
+            ยืนยันคำสั่งซื้อ
         </div>
 
-        <div
-            id="checkoutItems"
-            class="checkout-items"
-            style="margin-top:15px;">
+        <div class="modal-subtitle">
+            กรุณากรอกข้อมูลสำหรับจัดส่ง
         </div>
 
         <div class="form-group">
 
-            <label>
+            <label class="form-label">
                 ชื่อผู้รับ
             </label>
 
             <input
                 id="customerName"
-                class="form-input"
-                type="text"
-                placeholder="ชื่อ-นามสกุล">
+                class="form-input">
 
         </div>
 
         <div class="form-group">
 
-            <label>
+            <label class="form-label">
                 เบอร์โทรศัพท์
             </label>
 
             <input
                 id="customerPhone"
                 class="form-input"
-                type="tel"
-                placeholder="08xxxxxxxx">
+                type="tel">
 
         </div>
 
         <div class="form-group">
 
-            <label>
-                จังหวัด
+            <label class="form-label">
+                ที่อยู่
             </label>
 
-            <input
-                id="customerProvince"
-                class="form-input"
-                type="text"
-                placeholder="จังหวัด">
+            <textarea
+                id="customerAddress"
+                class="form-textarea"></textarea>
+
+        </div>
+
+        <div class="grid-2">
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    จังหวัด
+                </label>
+
+                <input
+                    id="customerProvince"
+                    class="form-input">
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    อำเภอ
+                </label>
+
+                <input
+                    id="customerDistrict"
+                    class="form-input">
+
+            </div>
 
         </div>
 
         <div class="form-group">
 
-            <label>
-                อำเภอ
-            </label>
-
-            <input
-                id="customerDistrict"
-                class="form-input"
-                type="text"
-                placeholder="อำเภอ">
-
-        </div>
-
-        <div class="form-group">
-
-            <label>
+            <label class="form-label">
                 ตำบล
             </label>
 
             <input
                 id="customerSubdistrict"
-                class="form-input"
-                type="text"
-                placeholder="ตำบล">
+                class="form-input">
+
+        </div>
+
+        <div class="grid-2">
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    วันที่จัดส่ง
+                </label>
+
+                <input
+                    id="deliveryDate"
+                    class="form-input"
+                    type="date">
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    รอบจัดส่ง
+                </label>
+
+                <select
+                    id="deliveryRound"
+                    class="form-select">
+
+                    <option value="1">
+                        รอบ 1
+                    </option>
+
+                    <option value="2">
+                        รอบ 2
+                    </option>
+
+                    <option value="3">
+                        รอบ 3
+                    </option>
+
+                    <option value="4">
+                        รอบ 4
+                    </option>
+
+                    <option value="5">
+                        รอบ 5
+                    </option>
+
+                </select>
+
+            </div>
 
         </div>
 
         <div class="form-group">
 
-            <label>
-                วันที่ต้องการรับสินค้า
-            </label>
-
-            <input
-                id="deliveryDate"
-                class="form-input"
-                type="date">
-
-        </div>
-
-        <div class="form-group">
-
-            <label>
-                รอบ
-            </label>
-
-            <select
-                id="deliveryRound"
-                class="form-select">
-
-                <option value="1">
-                    รอบ 1
-                </option>
-
-                <option value="2">
-                    รอบ 2
-                </option>
-
-                <option value="3">
-                    รอบ 3
-                </option>
-
-                <option value="4">
-                    รอบ 4
-                </option>
-
-                <option value="5">
-                    รอบ 5
-                </option>
-
-            </select>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>
+            <label class="form-label">
                 วิธีชำระเงิน
             </label>
 
@@ -1417,22 +1020,23 @@ button {
         </div>
 
         <div
-            id="checkoutMessage"
-            class="message">
+            id="checkoutSummary"
+            class="card"
+            style="margin-top:10px">
         </div>
 
         <div class="modal-actions">
 
             <button
-                class="modal-button secondary"
+                class="secondary-btn"
                 onclick="closeCheckout()">
                 ยกเลิก
             </button>
 
             <button
-                class="modal-button primary"
+                class="primary-btn"
                 onclick="createOrder()">
-                ยืนยันสั่งซื้อ
+                สั่งซื้อ
             </button>
 
         </div>
@@ -1443,241 +1047,214 @@ button {
 
 <script>
 
-/*
-====================================================
-API
-====================================================
-
-ถ้า index.html และ api.php อยู่ในโฮสต์เดียวกัน
-ใช้แบบนี้ได้เลย:
-
-api.php
-
-ถ้า API อยู่คนละโฮสต์ ต้องเปลี่ยนเป็น URL เต็ม เช่น:
-
-https://example.com/api.php
-*/
-
 var API_URL = "api.php";
 
-
-var products = [
-    {
-        id: 1,
-        name: "รสดั้งเดิม",
-        detail: "หอม อร่อย ได้ประโยชน์",
-        price: 15,
-        image: ""
-    },
-    {
-        id: 2,
-        name: "รสสตรอว์เบอร์รี่",
-        detail: "หอมหวาน สดชื่น",
-        price: 15,
-        image: ""
-    },
-    {
-        id: 3,
-        name: "รสพีช",
-        detail: "หอมละมุน กลมกล่อม",
-        price: 15,
-        image: ""
-    },
-    {
-        id: 4,
-        name: "รสแอปเปิ้ล",
-        detail: "หอมสดชื่น เปรี้ยวหวานลงตัว",
-        price: 15,
-        image: ""
-    },
-    {
-        id: 5,
-        name: "รสบลูเบอร์รี่",
-        detail: "หอมอร่อย สดชื่น",
-        price: 15,
-        image: ""
-    },
-    {
-        id: 6,
-        name: "รสผลไม้รวม",
-        detail: "รวมความอร่อยจากผลไม้",
-        price: 15,
-        image: ""
-    }
-];
-
+var products = [];
 
 var cart = [];
-var currentUser = null;
-var currentPage = "products";
-var pendingRegisterEmail = "";
 
+var currentUser = null;
+
+var registerEmail = "";
+
+var currentPage = "productPage";
+
+var previousPage = "";
 
 try {
-
-    var savedCart =
-        localStorage.getItem("betagen_cart");
-
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
+    cart = JSON.parse(
+        localStorage.getItem("betagen_cart") || "[]"
+    );
 
     if (!Array.isArray(cart)) {
         cart = [];
     }
-
 } catch (e) {
-
     cart = [];
-
 }
-
-
-/*
-====================================================
-API FUNCTION
-====================================================
-
-จุดที่แก้:
-
-เดิม:
-POST api.php
-
-แล้วส่ง:
-{
-    action: "login"
-}
-
-แต่ api.php ของไฟล์ปัจจุบันอ่าน:
-$_GET['action']
-
-ดังนั้นต้องส่งเป็น:
-
-POST api.php?action=login
-
-ส่วนข้อมูลอื่นยังส่งเป็น JSON เหมือนเดิม
-====================================================
-*/
 
 function api(action, data, callback) {
 
     var xhr =
         new XMLHttpRequest();
 
-
-    var url =
-        API_URL +
-        "?action=" +
-        encodeURIComponent(action);
-
-
     xhr.open(
         "POST",
-        url,
+        API_URL,
         true
     );
-
 
     xhr.setRequestHeader(
         "Content-Type",
         "application/json;charset=UTF-8"
     );
 
+    xhr.withCredentials = true;
 
-    xhr.onreadystatechange =
-        function() {
+    xhr.onreadystatechange = function() {
 
-            if (xhr.readyState !== 4) {
-                return;
-            }
+        if (xhr.readyState !== 4) {
+            return;
+        }
 
+        var result = null;
 
-            var result = null;
-
-
-            try {
-
-                result =
-                    JSON.parse(
-                        xhr.responseText
-                    );
-
-            } catch (e) {
-
-                callback(
-                    false,
-                    {
-                        ok: false,
-                        message:
-                            "เซิร์ฟเวอร์ส่งข้อมูลไม่ถูกต้อง"
-                    }
+        try {
+            result =
+                JSON.parse(
+                    xhr.responseText
                 );
+        } catch (e) {
 
-                return;
-            }
+            callback(false, {
+                ok:false,
+                message:"เซิร์ฟเวอร์ส่งข้อมูลไม่ถูกต้อง"
+            });
 
+            return;
+        }
 
-            callback(
-                true,
-                result
-            );
+        callback(
+            xhr.status >= 200 &&
+            xhr.status < 500,
+            result
+        );
+    };
 
-        };
+    xhr.onerror = function() {
 
-
-    xhr.onerror =
-        function() {
-
-            callback(
-                false,
-                {
-                    ok: false,
-                    message:
-                        "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
-                }
-            );
-
-        };
-
+        callback(false, {
+            ok:false,
+            message:"ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
+        });
+    };
 
     data = data || {};
 
-
-    /*
-    ไม่ต้องใส่:
     data.action = action;
-
-    เพราะ action ถูกส่งไปใน URL แล้ว
-    */
-
 
     xhr.send(
         JSON.stringify(data)
     );
-
 }
 
+function escapeHtml(value) {
+
+    value = String(
+        value === undefined ||
+        value === null
+            ? ""
+            : value
+    );
+
+    return value
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
 
 function saveCart() {
 
-    try {
-
-        localStorage.setItem(
-            "betagen_cart",
-            JSON.stringify(cart)
-        );
-
-    } catch (e) {
-
-    }
-
+    localStorage.setItem(
+        "betagen_cart",
+        JSON.stringify(cart)
+    );
 }
 
+function findProduct(id) {
+
+    id = Number(id);
+
+    for (
+        var i = 0;
+        i < products.length;
+        i++
+    ) {
+
+        if (
+            Number(products[i].id) === id
+        ) {
+            return products[i];
+        }
+    }
+
+    return null;
+}
+
+function loadProducts(callback) {
+
+    api(
+        "products",
+        {},
+        function(networkOK,result) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
+
+                if (callback) {
+                    callback(false);
+                }
+
+                return;
+            }
+
+            products = [];
+
+            var list =
+                result.products || [];
+
+            for (
+                var i = 0;
+                i < list.length;
+                i++
+            ) {
+
+                products.push({
+                    id:Number(list[i].id),
+                    name:list[i].name,
+                    detail:"",
+                    price:Number(list[i].price),
+                    image:list[i].image_url || ""
+                });
+            }
+
+            renderProducts();
+
+            updateCartCount();
+
+            if (callback) {
+                callback(true);
+            }
+        }
+    );
+}
 
 function renderProducts() {
 
-    var html = "";
+    var container =
+        document.getElementById(
+            "productList"
+        );
 
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (products.length === 0) {
+
+        container.innerHTML =
+            '<div class="card empty">' +
+            'ไม่พบสินค้า' +
+            '</div>';
+
+        return;
+    }
 
     for (
         var i = 0;
@@ -1688,91 +1265,70 @@ function renderProducts() {
         var product =
             products[i];
 
+        var card =
+            document.createElement("div");
 
-        var imageHTML = "";
+        card.className =
+            "product-card";
 
+        var imageHtml;
 
         if (product.image) {
 
-            imageHTML =
+            imageHtml =
                 '<img src="' +
-                escapeHTML(product.image) +
+                escapeHtml(product.image) +
                 '" alt="' +
-                escapeHTML(product.name) +
+                escapeHtml(product.name) +
                 '">';
 
         } else {
 
-            imageHTML =
-                '<div class="image-placeholder">' +
-                'รูปสินค้า' +
+            imageHtml =
+                '<div class="product-image-placeholder">' +
+                escapeHtml(product.name) +
                 '</div>';
-
         }
 
-
-        html +=
-
-            '<div class="product">' +
-
-                '<div class="product-image">' +
-                    imageHTML +
+        card.innerHTML =
+            '<div class="product-image">' +
+                imageHtml +
+            '</div>' +
+            '<div class="product-info">' +
+                '<div class="product-name">' +
+                    escapeHtml(product.name) +
                 '</div>' +
-
-                '<div class="product-info">' +
-
-                    '<div class="product-name">' +
-                        escapeHTML(product.name) +
-                    '</div>' +
-
-                    '<div class="product-detail">' +
-                        escapeHTML(product.detail) +
-                    '</div>' +
-
-                    '<div class="product-bottom">' +
-
-                        '<div class="price">' +
-                            formatPrice(product.price) +
-                            ' ฿' +
-                        '</div>' +
-
-                        '<button ' +
-                            'class="select-button" ' +
-                            'onclick="addToCart(' +
-                                product.id +
-                            ')">' +
-                            'เลือก' +
-                        '</button>' +
-
-                    '</div>' +
-
+                '<div class="product-detail">' +
+                    escapeHtml(product.detail) +
                 '</div>' +
-
+                '<div class="product-bottom">' +
+                    '<div class="product-price">' +
+                        Number(product.price).toFixed(2) +
+                        ' บาท' +
+                    '</div>' +
+                    '<button class="primary-btn" onclick="addToCart(' +
+                        Number(product.id) +
+                    ')">' +
+                        'เพิ่ม' +
+                    '</button>' +
+                '</div>' +
             '</div>';
 
+        container.appendChild(card);
     }
-
-
-    document.getElementById(
-        "productList"
-    ).innerHTML = html;
-
 }
 
-
-function addToCart(id) {
+function addToCart(productId) {
 
     var product =
-        findProduct(id);
-
+        findProduct(productId);
 
     if (!product) {
+        alert("ไม่พบสินค้า");
         return;
     }
 
-
     var found = false;
-
 
     for (
         var i = 0;
@@ -1780,58 +1336,38 @@ function addToCart(id) {
         i++
     ) {
 
-        if (cart[i].id === id) {
+        if (
+            Number(cart[i].id) ===
+            Number(productId)
+        ) {
 
-            cart[i].quantity++;
+            cart[i].quantity =
+                Number(cart[i].quantity) + 1;
 
             found = true;
 
             break;
         }
-
     }
-
 
     if (!found) {
 
         cart.push({
-            id: id,
-            quantity: 1
+            id:Number(productId),
+            quantity:1
         });
-
     }
-
 
     saveCart();
 
     updateCartCount();
 
+    renderCart();
 }
-
-
-function findProduct(id) {
-
-    for (
-        var i = 0;
-        i < products.length;
-        i++
-    ) {
-
-        if (products[i].id === id) {
-            return products[i];
-        }
-
-    }
-
-    return null;
-
-}
-
 
 function updateCartCount() {
 
-    var count = 0;
-
+    var total = 0;
 
     for (
         var i = 0;
@@ -1839,20 +1375,20 @@ function updateCartCount() {
         i++
     ) {
 
-        count +=
-            Number(
-                cart[i].quantity || 0
-            );
-
+        total +=
+            Number(cart[i].quantity) || 0;
     }
 
+    var element =
+        document.getElementById(
+            "cartCount"
+        );
 
-    document.getElementById(
-        "cartCount"
-    ).innerText = count;
-
+    if (element) {
+        element.textContent =
+            total;
+    }
 }
-
 
 function renderCart() {
 
@@ -1861,449 +1397,322 @@ function renderCart() {
             "cartContent"
         );
 
+    if (!container) {
+        return;
+    }
 
     if (cart.length === 0) {
 
         container.innerHTML =
-
-            '<div class="empty-cart">' +
-
-                '<div class="empty-icon">🛒</div>' +
-
-                '<h2>ยังไม่มีสินค้าในรถเข็น</h2>' +
-
-                '<p>' +
-                    'เลือกสินค้าที่ต้องการเพื่อเพิ่มลงรถเข็น' +
-                '</p>' +
-
+            '<div class="card empty">' +
+            'ยังไม่มีสินค้าในตะกร้า' +
             '</div>';
 
         return;
-
     }
-
-
-    var html =
-        '<div class="cart-list">';
-
-
-    var totalItems = 0;
-    var totalPrice = 0;
-
-
-    for (
-        var i = 0;
-        i < cart.length;
-        i++
-    ) {
-
-        var item =
-            cart[i];
-
-
-        var product =
-            findProduct(item.id);
-
-
-        if (!product) {
-            continue;
-        }
-
-
-        var itemTotal =
-            product.price *
-            item.quantity;
-
-
-        totalItems +=
-            item.quantity;
-
-
-        totalPrice +=
-            itemTotal;
-
-
-        var imageHTML = "";
-
-
-        if (product.image) {
-
-            imageHTML =
-                '<img src="' +
-                escapeHTML(product.image) +
-                '" alt="' +
-                escapeHTML(product.name) +
-                '">';
-
-        } else {
-
-            imageHTML =
-                '<div class="image-placeholder">' +
-                'รูป' +
-                '</div>';
-
-        }
-
-
-        html +=
-
-            '<div class="cart-item">' +
-
-                '<div class="cart-image">' +
-                    imageHTML +
-                '</div>' +
-
-                '<div class="cart-info">' +
-
-                    '<div class="cart-name">' +
-                        escapeHTML(product.name) +
-                    '</div>' +
-
-                    '<div class="cart-flavor">' +
-                        escapeHTML(product.detail) +
-                    '</div>' +
-
-                    '<div class="cart-unit-price">' +
-                        'ราคา ' +
-                        formatPrice(product.price) +
-                        ' ฿ / ชิ้น' +
-                    '</div>' +
-
-                    '<div class="quantity">' +
-
-                        '<button ' +
-                            'onclick="changeQuantity(' +
-                                product.id +
-                                ', -1)">' +
-                            '−' +
-                        '</button>' +
-
-                        '<span>' +
-                            item.quantity +
-                        '</span>' +
-
-                        '<button ' +
-                            'onclick="changeQuantity(' +
-                                product.id +
-                                ', 1)">' +
-                            '+' +
-                        '</button>' +
-
-                    '</div>' +
-
-                '</div>' +
-
-                '<div class="cart-total">' +
-
-                    '<div class="cart-total-label">' +
-                        'รวม' +
-                    '</div>' +
-
-                    '<div class="cart-total-price">' +
-                        formatPrice(itemTotal) +
-                        ' ฿' +
-                    '</div>' +
-
-                    '<button ' +
-                        'class="remove-button" ' +
-                        'onclick="removeFromCart(' +
-                            product.id +
-                        ')">' +
-                        'ลบ' +
-                    '</button>' +
-
-                '</div>' +
-
-            '</div>';
-
-    }
-
-
-    html += '</div>';
-
-
-    html +=
-
-        '<div class="summary">' +
-
-            '<div class="summary-row">' +
-
-                '<span>จำนวนสินค้า</span>' +
-
-                '<span>' +
-                    totalItems +
-                    ' ชิ้น' +
-                '</span>' +
-
-            '</div>' +
-
-            '<div class="summary-row">' +
-
-                '<span>ราคาสินค้ารวม</span>' +
-
-                '<span>' +
-                    formatPrice(totalPrice) +
-                    ' ฿' +
-                '</span>' +
-
-            '</div>' +
-
-            '<div class="summary-total">' +
-
-                '<span>ราคารวมทั้งหมด</span>' +
-
-                '<span class="total-price">' +
-                    formatPrice(totalPrice) +
-                    ' ฿' +
-                '</span>' +
-
-            '</div>' +
-
-            '<div class="cart-actions">' +
-
-                '<button ' +
-                    'class="continue-button" ' +
-                    'onclick="showProducts()">' +
-                    'เลือกสินค้าต่อ' +
-                '</button>' +
-
-                '<button ' +
-                    'class="checkout-button" ' +
-                    'onclick="checkout()">' +
-                    'ดำเนินการต่อ' +
-                '</button>' +
-
-            '</div>' +
-
-        '</div>';
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-function changeQuantity(id, amount) {
-
-    for (
-        var i = 0;
-        i < cart.length;
-        i++
-    ) {
-
-        if (cart[i].id === id) {
-
-            cart[i].quantity +=
-                amount;
-
-
-            if (
-                cart[i].quantity <= 0
-            ) {
-
-                cart.splice(i, 1);
-
-            }
-
-
-            break;
-
-        }
-
-    }
-
-
-    saveCart();
-
-    updateCartCount();
-
-    renderCart();
-
-}
-
-
-function removeFromCart(id) {
-
-    for (
-        var i = 0;
-        i < cart.length;
-        i++
-    ) {
-
-        if (cart[i].id === id) {
-
-            cart.splice(i, 1);
-
-            break;
-
-        }
-
-    }
-
-
-    saveCart();
-
-    updateCartCount();
-
-    renderCart();
-
-}
-
-
-function showProducts() {
-
-    hideAllPages();
-
-
-    document
-        .getElementById("productPage")
-        .classList.add("active");
-
-
-    currentPage =
-        "products";
-
-
-    document
-        .getElementById("backButton")
-        .style.display =
-        "none";
-
-
-    window.scrollTo(0, 0);
-
-}
-
-
-function showCart() {
-
-    hideAllPages();
-
-
-    document
-        .getElementById("cartPage")
-        .classList.add("active");
-
-
-    currentPage =
-        "cart";
-
-
-    document
-        .getElementById("backButton")
-        .style.display =
-        "block";
-
-
-    renderCart();
-
-
-    window.scrollTo(0, 0);
-
-}
-
-
-function openAccount() {
-
-    hideAllPages();
-
-
-    document
-        .getElementById("accountPage")
-        .classList.add("active");
-
-
-    currentPage =
-        "account";
-
-
-    document
-        .getElementById("backButton")
-        .style.display =
-        "block";
-
-
-    renderAccount();
-
-
-    window.scrollTo(0, 0);
-
-}
-
-
-function hideAllPages() {
-
-    document
-        .getElementById("productPage")
-        .classList.remove("active");
-
-
-    document
-        .getElementById("cartPage")
-        .classList.remove("active");
-
-
-    document
-        .getElementById("accountPage")
-        .classList.remove("active");
-
-}
-
-
-function goBackPage() {
-
-    if (
-        currentPage === "cart" ||
-        currentPage === "account"
-    ) {
-
-        showProducts();
-
-        return;
-
-    }
-
-
-    showProducts();
-
-}
-
-
-function checkout() {
-
-    if (cart.length === 0) {
-        return;
-    }
-
-
-    if (!currentUser) {
-
-        openAuth();
-
-        switchAuth("login");
-
-        return;
-
-    }
-
-
-    renderCheckout();
-
-
-    document
-        .getElementById("checkoutOverlay")
-        .classList.add("active");
-
-}
-
-
-function renderCheckout() {
 
     var html = "";
 
     var total = 0;
 
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
+
+        var item = cart[i];
+
+        var product =
+            findProduct(item.id);
+
+        if (!product) {
+            continue;
+        }
+
+        var quantity =
+            Number(item.quantity);
+
+        var lineTotal =
+            product.price * quantity;
+
+        total += lineTotal;
+
+        html +=
+            '<div class="cart-item">' +
+
+                '<div class="cart-item-info">' +
+
+                    '<div class="cart-item-name">' +
+                        escapeHtml(product.name) +
+                    '</div>' +
+
+                    '<div class="cart-item-price">' +
+                        Number(product.price).toFixed(2) +
+                        ' บาท / ชิ้น' +
+                    '</div>' +
+
+                '</div>' +
+
+                '<div class="quantity-box">' +
+
+                    '<button class="quantity-btn" onclick="changeQuantity(' +
+                        Number(product.id) +
+                        ',-1)">−</button>' +
+
+                    '<div class="quantity-number">' +
+                        quantity +
+                    '</div>' +
+
+                    '<button class="quantity-btn" onclick="changeQuantity(' +
+                        Number(product.id) +
+                        ',1)">+</button>' +
+
+                '</div>' +
+
+                '<div style="font-weight:800;min-width:90px;text-align:right">' +
+                    lineTotal.toFixed(2) +
+                    ' ฿' +
+                '</div>' +
+
+                '<button class="danger-btn" onclick="removeFromCart(' +
+                    Number(product.id) +
+                ')">' +
+                    'ลบ' +
+                '</button>' +
+
+            '</div>';
+    }
+
+    html +=
+        '<div class="cart-total">' +
+            '<span>รวม</span>' +
+            '<span>' +
+                total.toFixed(2) +
+                ' บาท' +
+            '</span>' +
+        '</div>' +
+
+        '<div style="display:flex;justify-content:flex-end;margin-top:18px">' +
+
+            '<button class="primary-btn" onclick="checkout()">' +
+                'ดำเนินการสั่งซื้อ' +
+            '</button>' +
+
+        '</div>';
+
+    container.innerHTML =
+        '<div class="card">' +
+            html +
+        '</div>';
+}
+
+function changeQuantity(
+    productId,
+    change
+) {
+
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
+
+        if (
+            Number(cart[i].id) ===
+            Number(productId)
+        ) {
+
+            cart[i].quantity =
+                Number(cart[i].quantity) +
+                Number(change);
+
+            if (
+                cart[i].quantity <= 0
+            ) {
+                cart.splice(i,1);
+            }
+
+            break;
+        }
+    }
+
+    saveCart();
+
+    updateCartCount();
+
+    renderCart();
+}
+
+function removeFromCart(productId) {
+
+    var next = [];
+
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
+
+        if (
+            Number(cart[i].id) !==
+            Number(productId)
+        ) {
+            next.push(cart[i]);
+        }
+    }
+
+    cart = next;
+
+    saveCart();
+
+    updateCartCount();
+
+    renderCart();
+}
+
+function hideAllPages() {
+
+    var pages = [
+        "productPage",
+        "cartPage",
+        "accountPage"
+    ];
+
+    for (
+        var i = 0;
+        i < pages.length;
+        i++
+    ) {
+
+        var page =
+            document.getElementById(
+                pages[i]
+            );
+
+        if (page) {
+            page.classList.remove(
+                "active"
+            );
+        }
+    }
+}
+
+function showProducts() {
+
+    hideAllPages();
+
+    document
+        .getElementById("productPage")
+        .classList.add("active");
+
+    previousPage =
+        currentPage;
+
+    currentPage =
+        "productPage";
+
+    document
+        .getElementById("backButton")
+        .style.display = "none";
+}
+
+function showCart() {
+
+    hideAllPages();
+
+    document
+        .getElementById("cartPage")
+        .classList.add("active");
+
+    previousPage =
+        currentPage;
+
+    currentPage =
+        "cartPage";
+
+    document
+        .getElementById("backButton")
+        .style.display = "inline-block";
+
+    renderCart();
+}
+
+function openAccount() {
+
+    hideAllPages();
+
+    document
+        .getElementById("accountPage")
+        .classList.add("active");
+
+    previousPage =
+        currentPage;
+
+    currentPage =
+        "accountPage";
+
+    document
+        .getElementById("backButton")
+        .style.display = "inline-block";
+
+    renderAccount();
+}
+
+function goBackPage() {
+
+    if (
+        previousPage === "cartPage"
+    ) {
+        showCart();
+        return;
+    }
+
+    if (
+        previousPage === "accountPage"
+    ) {
+        openAccount();
+        return;
+    }
+
+    showProducts();
+}
+
+function checkout() {
+
+    if (cart.length === 0) {
+        alert("ไม่มีสินค้าในตะกร้า");
+        return;
+    }
+
+    if (!currentUser) {
+        openAuth();
+        return;
+    }
+
+    renderCheckout();
+
+    document
+        .getElementById(
+            "checkoutOverlay"
+        )
+        .classList.add("active");
+}
+
+function renderCheckout() {
+
+    var summary =
+        document.getElementById(
+            "checkoutSummary"
+        );
+
+    if (!summary) {
+        return;
+    }
+
+    var html = "";
+
+    var total = 0;
 
     for (
         var i = 0;
@@ -2312,171 +1721,157 @@ function renderCheckout() {
     ) {
 
         var product =
-            findProduct(
-                cart[i].id
-            );
-
+            findProduct(cart[i].id);
 
         if (!product) {
             continue;
         }
 
+        var quantity =
+            Number(cart[i].quantity);
 
-        var itemTotal =
-            product.price *
-            cart[i].quantity;
+        var line =
+            product.price * quantity;
 
-
-        total +=
-            itemTotal;
-
+        total += line;
 
         html +=
-
-            '<div class="checkout-item">' +
-
+            '<div style="display:flex;justify-content:space-between;margin-bottom:7px">' +
                 '<span>' +
-                    escapeHTML(product.name) +
-                    ' × ' +
-                    cart[i].quantity +
+                    escapeHtml(product.name) +
+                    ' x ' +
+                    quantity +
                 '</span>' +
-
-                '<span>' +
-                    formatPrice(itemTotal) +
+                '<strong>' +
+                    line.toFixed(2) +
                     ' ฿' +
-                '</span>' +
-
+                '</strong>' +
             '</div>';
-
     }
 
-
     html +=
-
-        '<div class="checkout-item" ' +
-            'style="border-top:1px solid #29466B;margin-top:6px;padding-top:10px;font-weight:800;">' +
-
-            '<span>รวม</span>' +
-
-            '<span>' +
-                formatPrice(total) +
-                ' ฿' +
-            '</span>' +
-
+        '<div style="border-top:1px solid #e2e8f0;padding-top:10px;margin-top:10px;display:flex;justify-content:space-between;font-size:18px">' +
+            '<strong>รวม</strong>' +
+            '<strong>' +
+                total.toFixed(2) +
+                ' บาท' +
+            '</strong>' +
         '</div>';
 
-
-    document.getElementById(
-        "checkoutItems"
-    ).innerHTML =
+    summary.innerHTML =
         html;
-
 }
-
 
 function closeCheckout() {
 
     document
-        .getElementById("checkoutOverlay")
+        .getElementById(
+            "checkoutOverlay"
+        )
         .classList.remove("active");
-
 }
-
 
 function createOrder() {
 
     if (!currentUser) {
-
-        closeCheckout();
-
         openAuth();
-
         return;
-
     }
 
+    if (cart.length === 0) {
+        alert("ไม่มีสินค้าในตะกร้า");
+        return;
+    }
 
-    var name =
+    var customerName =
         document.getElementById(
             "customerName"
         ).value.trim();
-
 
     var phone =
         document.getElementById(
             "customerPhone"
         ).value.trim();
 
+    var address =
+        document.getElementById(
+            "customerAddress"
+        ).value.trim();
 
     var province =
         document.getElementById(
             "customerProvince"
         ).value.trim();
 
-
     var district =
         document.getElementById(
             "customerDistrict"
         ).value.trim();
-
 
     var subdistrict =
         document.getElementById(
             "customerSubdistrict"
         ).value.trim();
 
-
     var deliveryDate =
         document.getElementById(
             "deliveryDate"
         ).value;
 
+    var roundNo =
+        Number(
+            document.getElementById(
+                "deliveryRound"
+            ).value
+        );
 
-    var round =
-        document.getElementById(
-            "deliveryRound"
-        ).value;
-
-
-    var paymentMethod =
+    var payment =
         document.getElementById(
             "paymentMethod"
         ).value;
 
-
-    var message =
-        document.getElementById(
-            "checkoutMessage"
-        );
-
-
-    hideMessage(message);
-
-
     if (
-        !name ||
+        !customerName ||
         !phone ||
+        !address ||
         !province ||
         !district ||
-        !subdistrict ||
-        !deliveryDate
+        !subdistrict
     ) {
 
-        showMessage(
-            message,
-            "กรุณากรอกข้อมูลให้ครบ",
-            true
+        alert(
+            "กรุณากรอกข้อมูลให้ครบ"
         );
 
         return;
-
     }
 
+    if (!deliveryDate) {
+
+        alert(
+            "กรุณาเลือกวันที่จัดส่ง"
+        );
+
+        return;
+    }
+
+    var date =
+        new Date(
+            deliveryDate + "T00:00:00"
+        );
+
+    if (
+        date.getDay() === 0
+    ) {
+
+        alert(
+            "ไม่สามารถจัดส่งวันอาทิตย์ได้"
+        );
+
+        return;
+    }
 
     var items = [];
-
-    var total = 0;
-
 
     for (
         var i = 0;
@@ -2489,51 +1884,30 @@ function createOrder() {
                 cart[i].id
             );
 
-
         if (!product) {
             continue;
         }
 
-
-        var itemTotal =
-            product.price *
-            cart[i].quantity;
-
-
-        total +=
-            itemTotal;
-
-
         items.push({
-
             product_id:
-                product.id,
-
-            name:
-                product.name,
+                Number(product.id),
 
             quantity:
-                cart[i].quantity,
-
-            price:
-                product.price,
-
-            total:
-                itemTotal
-
+                Number(cart[i].quantity)
         });
-
     }
-
 
     api(
         "create_order",
         {
             customer_name:
-                name,
+                customerName,
 
-            customer_phone:
+            phone:
                 phone,
+
+            address:
+                address,
 
             province:
                 province,
@@ -2548,42 +1922,32 @@ function createOrder() {
                 deliveryDate,
 
             round_no:
-                Number(round),
+                roundNo,
 
-            payment_method:
-                paymentMethod,
+            payment:
+                payment,
 
             items:
-                items,
-
-            total:
-                total
+                items
         },
-
-        function(
-            networkOK,
-            result
-        ) {
+        function(networkOK,result) {
 
             if (
                 !networkOK ||
                 !result.ok
             ) {
 
-                showMessage(
-                    message,
-                    result.message ||
-                    "ไม่สามารถสั่งซื้อได้",
-                    true
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "สร้างคำสั่งซื้อไม่สำเร็จ"
                 );
 
                 return;
-
             }
 
-
             cart = [];
-
 
             saveCart();
 
@@ -2591,85 +1955,73 @@ function createOrder() {
 
             closeCheckout();
 
-
-            alert(
-                "สั่งซื้อสำเร็จ\nเลขที่คำสั่งซื้อ " +
-                result.order_no
-            );
-
-
             showProducts();
 
+            alert(
+                "สั่งซื้อสำเร็จ\n\n" +
+                "เลขคำสั่งซื้อ: " +
+                result.order_no +
+                "\nยอดรวม: " +
+                Number(
+                    result.total
+                ).toFixed(2) +
+                " บาท"
+            );
         }
     );
-
 }
-
 
 function openAuth() {
 
     document
-        .getElementById("authOverlay")
+        .getElementById(
+            "authOverlay"
+        )
         .classList.add("active");
 
+    switchAuth("login");
 }
-
 
 function closeAuth() {
 
     document
-        .getElementById("authOverlay")
+        .getElementById(
+            "authOverlay"
+        )
         .classList.remove("active");
-
 }
 
-
 function switchAuth(type) {
+
+    var loginPanel =
+        document.getElementById(
+            "loginPanel"
+        );
+
+    var registerPanel =
+        document.getElementById(
+            "registerPanel"
+        );
 
     var loginTab =
         document.getElementById(
             "loginTab"
         );
 
-
     var registerTab =
         document.getElementById(
             "registerTab"
         );
 
+    if (type === "login") {
 
-    var loginBox =
-        document.getElementById(
-            "loginBox"
-        );
-
-
-    var registerBox =
-        document.getElementById(
-            "registerBox"
-        );
-
-
-    if (type === "register") {
-
-        loginTab.classList.remove(
+        loginPanel.classList.add(
             "active"
         );
 
-        registerTab.classList.add(
+        registerPanel.classList.remove(
             "active"
         );
-
-
-        loginBox.classList.remove(
-            "active"
-        );
-
-        registerBox.classList.add(
-            "active"
-        );
-
-    } else {
 
         loginTab.classList.add(
             "active"
@@ -2679,19 +2031,25 @@ function switchAuth(type) {
             "active"
         );
 
+    } else {
 
-        loginBox.classList.add(
+        loginPanel.classList.remove(
             "active"
         );
 
-        registerBox.classList.remove(
+        registerPanel.classList.add(
             "active"
         );
 
+        loginTab.classList.remove(
+            "active"
+        );
+
+        registerTab.classList.add(
+            "active"
+        );
     }
-
 }
-
 
 function registerRequest() {
 
@@ -2700,127 +2058,90 @@ function registerRequest() {
             "registerEmail"
         ).value.trim();
 
-
     var password =
         document.getElementById(
             "registerPassword"
         ).value;
 
-
-    var confirmPassword =
+    var confirm =
         document.getElementById(
             "registerPasswordConfirm"
         ).value;
 
+    if (!email || !password) {
 
-    var message =
-        document.getElementById(
-            "registerMessage"
-        );
-
-
-    hideMessage(message);
-
-
-    if (
-        !email ||
-        !password ||
-        !confirmPassword
-    ) {
-
-        showMessage(
-            message,
-            "กรุณากรอกข้อมูลให้ครบ",
-            true
+        alert(
+            "กรุณากรอกข้อมูลให้ครบ"
         );
 
         return;
-
     }
-
 
     if (password.length < 6) {
 
-        showMessage(
-            message,
-            "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร",
-            true
+        alert(
+            "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร"
         );
 
         return;
-
     }
 
+    if (password !== confirm) {
 
-    if (
-        password !==
-        confirmPassword
-    ) {
-
-        showMessage(
-            message,
-            "รหัสผ่านไม่ตรงกัน",
-            true
+        alert(
+            "รหัสผ่านไม่ตรงกัน"
         );
 
         return;
-
     }
 
+    registerEmail =
+        email;
 
     api(
         "register_request",
         {
-            email:
-                email,
-
-            password:
-                password
+            email:email,
+            password:password
         },
-
-        function(
-            networkOK,
-            result
-        ) {
+        function(networkOK,result) {
 
             if (
                 !networkOK ||
                 !result.ok
             ) {
 
-                showMessage(
-                    message,
-                    result.message ||
-                    "ไม่สามารถสมัครสมาชิกได้",
-                    true
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "สมัครสมาชิกไม่สำเร็จ"
                 );
 
                 return;
-
             }
-
-
-            pendingRegisterEmail =
-                email;
-
-
-            document.getElementById(
-                "otpCode"
-            ).value = "";
-
 
             closeAuth();
 
+            document
+                .getElementById(
+                    "otpOverlay"
+                )
+                .classList.add(
+                    "active"
+                );
 
             document
-                .getElementById("otpOverlay")
-                .classList.add("active");
+                .getElementById(
+                    "otpCode"
+                ).value = "";
 
+            alert(
+                result.message
+            );
         }
     );
-
 }
-
 
 function registerVerify() {
 
@@ -2829,105 +2150,69 @@ function registerVerify() {
             "otpCode"
         ).value.trim();
 
-
-    var message =
-        document.getElementById(
-            "otpMessage"
-        );
-
-
-    hideMessage(message);
-
-
-    if (!pendingRegisterEmail) {
-
-        showMessage(
-            message,
-            "ไม่พบข้อมูลการสมัครสมาชิก",
-            true
-        );
-
-        return;
-
-    }
-
-
     if (
         !/^[0-9]{6}$/.test(code)
     ) {
 
-        showMessage(
-            message,
-            "กรุณากรอกรหัส OTP 6 หลัก",
-            true
+        alert(
+            "กรุณากรอก OTP 6 หลัก"
         );
 
         return;
-
     }
-
 
     api(
         "register_verify",
         {
             email:
-                pendingRegisterEmail,
+                registerEmail,
 
             code:
                 code
         },
-
-        function(
-            networkOK,
-            result
-        ) {
+        function(networkOK,result) {
 
             if (
                 !networkOK ||
                 !result.ok
             ) {
 
-                showMessage(
-                    message,
-                    result.message ||
-                    "รหัส OTP ไม่ถูกต้อง",
-                    true
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "ยืนยัน OTP ไม่สำเร็จ"
                 );
 
                 return;
-
             }
 
-
             currentUser =
-                result.user ||
-                null;
-
-
-            pendingRegisterEmail =
-                "";
-
+                result.user || null;
 
             closeOtp();
 
             renderAccount();
 
-            openAccount();
+            updateHeaderAccount();
 
+            alert(
+                result.message
+            );
         }
     );
-
 }
-
 
 function closeOtp() {
 
     document
-        .getElementById("otpOverlay")
-        .classList.remove("active");
-
+        .getElementById(
+            "otpOverlay"
+        )
+        .classList.remove(
+            "active"
+        );
 }
-
 
 function login() {
 
@@ -2936,143 +2221,143 @@ function login() {
             "loginEmail"
         ).value.trim();
 
-
     var password =
         document.getElementById(
             "loginPassword"
         ).value;
 
-
-    var message =
-        document.getElementById(
-            "loginMessage"
-        );
-
-
-    hideMessage(message);
-
-
     if (!email || !password) {
 
-        showMessage(
-            message,
-            "กรุณากรอกอีเมลและรหัสผ่าน",
-            true
+        alert(
+            "กรุณากรอกอีเมลและรหัสผ่าน"
         );
 
         return;
-
     }
-
 
     api(
         "login",
         {
-            email:
-                email,
-
-            password:
-                password
+            email:email,
+            password:password
         },
-
-        function(
-            networkOK,
-            result
-        ) {
+        function(networkOK,result) {
 
             if (
                 !networkOK ||
                 !result.ok
             ) {
 
-                showMessage(
-                    message,
-                    result.message ||
-                    "เข้าสู่ระบบไม่สำเร็จ",
-                    true
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "เข้าสู่ระบบไม่สำเร็จ"
                 );
 
                 return;
-
             }
 
-
             currentUser =
-                result.user ||
-                null;
-
+                result.user || null;
 
             closeAuth();
 
+            updateHeaderAccount();
+
             renderAccount();
 
-            openAccount();
-
+            alert(
+                result.message
+            );
         }
     );
-
 }
-
 
 function logout() {
 
     api(
         "logout",
         {},
+        function(networkOK,result) {
 
-        function() {
+            currentUser = null;
 
-            currentUser =
-                null;
-
+            updateHeaderAccount();
 
             renderAccount();
 
-            showProducts();
+            if (
+                networkOK &&
+                result.ok
+            ) {
 
+                alert(
+                    result.message
+                );
+            }
         }
     );
-
 }
 
-
-function loadCurrentUser(callback) {
+function loadCurrentUser(
+    callback
+) {
 
     api(
         "me",
         {},
-
-        function(
-            networkOK,
-            result
-        ) {
+        function(networkOK,result) {
 
             if (
-                networkOK &&
-                result.ok &&
-                result.user
+                !networkOK ||
+                !result.ok
             ) {
-
-                currentUser =
-                    result.user;
-
-            } else {
 
                 currentUser =
                     null;
 
+                if (callback) {
+                    callback(null);
+                }
+
+                return;
             }
 
+            currentUser =
+                result.user || null;
 
             if (callback) {
-                callback();
+                callback(
+                    currentUser
+                );
             }
-
         }
     );
-
 }
 
+function updateHeaderAccount() {
+
+    var button =
+        document.getElementById(
+            "accountHeaderButton"
+        );
+
+    if (!button) {
+        return;
+    }
+
+    if (currentUser) {
+
+        button.textContent =
+            "บัญชี";
+
+    } else {
+
+        button.textContent =
+            "เข้าสู่ระบบ";
+    }
+}
 
 function renderAccount() {
 
@@ -3081,33 +2366,39 @@ function renderAccount() {
             "accountContent"
         );
 
+    if (!container) {
+        return;
+    }
 
     if (!currentUser) {
 
         container.innerHTML =
+            '<div class="card">' +
 
-            '<div class="profile-card">' +
+                '<div class="account-box">' +
 
-                '<div class="empty-icon">👤</div>' +
+                    '<div class="account-icon">' +
+                        '👤' +
+                    '</div>' +
 
-                '<h2>ยังไม่ได้เข้าสู่ระบบ</h2>' +
+                    '<div>' +
 
-                '<p style="color:#94A3B8;margin-top:7px;font-size:13px;">' +
-                    'เข้าสู่ระบบเพื่อสั่งซื้อสินค้าและใช้งานระบบเซลล์' +
-                '</p>' +
+                        '<div class="account-email">' +
+                            'ยังไม่ได้เข้าสู่ระบบ' +
+                        '</div>' +
 
-                '<div class="account-actions">' +
+                        '<div class="account-role">' +
+                            'เข้าสู่ระบบเพื่อใช้งานบัญชี' +
+                        '</div>' +
 
-                    '<button ' +
-                        'class="modal-button primary" ' +
-                        'onclick="openAuth();switchAuth(\'login\');">' +
+                    '</div>' +
+
+                '</div>' +
+
+                '<div style="margin-top:20px">' +
+
+                    '<button class="primary-btn" onclick="openAuth()">' +
                         'เข้าสู่ระบบ' +
-                    '</button>' +
-
-                    '<button ' +
-                        'class="modal-button secondary" ' +
-                        'onclick="openAuth();switchAuth(\'register\');">' +
-                        'สมัครสมาชิก' +
                     '</button>' +
 
                 '</div>' +
@@ -3115,661 +2406,113 @@ function renderAccount() {
             '</div>';
 
         return;
-
     }
 
+    var sellerHtml = "";
 
-    var sellerStatus =
-        Number(
-            currentUser.is_seller
-        ) === 1;
+    if (
+        Number(currentUser.is_seller) === 1
+    ) {
 
+        sellerHtml =
+            '<div class="card">' +
 
-    var html =
+                '<h2 style="margin-bottom:10px">' +
+                    'Seller' +
+                '</h2>' +
 
-        '<div class="profile-card">' +
+                '<p style="color:#64748b;margin-bottom:15px">' +
+                    'จัดการพื้นที่และรอบจัดส่ง' +
+                '</p>' +
 
-            '<div class="profile-email">' +
-                escapeHTML(
-                    currentUser.email
-                ) +
+                '<button class="primary-btn" onclick="openSellerPanel()">' +
+                    'จัดการ Seller' +
+                '</button>' +
+
+            '</div>';
+
+    } else {
+
+        sellerHtml =
+            '<div class="card">' +
+
+                '<h2 style="margin-bottom:10px">' +
+                    'เปิดใช้งาน Seller' +
+                '</h2>' +
+
+                '<p style="color:#64748b;margin-bottom:15px">' +
+                    'เปิดระบบ Seller เพื่อกำหนดพื้นที่และรอบส่ง' +
+                '</p>' +
+
+                '<button class="primary-btn" onclick="enableSeller()">' +
+                    'เปิด Seller' +
+                '</button>' +
+
+            '</div>';
+    }
+
+    container.innerHTML =
+
+        '<div class="card">' +
+
+            '<div class="account-box">' +
+
+                '<div class="account-icon">' +
+                    '👤' +
+                '</div>' +
+
+                '<div>' +
+
+                    '<div class="account-email">' +
+                        escapeHtml(
+                            currentUser.email
+                        ) +
+                    '</div>' +
+
+                    '<div class="account-role">' +
+                        (
+                            Number(currentUser.is_seller) === 1
+                                ? 'Seller'
+                                : 'Customer'
+                        ) +
+                    '</div>' +
+
+                '</div>' +
+
             '</div>' +
 
-            '<div class="status ' +
-                (
-                    sellerStatus
-                    ? "seller"
-                    : ""
-                ) +
-                '">' +
+            '<div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">' +
 
-                (
-                    sellerStatus
-                    ? "✓ เซลล์"
-                    : "สมาชิก"
-                ) +
-
-            '</div>' +
-
-            '<div class="account-actions">' +
-
-                (
-                    !sellerStatus ?
-
-                    '<button ' +
-                        'class="modal-button primary" ' +
-                        'onclick="enableSeller()">' +
-                        'เซลล์' +
-                    '</button>' :
-
-                    '<button ' +
-                        'class="modal-button primary" ' +
-                        'onclick="loadSellerPanel()">' +
-                        'จัดการพื้นที่เซลล์' +
-                    '</button>'
-                ) +
-
-                '<button ' +
-                    'class="modal-button secondary" ' +
-                    'onclick="loadOrders()">' +
+                '<button class="primary-btn" onclick="loadOrders()">' +
                     'คำสั่งซื้อของฉัน' +
                 '</button>' +
 
-            '</div>' +
-
-            '<div class="account-actions">' +
-
-                '<button ' +
-                    'class="modal-button secondary" ' +
-                    'onclick="logout()">' +
+                '<button class="secondary-btn" onclick="logout()">' +
                     'ออกจากระบบ' +
                 '</button>' +
 
             '</div>' +
 
-        '</div>';
+        '</div>' +
 
+        sellerHtml +
 
-    container.innerHTML =
-        html;
+        '<div id="ordersBox"></div>' +
 
+        '<div id="sellerBox"></div>';
 }
-
-
-function enableSeller() {
-
-    api(
-        "enable_seller",
-        {},
-
-        function(
-            networkOK,
-            result
-        ) {
-
-            if (
-                !networkOK ||
-                !result.ok
-            ) {
-
-                alert(
-                    result.message ||
-                    "ไม่สามารถเปิดใช้งานเซลล์ได้"
-                );
-
-                return;
-
-            }
-
-
-            currentUser.is_seller =
-                1;
-
-
-            renderAccount();
-
-
-            alert(
-                "เปิดใช้งานระบบเซลล์แล้ว"
-            );
-
-
-            loadSellerPanel();
-
-        }
-    );
-
-}
-
-
-function loadSellerPanel() {
-
-    if (
-        !currentUser ||
-        Number(
-            currentUser.is_seller
-        ) !== 1
-    ) {
-
-        return;
-
-    }
-
-
-    api(
-        "seller_areas",
-        {},
-
-        function(
-            networkOK,
-            result
-        ) {
-
-            if (
-                !networkOK ||
-                !result.ok
-            ) {
-
-                alert(
-                    result.message ||
-                    "ไม่สามารถโหลดพื้นที่เซลล์ได้"
-                );
-
-                return;
-
-            }
-
-
-            renderSellerPanel(
-                result.areas || []
-            );
-
-        }
-    );
-
-}
-
-
-function renderSellerPanel(areas) {
-
-    var container =
-        document.getElementById(
-            "accountContent"
-        );
-
-
-    var html =
-
-        '<div class="seller-card">' +
-
-            '<h2>ระบบเซลล์</h2>' +
-
-            '<div class="modal-subtitle">' +
-                'กำหนดพื้นที่ วัน และรอบที่คุณวิ่ง' +
-            '</div>' +
-
-            '<div class="form-group">' +
-
-                '<label>จังหวัด</label>' +
-
-                '<input ' +
-                    'id="sellerProvince" ' +
-                    'class="form-input" ' +
-                    'placeholder="จังหวัด">' +
-
-            '</div>' +
-
-            '<div class="form-group">' +
-
-                '<label>อำเภอ</label>' +
-
-                '<input ' +
-                    'id="sellerDistrict" ' +
-                    'class="form-input" ' +
-                    'placeholder="อำเภอ">' +
-
-            '</div>' +
-
-            '<div class="form-group">' +
-
-                '<label>ตำบล</label>' +
-
-                '<input ' +
-                    'id="sellerSubdistrict" ' +
-                    'class="form-input" ' +
-                    'placeholder="ตำบล">' +
-
-            '</div>' +
-
-            '<button ' +
-                'class="modal-button primary" ' +
-                'style="width:100%;margin-top:14px;" ' +
-                'onclick="saveSellerArea()">' +
-                'เพิ่มพื้นที่' +
-            '</button>' +
-
-        '</div>';
-
-
-    if (!areas.length) {
-
-        html +=
-
-            '<div class="seller-card">' +
-
-                '<div style="color:#94A3B8;font-size:13px;">' +
-                    'ยังไม่มีพื้นที่ที่ตั้งค่า' +
-                '</div>' +
-
-            '</div>';
-
-    }
-
-
-    for (
-        var i = 0;
-        i < areas.length;
-        i++
-    ) {
-
-        var area =
-            areas[i];
-
-
-        html +=
-
-            '<div class="seller-area">' +
-
-                '<div class="seller-area-title">' +
-
-                    escapeHTML(
-                        area.province
-                    ) +
-
-                    ' / ' +
-
-                    escapeHTML(
-                        area.district
-                    ) +
-
-                    ' / ' +
-
-                    escapeHTML(
-                        area.subdistrict
-                    ) +
-
-                '</div>' +
-
-                '<div class="route-row">' +
-
-                    '<select ' +
-                        'id="day_' +
-                        area.id +
-                        '" ' +
-                        'class="form-select">' +
-
-                        '<option value="1">จันทร์</option>' +
-                        '<option value="2">อังคาร</option>' +
-                        '<option value="3">พุธ</option>' +
-                        '<option value="4">พฤหัสบดี</option>' +
-                        '<option value="5">ศุกร์</option>' +
-                        '<option value="6">เสาร์</option>' +
-
-                    '</select>' +
-
-                    '<select ' +
-                        'id="round_' +
-                        area.id +
-                        '" ' +
-                        'class="form-select">' +
-
-                        '<option value="1">รอบ 1</option>' +
-                        '<option value="2">รอบ 2</option>' +
-                        '<option value="3">รอบ 3</option>' +
-                        '<option value="4">รอบ 4</option>' +
-                        '<option value="5">รอบ 5</option>' +
-
-                    '</select>' +
-
-                    '<button ' +
-                        'class="small-button" ' +
-                        'onclick="saveSellerRoute(' +
-                            area.id +
-                        ')">' +
-                        'เพิ่ม' +
-                    '</button>' +
-
-                '</div>';
-
-
-        html +=
-            '<div class="route-list">';
-
-
-        var routes =
-            area.routes || [];
-
-
-        for (
-            var r = 0;
-            r < routes.length;
-            r++
-        ) {
-
-            var route =
-                routes[r];
-
-
-            html +=
-
-                '<div class="route-chip">' +
-
-                    getDayName(
-                        route.day_of_week
-                    ) +
-
-                    ' · รอบ ' +
-
-                    route.round_no +
-
-                    ' ' +
-
-                    '<button ' +
-                        'class="danger-button" ' +
-                        'onclick="deleteSellerRoute(' +
-                            route.id +
-                        ')">' +
-                        'ลบ' +
-                    '</button>' +
-
-                '</div>';
-
-        }
-
-
-        html +=
-            '</div>';
-
-
-        html +=
-
-            '<button ' +
-                'class="danger-button" ' +
-                'style="margin-top:12px;" ' +
-                'onclick="deleteSellerArea(' +
-                    area.id +
-                ')">' +
-                'ลบพื้นที่นี้' +
-            '</button>';
-
-
-        html +=
-            '</div>';
-
-    }
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-function saveSellerArea() {
-
-    var province =
-        document.getElementById(
-            "sellerProvince"
-        ).value.trim();
-
-
-    var district =
-        document.getElementById(
-            "sellerDistrict"
-        ).value.trim();
-
-
-    var subdistrict =
-        document.getElementById(
-            "sellerSubdistrict"
-        ).value.trim();
-
-
-    if (
-        !province ||
-        !district ||
-        !subdistrict
-    ) {
-
-        alert(
-            "กรุณากรอก จังหวัด อำเภอ และตำบล"
-        );
-
-        return;
-
-    }
-
-
-    api(
-        "seller_area_save",
-        {
-            province:
-                province,
-
-            district:
-                district,
-
-            subdistrict:
-                subdistrict
-        },
-
-        function(
-            networkOK,
-            result
-        ) {
-
-            if (
-                !networkOK ||
-                !result.ok
-            ) {
-
-                alert(
-                    result.message ||
-                    "ไม่สามารถเพิ่มพื้นที่ได้"
-                );
-
-                return;
-
-            }
-
-
-            loadSellerPanel();
-
-        }
-    );
-
-}
-
-
-function deleteSellerArea(id) {
-
-    if (
-        !confirm(
-            "ต้องการลบพื้นที่นี้หรือไม่"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    api(
-        "seller_area_delete",
-        {
-            id:
-                id
-        },
-
-        function(
-            networkOK,
-            result
-        ) {
-
-            if (
-                !networkOK ||
-                !result.ok
-            ) {
-
-                alert(
-                    result.message ||
-                    "ไม่สามารถลบพื้นที่ได้"
-                );
-
-                return;
-
-            }
-
-
-            loadSellerPanel();
-
-        }
-    );
-
-}
-
-
-/*
-====================================================
-SELLER ROUTE
-====================================================
-
-จุดที่แก้:
-
-เดิม:
-seller_area_id: areaId
-
-เปลี่ยนเป็น:
-area_id: areaId
-
-เพราะ api.php รับค่า:
-$data['area_id']
-====================================================
-*/
-
-function saveSellerRoute(areaId) {
-
-    var day =
-        document.getElementById(
-            "day_" + areaId
-        ).value;
-
-
-    var round =
-        document.getElementById(
-            "round_" + areaId
-        ).value;
-
-
-    api(
-        "seller_route_save",
-        {
-            area_id:
-                Number(areaId),
-
-            day_of_week:
-                Number(day),
-
-            round_no:
-                Number(round)
-        },
-
-        function(
-            networkOK,
-            result
-        ) {
-
-            if (
-                !networkOK ||
-                !result.ok
-            ) {
-
-                alert(
-                    result.message ||
-                    "ไม่สามารถเพิ่มรอบได้"
-                );
-
-                return;
-
-            }
-
-
-            loadSellerPanel();
-
-        }
-    );
-
-}
-
-
-function deleteSellerRoute(id) {
-
-    if (
-        !confirm(
-            "ต้องการลบรอบนี้หรือไม่"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    api(
-        "seller_route_delete",
-        {
-            id:
-                id
-        },
-
-        function(
-            networkOK,
-            result
-        ) {
-
-            if (
-                !networkOK ||
-                !result.ok
-            ) {
-
-                alert(
-                    result.message ||
-                    "ไม่สามารถลบรอบได้"
-                );
-
-                return;
-
-            }
-
-
-            loadSellerPanel();
-
-        }
-    );
-
-}
-
 
 function loadOrders() {
+
+    if (!currentUser) {
+        openAuth();
+        return;
+    }
 
     api(
         "my_orders",
         {},
-
-        function(
-            networkOK,
-            result
-        ) {
+        function(networkOK,result) {
 
             if (
                 !networkOK ||
@@ -3777,67 +2520,53 @@ function loadOrders() {
             ) {
 
                 alert(
-                    result.message ||
-                    "ไม่สามารถโหลดคำสั่งซื้อได้"
+                    result &&
+                    result.message
+                        ? result.message
+                        : "โหลดคำสั่งซื้อไม่สำเร็จ"
                 );
 
                 return;
-
             }
-
 
             renderOrders(
                 result.orders || []
             );
-
         }
     );
-
 }
 
+function renderOrders(
+    orders
+) {
 
-function renderOrders(orders) {
-
-    var container =
+    var box =
         document.getElementById(
-            "accountContent"
+            "ordersBox"
         );
 
-
-    var html =
-
-        '<div class="seller-card">' +
-
-            '<h2>คำสั่งซื้อของฉัน</h2>' +
-
-            '<div class="modal-subtitle">' +
-                'รายการสั่งซื้อทั้งหมด' +
-            '</div>' +
-
-        '</div>';
-
-
-    if (!orders.length) {
-
-        html +=
-
-            '<div class="order-card">' +
-
-                '<div style="color:#94A3B8;font-size:13px;">' +
-                    'ยังไม่มีคำสั่งซื้อ' +
-                '</div>' +
-
-            '</div>';
-
-
-        container.innerHTML =
-            html;
-
-
+    if (!box) {
         return;
-
     }
 
+    if (
+        !orders ||
+        orders.length === 0
+    ) {
+
+        box.innerHTML =
+            '<div class="card empty">' +
+            'ยังไม่มีคำสั่งซื้อ' +
+            '</div>';
+
+        return;
+    }
+
+    var html =
+        '<div class="card">' +
+        '<h2 style="margin-bottom:15px">' +
+        'คำสั่งซื้อของฉัน' +
+        '</h2>';
 
     for (
         var i = 0;
@@ -3848,363 +2577,851 @@ function renderOrders(orders) {
         var order =
             orders[i];
 
-
         html +=
+            '<div class="order">' +
 
-            '<div class="order-card">' +
+                '<div class="order-head">' +
 
-                '<div class="order-number">' +
-                    '#' +
-                    escapeHTML(
-                        order.order_no
-                    ) +
+                    '<div class="order-number">' +
+                        '#' +
+                        escapeHtml(
+                            order.order_no
+                        ) +
+                    '</div>' +
+
+                    '<div class="status">' +
+                        escapeHtml(
+                            order.status
+                        ) +
+                    '</div>' +
+
                 '</div>' +
 
-                '<div class="order-status">' +
-                    escapeHTML(
-                        order.status ||
-                        "pending"
-                    ) +
-                '</div>' +
-
-                '<div class="order-info">' +
-
-                    'ยอดรวม: ' +
-                    formatPrice(
-                        order.total
-                    ) +
-                    ' ฿<br>' +
-
-                    'พื้นที่: ' +
-                    escapeHTML(
-                        order.province
-                    ) +
-                    ' / ' +
-                    escapeHTML(
-                        order.district
-                    ) +
-                    ' / ' +
-                    escapeHTML(
-                        order.subdistrict
-                    ) +
-                    '<br>' +
-
-                    'วันที่รับ: ' +
-                    escapeHTML(
+                '<div class="order-row">' +
+                    'จัดส่ง: ' +
+                    escapeHtml(
                         order.delivery_date
                     ) +
-                    '<br>' +
+                '</div>' +
 
+                '<div class="order-row">' +
                     'รอบ: ' +
-                    escapeHTML(
+                    Number(
                         order.round_no
                     ) +
+                '</div>' +
 
+                '<div class="order-row">' +
+                    'พื้นที่: ' +
+                    escapeHtml(
+                        order.province
+                    ) +
+                    ' ' +
+                    escapeHtml(
+                        order.district
+                    ) +
+                    ' ' +
+                    escapeHtml(
+                        order.subdistrict
+                    ) +
+                '</div>' +
+
+                '<div class="order-items">';
+
+        var items =
+            order.items || [];
+
+        for (
+            var j = 0;
+            j < items.length;
+            j++
+        ) {
+
+            html +=
+                '<div class="order-item">' +
+
+                    '<span>' +
+                        escapeHtml(
+                            items[j].name
+                        ) +
+                        ' x ' +
+                        Number(
+                            items[j].quantity
+                        ) +
+                    '</span>' +
+
+                    '<strong>' +
+                        Number(
+                            items[j].total
+                        ).toFixed(2) +
+                        ' ฿' +
+                    '</strong>' +
+
+                '</div>';
+        }
+
+        html +=
+                '</div>' +
+
+                '<div class="order-total">' +
+                    Number(
+                        order.total_amount
+                    ).toFixed(2) +
+                    ' บาท' +
                 '</div>' +
 
             '</div>';
-
     }
 
+    html +=
+        '</div>';
 
-    container.innerHTML =
+    box.innerHTML =
         html;
-
 }
 
+function enableSeller() {
 
-function getDayName(day) {
+    if (!currentUser) {
+        openAuth();
+        return;
+    }
 
-    var days = {
+    api(
+        "enable_seller",
+        {},
+        function(networkOK,result) {
 
-        1:
-            "จันทร์",
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
-        2:
-            "อังคาร",
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "เปิด Seller ไม่สำเร็จ"
+                );
 
-        3:
-            "พุธ",
+                return;
+            }
 
-        4:
-            "พฤหัสบดี",
+            currentUser =
+                result.user ||
+                currentUser;
 
-        5:
-            "ศุกร์",
+            renderAccount();
 
-        6:
-            "เสาร์"
+            alert(
+                result.message
+            );
 
-    };
-
-
-    return (
-        days[
-            Number(day)
-        ] ||
-        ""
+            openSellerPanel();
+        }
     );
-
 }
 
+function openSellerPanel() {
 
-function showMessage(
-    element,
-    text,
-    error
+    if (!currentUser) {
+        openAuth();
+        return;
+    }
+
+    if (
+        Number(currentUser.is_seller) !== 1
+    ) {
+
+        alert(
+            "บัญชีนี้ยังไม่ได้เปิด Seller"
+        );
+
+        return;
+    }
+
+    var box =
+        document.getElementById(
+            "sellerBox"
+        );
+
+    if (!box) {
+        renderAccount();
+
+        box =
+            document.getElementById(
+                "sellerBox"
+            );
+    }
+
+    loadSellerPanel();
+}
+
+function loadSellerPanel() {
+
+    if (!currentUser) {
+        return;
+    }
+
+    api(
+        "seller_areas",
+        {},
+        function(networkOK,result) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
+
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "โหลดพื้นที่ไม่สำเร็จ"
+                );
+
+                return;
+            }
+
+            var areas =
+                result.areas || [];
+
+            api(
+                "seller_routes",
+                {},
+                function(
+                    routeNetworkOK,
+                    routeResult
+                ) {
+
+                    var routes =
+                        routeNetworkOK &&
+                        routeResult.ok
+                            ? (
+                                routeResult.routes ||
+                                []
+                            )
+                            : [];
+
+                    renderSellerPanel(
+                        areas,
+                        routes
+                    );
+                }
+            );
+        }
+    );
+}
+
+function renderSellerPanel(
+    areas,
+    routes
 ) {
 
-    element.innerText =
-        text;
-
-
-    element.classList.add(
-        "show"
-    );
-
-
-    if (error) {
-
-        element.classList.add(
-            "error"
+    var box =
+        document.getElementById(
+            "sellerBox"
         );
+
+    if (!box) {
+        return;
+    }
+
+    var areaOptions =
+        '<option value="">เลือกพื้นที่</option>';
+
+    for (
+        var i = 0;
+        i < areas.length;
+        i++
+    ) {
+
+        areaOptions +=
+            '<option value="' +
+            Number(areas[i].id) +
+            '">' +
+            escapeHtml(
+                areas[i].province +
+                ' / ' +
+                areas[i].district +
+                ' / ' +
+                areas[i].subdistrict
+            ) +
+            '</option>';
+    }
+
+    var html =
+
+        '<div class="card">' +
+
+            '<h2>' +
+                'Seller' +
+            '</h2>' +
+
+            '<div class="seller-section">' +
+
+                '<h3>' +
+                    'เพิ่มพื้นที่' +
+                '</h3>' +
+
+                '<div style="margin-top:12px">' +
+
+                    '<div class="form-group">' +
+
+                        '<label class="form-label">' +
+                            'จังหวัด' +
+                        '</label>' +
+
+                        '<input id="sellerProvince" class="form-input">' +
+
+                    '</div>' +
+
+                    '<div class="form-group">' +
+
+                        '<label class="form-label">' +
+                            'อำเภอ' +
+                        '</label>' +
+
+                        '<input id="sellerDistrict" class="form-input">' +
+
+                    '</div>' +
+
+                    '<div class="form-group">' +
+
+                        '<label class="form-label">' +
+                            'ตำบล' +
+                        '</label>' +
+
+                        '<input id="sellerSubdistrict" class="form-input">' +
+
+                    '</div>' +
+
+                    '<button class="primary-btn" onclick="saveSellerArea()">' +
+                        'เพิ่มพื้นที่' +
+                    '</button>' +
+
+                '</div>' +
+
+            '</div>' +
+
+            '<div class="seller-section">' +
+
+                '<h3>' +
+                    'พื้นที่ของฉัน' +
+                '</h3>' +
+
+                '<div>';
+
+    if (areas.length === 0) {
+
+        html +=
+            '<div style="color:#64748b;margin-top:10px">' +
+                'ยังไม่มีพื้นที่' +
+            '</div>';
 
     } else {
 
-        element.classList.remove(
-            "error"
-        );
+        for (
+            var j = 0;
+            j < areas.length;
+            j++
+        ) {
 
+            html +=
+                '<div class="seller-area">' +
+
+                    '<div class="seller-area-head">' +
+
+                        '<div>' +
+
+                            '<strong>' +
+                                escapeHtml(
+                                    areas[j].province
+                                ) +
+                            '</strong>' +
+
+                            '<div style="color:#64748b;font-size:13px;margin-top:4px">' +
+                                escapeHtml(
+                                    areas[j].district
+                                ) +
+                                ' / ' +
+                                escapeHtml(
+                                    areas[j].subdistrict
+                                ) +
+                            '</div>' +
+
+                        '</div>' +
+
+                        '<button class="danger-btn" onclick="deleteSellerArea(' +
+                            Number(areas[j].id) +
+                        ')">' +
+                            'ลบ' +
+                        '</button>' +
+
+                    '</div>' +
+
+                '</div>';
+        }
     }
 
+    html +=
+                '</div>' +
+            '</div>' +
+
+            '<div class="seller-section">' +
+
+                '<h3>' +
+                    'เพิ่มรอบส่ง' +
+                '</h3>' +
+
+                '<div style="margin-top:12px">' +
+
+                    '<div class="form-group">' +
+
+                        '<label class="form-label">' +
+                            'พื้นที่' +
+                        '</label>' +
+
+                        '<select id="sellerAreaId" class="form-select">' +
+                            areaOptions +
+                        '</select>' +
+
+                    '</div>' +
+
+                    '<div class="form-group">' +
+
+                        '<label class="form-label">' +
+                            'วัน' +
+                        '</label>' +
+
+                        '<select id="sellerDay" class="form-select">' +
+
+                            '<option value="1">จันทร์</option>' +
+                            '<option value="2">อังคาร</option>' +
+                            '<option value="3">พุธ</option>' +
+                            '<option value="4">พฤหัสบดี</option>' +
+                            '<option value="5">ศุกร์</option>' +
+                            '<option value="6">เสาร์</option>' +
+
+                        '</select>' +
+
+                    '</div>' +
+
+                    '<div class="form-group">' +
+
+                        '<label class="form-label">' +
+                            'รอบ' +
+                        '</label>' +
+
+                        '<select id="sellerRound" class="form-select">' +
+
+                            '<option value="1">รอบ 1</option>' +
+                            '<option value="2">รอบ 2</option>' +
+                            '<option value="3">รอบ 3</option>' +
+                            '<option value="4">รอบ 4</option>' +
+                            '<option value="5">รอบ 5</option>' +
+
+                        '</select>' +
+
+                    '</div>' +
+
+                    '<button class="primary-btn" onclick="saveSellerRoute()">' +
+                        'เพิ่มรอบ' +
+                    '</button>' +
+
+                '</div>' +
+
+            '</div>' +
+
+            '<div class="seller-section">' +
+
+                '<h3>' +
+                    'รอบส่งของฉัน' +
+                '</h3>';
+
+    if (
+        !routes ||
+        routes.length === 0
+    ) {
+
+        html +=
+            '<div style="color:#64748b;margin-top:10px">' +
+                'ยังไม่มีรอบส่ง' +
+            '</div>';
+
+    } else {
+
+        html +=
+            '<div class="route-list">';
+
+        for (
+            var r = 0;
+            r < routes.length;
+            r++
+        ) {
+
+            html +=
+                '<div class="route-item">' +
+
+                    '<div>' +
+
+                        '<strong>' +
+                            escapeHtml(
+                                routes[r].province
+                            ) +
+                        '</strong>' +
+
+                        '<div style="font-size:13px;color:#64748b">' +
+                            escapeHtml(
+                                routes[r].district
+                            ) +
+                            ' / ' +
+                            escapeHtml(
+                                routes[r].subdistrict
+                            ) +
+                            ' · ' +
+                            dayName(
+                                routes[r].day_of_week
+                            ) +
+                            ' · รอบ ' +
+                            Number(
+                                routes[r].round_no
+                            ) +
+                        '</div>' +
+
+                    '</div>' +
+
+                    '<button class="danger-btn" onclick="deleteSellerRoute(' +
+                        Number(routes[r].id) +
+                    ')">' +
+                        'ลบ' +
+                    '</button>' +
+
+                '</div>';
+        }
+
+        html +=
+            '</div>';
+    }
+
+    html +=
+            '</div>' +
+
+        '</div>';
+
+    box.innerHTML =
+        html;
 }
 
+function saveSellerArea() {
 
-function hideMessage(element) {
+    var province =
+        document.getElementById(
+            "sellerProvince"
+        ).value.trim();
 
-    element.innerText =
-        "";
+    var district =
+        document.getElementById(
+            "sellerDistrict"
+        ).value.trim();
 
+    var subdistrict =
+        document.getElementById(
+            "sellerSubdistrict"
+        ).value.trim();
 
-    element.classList.remove(
-        "show"
-    );
+    if (
+        !province ||
+        !district ||
+        !subdistrict
+    ) {
 
-
-    element.classList.remove(
-        "error"
-    );
-
-}
-
-
-function escapeHTML(value) {
-
-    value =
-        String(
-            value === undefined ||
-            value === null
-                ? ""
-                : value
+        alert(
+            "กรุณากรอกพื้นที่ให้ครบ"
         );
 
+        return;
+    }
 
-    return value
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-function formatPrice(price) {
-
-    return Number(
-        price
-    ).toLocaleString(
-        "th-TH",
+    api(
+        "seller_area_save",
         {
-            minimumFractionDigits:
-                0,
+            province:province,
+            district:district,
+            subdistrict:subdistrict
+        },
+        function(networkOK,result) {
 
-            maximumFractionDigits:
-                2
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
+
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "เพิ่มพื้นที่ไม่สำเร็จ"
+                );
+
+                return;
+            }
+
+            loadSellerPanel();
+
+            alert(
+                result.message
+            );
         }
     );
-
 }
 
+function deleteSellerArea(
+    areaId
+) {
+
+    api(
+        "seller_area_delete",
+        {
+            area_id:
+                Number(areaId)
+        },
+        function(networkOK,result) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
+
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "ลบพื้นที่ไม่สำเร็จ"
+                );
+
+                return;
+            }
+
+            loadSellerPanel();
+
+            alert(
+                result.message
+            );
+        }
+    );
+}
+
+function saveSellerRoute() {
+
+    var areaId =
+        Number(
+            document.getElementById(
+                "sellerAreaId"
+            ).value
+        );
+
+    var dayOfWeek =
+        Number(
+            document.getElementById(
+                "sellerDay"
+            ).value
+        );
+
+    var roundNo =
+        Number(
+            document.getElementById(
+                "sellerRound"
+            ).value
+        );
+
+    if (!areaId) {
+
+        alert(
+            "กรุณาเลือกพื้นที่"
+        );
+
+        return;
+    }
+
+    api(
+        "seller_route_save",
+        {
+            area_id:
+                areaId,
+
+            day_of_week:
+                dayOfWeek,
+
+            round_no:
+                roundNo
+        },
+        function(networkOK,result) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
+
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "เพิ่มรอบไม่สำเร็จ"
+                );
+
+                return;
+            }
+
+            loadSellerPanel();
+
+            alert(
+                result.message
+            );
+        }
+    );
+}
+
+function deleteSellerRoute(
+    routeId
+) {
+
+    api(
+        "seller_route_delete",
+        {
+            route_id:
+                Number(routeId)
+        },
+        function(networkOK,result) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
+
+                alert(
+                    result &&
+                    result.message
+                        ? result.message
+                        : "ลบรอบไม่สำเร็จ"
+                );
+
+                return;
+            }
+
+            loadSellerPanel();
+
+            alert(
+                result.message
+            );
+        }
+    );
+}
+
+function dayName(day) {
+
+    var names = {
+        1:"จันทร์",
+        2:"อังคาร",
+        3:"พุธ",
+        4:"พฤหัสบดี",
+        5:"ศุกร์",
+        6:"เสาร์",
+        7:"อาทิตย์"
+    };
+
+    return names[
+        Number(day)
+    ] || "";
+}
 
 function setTodayMinDate() {
 
-    var input =
+    var element =
         document.getElementById(
             "deliveryDate"
         );
 
-
-    if (!input) {
+    if (!element) {
         return;
     }
-
 
     var now =
         new Date();
 
-
     var year =
         now.getFullYear();
-
 
     var month =
         String(
             now.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
+        ).padStart(2,"0");
 
     var day =
         String(
             now.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
+        ).padStart(2,"0");
 
-
-    input.min =
+    element.min =
         year +
         "-" +
         month +
         "-" +
         day;
-
 }
 
-
-document.getElementById(
-    "deliveryDate"
-).addEventListener(
-    "change",
+document.addEventListener(
+    "DOMContentLoaded",
     function() {
 
-        if (!this.value) {
-            return;
-        }
+        loadProducts();
 
+        loadCurrentUser(
+            function(user) {
 
-        var date =
-            new Date(
-                this.value +
-                "T00:00:00"
+                currentUser =
+                    user;
+
+                updateHeaderAccount();
+
+                renderAccount();
+            }
+        );
+
+        updateCartCount();
+
+        setTodayMinDate();
+
+        document
+            .getElementById(
+                "deliveryDate"
+            )
+            .addEventListener(
+                "change",
+                function() {
+
+                    if (!this.value) {
+                        return;
+                    }
+
+                    var date =
+                        new Date(
+                            this.value +
+                            "T00:00:00"
+                        );
+
+                    if (
+                        date.getDay() === 0
+                    ) {
+
+                        alert(
+                            "ไม่สามารถเลือกวันอาทิตย์ได้"
+                        );
+
+                        this.value = "";
+                    }
+                }
             );
-
-
-        var day =
-            date.getDay();
-
-
-        if (day === 0) {
-
-            alert(
-                "วันอาทิตย์เป็นวันหยุดของเซลล์ กรุณาเลือกวันจันทร์ถึงวันเสาร์"
-            );
-
-
-            this.value =
-                "";
-
-        }
-
-    }
-);
-
-
-document.getElementById(
-    "authOverlay"
-).addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target === this
-        ) {
-
-            closeAuth();
-
-        }
-
-    }
-);
-
-
-document.getElementById(
-    "otpOverlay"
-).addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target === this
-        ) {
-
-            closeOtp();
-
-        }
-
-    }
-);
-
-
-document.getElementById(
-    "checkoutOverlay"
-).addEventListener(
-    "click",
-    function(event) {
-
-        if (
-            event.target === this
-        ) {
-
-            closeCheckout();
-
-        }
-
-    }
-);
-
-
-renderProducts();
-
-updateCartCount();
-
-setTodayMinDate();
-
-
-loadCurrentUser(
-    function() {
-
-        renderAccount();
-
     }
 );
 
