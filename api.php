@@ -12,21 +12,16 @@ function random_otp() {
 }
 
 function valid_email($email) {
-    return filter_var(
-        $email,
-        FILTER_VALIDATE_EMAIL
-    ) !== false;
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
 function order_no() {
-    return 'BT'
-        . date('ymdHis')
-        . str_pad(
-            (string)random_int(0, 999),
-            3,
-            '0',
-            STR_PAD_LEFT
-        );
+    return 'BT' . date('ymdHis') . str_pad(
+        (string)random_int(0, 999),
+        3,
+        '0',
+        STR_PAD_LEFT
+    );
 }
 
 function send_otp($email, $purpose) {
@@ -56,8 +51,8 @@ function send_otp($email, $purpose) {
 
     $stmt = $pdo->prepare(
         'INSERT INTO otp_codes
-        (email,code_hash,purpose,expires_at,attempts)
-        VALUES(?,?,?,?,0)'
+         (email,code_hash,purpose,expires_at,attempts)
+         VALUES(?,?,?,?,0)'
     );
 
     $stmt->execute(array(
@@ -112,10 +107,7 @@ function verify_otp($email, $code, $purpose) {
         return false;
     }
 
-    if (!password_verify(
-        $code,
-        $otp['code_hash']
-    )) {
+    if (!password_verify($code, $otp['code_hash'])) {
         $stmt = $pdo->prepare(
             'UPDATE otp_codes
              SET attempts=attempts+1
@@ -147,8 +139,14 @@ $action = isset($data['action'])
     ? clean($data['action'])
     : '';
 
-if ($action === 'register_request') {
+if ($action === '') {
+    json_response(array(
+        'ok' => false,
+        'message' => 'ไม่พบ action'
+    ), 400);
+}
 
+if ($action === 'register_request') {
     $email = strtolower(
         clean(isset($data['email']) ? $data['email'] : '')
     );
@@ -216,7 +214,6 @@ if ($action === 'register_request') {
 }
 
 if ($action === 'register_verify') {
-
     $email = strtolower(
         clean(isset($data['email']) ? $data['email'] : '')
     );
@@ -247,24 +244,18 @@ if ($action === 'register_verify') {
     ) {
         json_response(array(
             'ok' => false,
-            'message' => 'เซสชันสมัครสมาชิกหมดอายุ'
-        ), 400);
+            'message' => 'ข้อมูลการสมัครไม่ตรงกัน'
+        ), 422);
     }
 
-    if (
-        empty($_SESSION['register_password_hash'])
-    ) {
+    if (empty($_SESSION['register_password_hash'])) {
         json_response(array(
             'ok' => false,
-            'message' => 'ไม่พบข้อมูลการสมัครสมาชิก'
-        ), 400);
+            'message' => 'เซสชันสมัครสมาชิกหมดอายุ กรุณาสมัครใหม่'
+        ), 422);
     }
 
-    if (!verify_otp(
-        $email,
-        $code,
-        'register'
-    )) {
+    if (!verify_otp($email, $code, 'register')) {
         json_response(array(
             'ok' => false,
             'message' => 'OTP ไม่ถูกต้องหรือหมดอายุ'
@@ -273,39 +264,36 @@ if ($action === 'register_verify') {
 
     $pdo = db();
 
-    $stmt = $pdo->prepare(
-        'SELECT id
-         FROM users
-         WHERE email=?
-         LIMIT 1'
-    );
+    try {
+        $pdo->beginTransaction();
 
-    $stmt->execute(array($email));
+        $stmt = $pdo->prepare(
+            'INSERT INTO users
+             (email,password_hash,is_seller)
+             VALUES(?,?,0)'
+        );
 
-    if ($stmt->fetch()) {
+        $stmt->execute(array(
+            $email,
+            $_SESSION['register_password_hash']
+        ));
+
+        $userId = (int)$pdo->lastInsertId();
+
+        $pdo->commit();
+    } catch (Exception $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+
         json_response(array(
             'ok' => false,
-            'message' => 'อีเมลนี้มีบัญชีอยู่แล้ว'
-        ), 409);
+            'message' => 'ไม่สามารถสร้างบัญชีได้'
+        ), 500);
     }
 
-    $stmt = $pdo->prepare(
-        'INSERT INTO users
-        (email,password_hash,is_seller)
-        VALUES(?,?,0)'
-    );
-
-    $stmt->execute(array(
-        $email,
-        $_SESSION['register_password_hash']
-    ));
-
-    $userId = (int)$pdo->lastInsertId();
-
-    unset(
-        $_SESSION['register_email'],
-        $_SESSION['register_password_hash']
-    );
+    unset($_SESSION['register_email']);
+    unset($_SESSION['register_password_hash']);
 
     $_SESSION['user_id'] = $userId;
 
@@ -317,7 +305,6 @@ if ($action === 'register_verify') {
 }
 
 if ($action === 'login') {
-
     $email = strtolower(
         clean(isset($data['email']) ? $data['email'] : '')
     );
@@ -360,10 +347,7 @@ if ($action === 'login') {
         ), 401);
     }
 
-    if (!password_verify(
-        $password,
-        $user['password_hash']
-    )) {
+    if (!password_verify($password, $user['password_hash'])) {
         json_response(array(
             'ok' => false,
             'message' => 'อีเมลหรือรหัสผ่านไม่ถูกต้อง'
@@ -380,10 +364,11 @@ if ($action === 'login') {
 }
 
 if ($action === 'logout') {
-
     $_SESSION = array();
 
-    session_destroy();
+    if (session_id() !== '') {
+        session_destroy();
+    }
 
     json_response(array(
         'ok' => true,
@@ -392,15 +377,22 @@ if ($action === 'logout') {
 }
 
 if ($action === 'me') {
+    $user = current_user();
+
+    if (!$user) {
+        json_response(array(
+            'ok' => false,
+            'message' => 'ยังไม่ได้เข้าสู่ระบบ'
+        ), 401);
+    }
 
     json_response(array(
         'ok' => true,
-        'user' => current_user()
+        'user' => $user
     ));
 }
 
 if ($action === 'enable_seller') {
-
     $user = require_user();
 
     $pdo = db();
@@ -423,18 +415,12 @@ if ($action === 'enable_seller') {
 }
 
 if ($action === 'seller_areas') {
-
     $user = require_seller();
 
     $pdo = db();
 
     $stmt = $pdo->prepare(
-        'SELECT
-            id,
-            province,
-            district,
-            subdistrict,
-            created_at
+        'SELECT id,province,district,subdistrict,created_at
          FROM seller_areas
          WHERE user_id=?
          ORDER BY id DESC'
@@ -457,7 +443,6 @@ if ($action === 'seller_areas') {
 }
 
 if ($action === 'seller_routes') {
-
     $user = require_seller();
 
     $pdo = db();
@@ -473,7 +458,7 @@ if ($action === 'seller_routes') {
             sa.subdistrict
          FROM seller_routes sr
          INNER JOIN seller_areas sa
-         ON sa.id=sr.area_id
+            ON sa.id=sr.area_id
          WHERE sa.user_id=?
          ORDER BY sr.day_of_week ASC,
                   sr.round_no ASC,
@@ -500,7 +485,6 @@ if ($action === 'seller_routes') {
 }
 
 if ($action === 'seller_area_save') {
-
     $user = require_seller();
 
     $province = clean(
@@ -560,8 +544,8 @@ if ($action === 'seller_area_save') {
 
     $stmt = $pdo->prepare(
         'INSERT INTO seller_areas
-        (user_id,province,district,subdistrict)
-        VALUES(?,?,?,?)'
+         (user_id,province,district,subdistrict)
+         VALUES(?,?,?,?)'
     );
 
     $stmt->execute(array(
@@ -578,7 +562,6 @@ if ($action === 'seller_area_save') {
 }
 
 if ($action === 'seller_area_delete') {
-
     $user = require_seller();
 
     $areaId = (int)(
@@ -613,7 +596,6 @@ if ($action === 'seller_area_delete') {
 }
 
 if ($action === 'seller_route_save') {
-
     $user = require_seller();
 
     $areaId = (int)(
@@ -643,7 +625,7 @@ if ($action === 'seller_route_save') {
     ) {
         json_response(array(
             'ok' => false,
-            'message' => 'ข้อมูลเส้นทางไม่ถูกต้อง'
+            'message' => 'ข้อมูลรอบส่งไม่ถูกต้อง'
         ), 422);
     }
 
@@ -692,8 +674,8 @@ if ($action === 'seller_route_save') {
 
     $stmt = $pdo->prepare(
         'INSERT INTO seller_routes
-        (area_id,day_of_week,round_no)
-        VALUES(?,?,?)'
+         (area_id,day_of_week,round_no)
+         VALUES(?,?,?)'
     );
 
     $stmt->execute(array(
@@ -709,7 +691,6 @@ if ($action === 'seller_route_save') {
 }
 
 if ($action === 'seller_route_delete') {
-
     $user = require_seller();
 
     $routeId = (int)(
@@ -724,7 +705,7 @@ if ($action === 'seller_route_delete') {
         'DELETE sr
          FROM seller_routes sr
          INNER JOIN seller_areas sa
-         ON sa.id=sr.area_id
+            ON sa.id=sr.area_id
          WHERE sr.id=?
          AND sa.user_id=?'
     );
@@ -748,7 +729,6 @@ if ($action === 'seller_route_delete') {
 }
 
 if ($action === 'products') {
-
     $pdo = db();
 
     $stmt = $pdo->query(
@@ -778,7 +758,6 @@ if ($action === 'products') {
 }
 
 if ($action === 'create_order') {
-
     $user = require_user();
 
     $customerName = clean(
@@ -927,7 +906,6 @@ if ($action === 'create_order') {
     $quantities = array();
 
     foreach ($items as $item) {
-
         if (!is_array($item)) {
             continue;
         }
@@ -960,6 +938,13 @@ if ($action === 'create_order') {
         }
 
         $quantities[$productId] += $quantity;
+
+        if ($quantities[$productId] > 999) {
+            json_response(array(
+                'ok' => false,
+                'message' => 'จำนวนสินค้ามากเกินไป'
+            ), 422);
+        }
     }
 
     $ids = array_keys($quantities);
@@ -993,54 +978,54 @@ if ($action === 'create_order') {
 
     $rows = $stmt->fetchAll();
 
-    $products = array();
+    $productMap = array();
 
     foreach ($rows as $row) {
-        $products[(int)$row['id']] = $row;
+        $productMap[(int)$row['id']] = $row;
     }
 
-    if (count($products) !== count($quantities)) {
+    if (count($productMap) !== count($ids)) {
         json_response(array(
             'ok' => false,
-            'message' => 'มีสินค้าบางรายการไม่พร้อมจำหน่าย'
+            'message' => 'มีสินค้าที่ไม่พร้อมจำหน่าย'
         ), 422);
     }
 
     $serverItems = array();
-    $total = 0;
+    $serverTotal = 0;
 
     foreach ($quantities as $productId => $quantity) {
-
-        $product = $products[$productId];
+        $product = $productMap[(int)$productId];
 
         $price = (float)$product['price'];
+        $lineTotal = $price * (int)$quantity;
 
-        $lineTotal =
-            $price * $quantity;
-
-        $total += $lineTotal;
+        $serverTotal += $lineTotal;
 
         $serverItems[] = array(
-            'product_id' => (int)$productId,
+            'product_id' => (int)$product['id'],
             'name' => $product['name'],
-            'quantity' => (int)$quantity,
             'price' => $price,
+            'quantity' => (int)$quantity,
             'total' => $lineTotal
         );
     }
 
     $stmt = $pdo->prepare(
-        'SELECT
-            sa.user_id AS seller_id
-         FROM seller_areas sa
+        'SELECT DISTINCT
+            u.id,
+            u.email
+         FROM users u
+         INNER JOIN seller_areas sa
+            ON sa.user_id=u.id
          INNER JOIN seller_routes sr
-         ON sr.area_id=sa.id
-         WHERE sa.province=?
+            ON sr.area_id=sa.id
+         WHERE u.is_seller=1
+         AND sa.province=?
          AND sa.district=?
          AND sa.subdistrict=?
          AND sr.day_of_week=?
-         AND sr.round_no=?
-         ORDER BY sa.id ASC'
+         AND sr.round_no=?'
     );
 
     $stmt->execute(array(
@@ -1051,78 +1036,112 @@ if ($action === 'create_order') {
         $roundNo
     ));
 
-    $sellerRows = $stmt->fetchAll();
+    $sellers = $stmt->fetchAll();
 
     $matchedSellerId = null;
 
-    if (count($sellerRows) > 0) {
-        $matchedSellerId =
-            (int)$sellerRows[0]['seller_id'];
+    if (!empty($sellers)) {
+        $matchedSellerId = (int)$sellers[0]['id'];
     }
 
     $orderNumber = order_no();
 
-    $stmt = $pdo->prepare(
-        'INSERT INTO orders
-        (
-            order_no,
-            customer_id,
-            matched_seller_id,
-            customer_name,
-            phone,
-            address,
-            province,
-            district,
-            subdistrict,
-            delivery_date,
-            day_of_week,
-            round_no,
-            payment,
-            items_json,
-            total_amount,
-            status
-        )
-        VALUES
-        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-    );
+    try {
+        $pdo->beginTransaction();
 
-    $stmt->execute(array(
-        $orderNumber,
-        (int)$user['id'],
-        $matchedSellerId,
-        $customerName,
-        $phone,
-        $address,
-        $province,
-        $district,
-        $subdistrict,
-        $deliveryDate,
-        $dayOfWeek,
-        $roundNo,
-        $payment,
-        json_encode(
-            $serverItems,
-            JSON_UNESCAPED_UNICODE
-        ),
-        $total,
-        'pending'
-    ));
+        $stmt = $pdo->prepare(
+            'INSERT INTO orders
+            (
+                order_no,
+                customer_id,
+                matched_seller_id,
+                customer_name,
+                phone,
+                address,
+                province,
+                district,
+                subdistrict,
+                delivery_date,
+                day_of_week,
+                round_no,
+                payment,
+                items_json,
+                total_amount,
+                status
+            )
+            VALUES
+            (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        );
 
-    $orderId =
-        (int)$pdo->lastInsertId();
+        $stmt->execute(array(
+            $orderNumber,
+            (int)$user['id'],
+            $matchedSellerId,
+            $customerName,
+            $phone,
+            $address,
+            $province,
+            $district,
+            $subdistrict,
+            $deliveryDate,
+            $dayOfWeek,
+            $roundNo,
+            $payment,
+            json_encode(
+                $serverItems,
+                JSON_UNESCAPED_UNICODE
+            ),
+            $serverTotal,
+            'pending'
+        ));
+
+        $pdo->commit();
+    } catch (Exception $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+
+        json_response(array(
+            'ok' => false,
+            'message' => 'ไม่สามารถสร้างคำสั่งซื้อได้'
+        ), 500);
+    }
+
+    if (!empty($sellers)) {
+        $sellerSubject = 'มีคำสั่งซื้อใหม่ - ' . $orderNumber;
+
+        $sellerBody =
+            "APP BETAGEN\n\n" .
+            "มีคำสั่งซื้อใหม่\n\n" .
+            "เลขที่คำสั่งซื้อ: " . $orderNumber . "\n" .
+            "ลูกค้า: " . $customerName . "\n" .
+            "โทร: " . $phone . "\n" .
+            "พื้นที่: " . $province . " / " . $district . " / " . $subdistrict . "\n" .
+            "วันที่จัดส่ง: " . $deliveryDate . "\n" .
+            "รอบ: " . $roundNo . "\n" .
+            "ยอดรวม: " . number_format($serverTotal, 2) . " บาท\n";
+
+        foreach ($sellers as $seller) {
+            if (!empty($seller['email'])) {
+                @send_mail_text(
+                    $seller['email'],
+                    $sellerSubject,
+                    $sellerBody
+                );
+            }
+        }
+    }
 
     json_response(array(
         'ok' => true,
         'message' => 'สร้างคำสั่งซื้อสำเร็จ',
-        'order_id' => $orderId,
         'order_no' => $orderNumber,
-        'total' => $total,
-        'seller_found' => count($sellerRows) > 0
+        'total' => $serverTotal,
+        'matched_seller' => $matchedSellerId
     ));
 }
 
 if ($action === 'my_orders') {
-
     $user = require_user();
 
     $pdo = db();
@@ -1157,31 +1176,10 @@ if ($action === 'my_orders') {
     $orders = $stmt->fetchAll();
 
     foreach ($orders as &$order) {
-
-        $order['id'] =
-            (int)$order['id'];
-
-        $order['day_of_week'] =
-            (int)$order['day_of_week'];
-
-        $order['round_no'] =
-            (int)$order['round_no'];
-
-        $order['total_amount'] =
-            (float)$order['total_amount'];
-
-        $decoded =
-            json_decode(
-                $order['items_json'],
-                true
-            );
-
-        $order['items'] =
-            is_array($decoded)
-                ? $decoded
-                : array();
-
-        unset($order['items_json']);
+        $order['id'] = (int)$order['id'];
+        $order['day_of_week'] = (int)$order['day_of_week'];
+        $order['round_no'] = (int)$order['round_no'];
+        $order['total_amount'] = (float)$order['total_amount'];
     }
 
     json_response(array(
@@ -1192,5 +1190,5 @@ if ($action === 'my_orders') {
 
 json_response(array(
     'ok' => false,
-    'message' => 'ไม่พบคำสั่ง'
+    'message' => 'ไม่พบ action ที่รองรับ'
 ), 404);
