@@ -4,7 +4,18 @@ COLLATE utf8mb4_unicode_ci;
 
 USE betagen;
 
-CREATE TABLE IF NOT EXISTS users (
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS seller_routes;
+DROP TABLE IF EXISTS seller_areas;
+DROP TABLE IF EXISTS otp_codes;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS users;
+
+SET FOREIGN_KEY_CHECKS=1;
+
+CREATE TABLE users (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(190) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -12,9 +23,11 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uq_users_email (email)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS otp_codes (
+CREATE TABLE otp_codes (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(190) NOT NULL,
     code_hash VARCHAR(255) NOT NULL,
@@ -23,10 +36,13 @@ CREATE TABLE IF NOT EXISTS otp_codes (
     attempts INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    KEY idx_otp_email_purpose (email,purpose)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    KEY idx_otp_email_purpose (email,purpose),
+    KEY idx_otp_expires (expires_at)
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS seller_areas (
+CREATE TABLE seller_areas (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id INT UNSIGNED NOT NULL,
     province VARCHAR(100) NOT NULL,
@@ -49,9 +65,11 @@ CREATE TABLE IF NOT EXISTS seller_areas (
         FOREIGN KEY (user_id)
         REFERENCES users(id)
         ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS seller_routes (
+CREATE TABLE seller_routes (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     area_id INT UNSIGNED NOT NULL,
     day_of_week TINYINT UNSIGNED NOT NULL,
@@ -63,13 +81,19 @@ CREATE TABLE IF NOT EXISTS seller_routes (
         day_of_week,
         round_no
     ),
+    KEY idx_seller_route_day (
+        day_of_week,
+        round_no
+    ),
     CONSTRAINT fk_seller_route_area
         FOREIGN KEY (area_id)
         REFERENCES seller_areas(id)
         ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS products (
+CREATE TABLE products (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(190) NOT NULL,
     price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
@@ -77,9 +101,11 @@ CREATE TABLE IF NOT EXISTS products (
     active TINYINT(1) NOT NULL DEFAULT 1,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS orders (
+CREATE TABLE orders (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     order_no VARCHAR(50) NOT NULL,
     customer_id INT UNSIGNED NOT NULL,
@@ -102,6 +128,11 @@ CREATE TABLE IF NOT EXISTS orders (
     UNIQUE KEY uq_order_no (order_no),
     KEY idx_orders_customer (customer_id),
     KEY idx_orders_seller (matched_seller_id),
+    KEY idx_orders_delivery (
+        delivery_date,
+        day_of_week,
+        round_no
+    ),
     CONSTRAINT fk_order_customer
         FOREIGN KEY (customer_id)
         REFERENCES users(id)
@@ -110,14 +141,16 @@ CREATE TABLE IF NOT EXISTS orders (
         FOREIGN KEY (matched_seller_id)
         REFERENCES users(id)
         ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO products
-(name,price,image_url,active)
+(id,name,price,image_url,active)
 VALUES
-('รสดั้งเดิม',15.00,'',1),
-('รสสตรอว์เบอร์รี่',15.00,'',1),
-('รสพีช',15.00,'',1),
-('รสแอปเปิ้ล',15.00,'',1),
-('รสบลูเบอร์รี่',15.00,'',1),
-('รสผลไม้รวม',15.00,'',1);
+(1,'รสดั้งเดิม',15.00,'',1),
+(2,'รสสตรอว์เบอร์รี่',15.00,'',1),
+(3,'รสพีช',15.00,'',1),
+(4,'รสแอปเปิ้ล',15.00,'',1),
+(5,'รสบลูเบอร์รี่',15.00,'',1),
+(6,'รสผลไม้รวม',15.00,'',1);
