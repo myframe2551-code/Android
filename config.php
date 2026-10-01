@@ -20,7 +20,7 @@ function db() {
     static $pdo = null;
 
     if ($pdo === null) {
-        $dsn = 'mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8mb4';
+        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
 
         $pdo = new PDO($dsn, DB_USER, DB_PASS, array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -35,7 +35,12 @@ function db() {
 function json_response($data, $status = 200) {
     http_response_code($status);
     header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+
+    echo json_encode(
+        $data,
+        JSON_UNESCAPED_UNICODE
+    );
+
     exit;
 }
 
@@ -80,7 +85,9 @@ function current_user() {
          LIMIT 1'
     );
 
-    $stmt->execute(array((int)$_SESSION['user_id']));
+    $stmt->execute(array(
+        (int)$_SESSION['user_id']
+    ));
 
     $user = $stmt->fetch();
 
@@ -126,13 +133,13 @@ function send_mail_text($to, $subject, $body) {
 
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-Type: text/plain; charset=UTF-8';
-    $headers[] = 'From: '.MAIL_FROM_NAME.' <'.MAIL_FROM.'>';
-    $headers[] = 'Reply-To: '.MAIL_FROM;
-    $headers[] = 'X-Mailer: PHP/'.phpversion();
+    $headers[] = 'From: ' . MAIL_FROM_NAME . ' <' . MAIL_FROM . '>';
+    $headers[] = 'Reply-To: ' . MAIL_FROM;
+    $headers[] = 'X-Mailer: PHP/' . phpversion();
 
     return mail(
         $to,
-        '=?UTF-8?B?'.base64_encode($subject).'?=',
+        '=?UTF-8?B?' . base64_encode($subject) . '?=',
         $body,
         implode("\r\n", $headers)
     );
