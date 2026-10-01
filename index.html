@@ -1443,7 +1443,23 @@ button {
 
 <script>
 
+/*
+====================================================
+API
+====================================================
+
+ถ้า index.html และ api.php อยู่ในโฮสต์เดียวกัน
+ใช้แบบนี้ได้เลย:
+
+api.php
+
+ถ้า API อยู่คนละโฮสต์ ต้องเปลี่ยนเป็น URL เต็ม เช่น:
+
+https://example.com/api.php
+*/
+
 var API_URL = "api.php";
+
 
 var products = [
     {
@@ -1490,13 +1506,17 @@ var products = [
     }
 ];
 
+
 var cart = [];
 var currentUser = null;
 var currentPage = "products";
 var pendingRegisterEmail = "";
 
+
 try {
-    var savedCart = localStorage.getItem("betagen_cart");
+
+    var savedCart =
+        localStorage.getItem("betagen_cart");
 
     if (savedCart) {
         cart = JSON.parse(savedCart);
@@ -1507,73 +1527,136 @@ try {
     }
 
 } catch (e) {
+
     cart = [];
+
 }
+
+
+/*
+====================================================
+API FUNCTION
+====================================================
+
+จุดที่แก้:
+
+เดิม:
+POST api.php
+
+แล้วส่ง:
+{
+    action: "login"
+}
+
+แต่ api.php ของไฟล์ปัจจุบันอ่าน:
+$_GET['action']
+
+ดังนั้นต้องส่งเป็น:
+
+POST api.php?action=login
+
+ส่วนข้อมูลอื่นยังส่งเป็น JSON เหมือนเดิม
+====================================================
+*/
 
 function api(action, data, callback) {
 
-    var xhr = new XMLHttpRequest();
+    var xhr =
+        new XMLHttpRequest();
+
+
+    var url =
+        API_URL +
+        "?action=" +
+        encodeURIComponent(action);
+
 
     xhr.open(
         "POST",
-        API_URL,
+        url,
         true
     );
+
 
     xhr.setRequestHeader(
         "Content-Type",
         "application/json;charset=UTF-8"
     );
 
-    xhr.onreadystatechange = function() {
 
-        if (xhr.readyState !== 4) {
-            return;
-        }
+    xhr.onreadystatechange =
+        function() {
 
-        var result = null;
+            if (xhr.readyState !== 4) {
+                return;
+            }
 
-        try {
-            result = JSON.parse(xhr.responseText);
-        } catch (e) {
+
+            var result = null;
+
+
+            try {
+
+                result =
+                    JSON.parse(
+                        xhr.responseText
+                    );
+
+            } catch (e) {
+
+                callback(
+                    false,
+                    {
+                        ok: false,
+                        message:
+                            "เซิร์ฟเวอร์ส่งข้อมูลไม่ถูกต้อง"
+                    }
+                );
+
+                return;
+            }
+
+
+            callback(
+                true,
+                result
+            );
+
+        };
+
+
+    xhr.onerror =
+        function() {
+
             callback(
                 false,
                 {
                     ok: false,
-                    message: "เซิร์ฟเวอร์ส่งข้อมูลไม่ถูกต้อง"
+                    message:
+                        "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
                 }
             );
-            return;
-        }
 
-        callback(
-            true,
-            result
-        );
+        };
 
-    };
-
-    xhr.onerror = function() {
-
-        callback(
-            false,
-            {
-                ok: false,
-                message: "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"
-            }
-        );
-
-    };
 
     data = data || {};
 
+
+    /*
+    ไม่ต้องใส่:
     data.action = action;
+
+    เพราะ action ถูกส่งไปใน URL แล้ว
+    */
+
 
     xhr.send(
         JSON.stringify(data)
     );
 
 }
+
 
 function saveCart() {
 
@@ -1590,15 +1673,24 @@ function saveCart() {
 
 }
 
+
 function renderProducts() {
 
     var html = "";
 
-    for (var i = 0; i < products.length; i++) {
 
-        var product = products[i];
+    for (
+        var i = 0;
+        i < products.length;
+        i++
+    ) {
+
+        var product =
+            products[i];
+
 
         var imageHTML = "";
+
 
         if (product.image) {
 
@@ -1612,9 +1704,12 @@ function renderProducts() {
         } else {
 
             imageHTML =
-                '<div class="image-placeholder">รูปสินค้า</div>';
+                '<div class="image-placeholder">' +
+                'รูปสินค้า' +
+                '</div>';
 
         }
+
 
         html +=
 
@@ -1657,23 +1752,33 @@ function renderProducts() {
 
     }
 
+
     document.getElementById(
         "productList"
     ).innerHTML = html;
 
 }
 
+
 function addToCart(id) {
 
-    var product = findProduct(id);
+    var product =
+        findProduct(id);
+
 
     if (!product) {
         return;
     }
 
+
     var found = false;
 
-    for (var i = 0; i < cart.length; i++) {
+
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
 
         if (cart[i].id === id) {
 
@@ -1686,6 +1791,7 @@ function addToCart(id) {
 
     }
 
+
     if (!found) {
 
         cart.push({
@@ -1695,15 +1801,21 @@ function addToCart(id) {
 
     }
 
+
     saveCart();
 
     updateCartCount();
 
 }
 
+
 function findProduct(id) {
 
-    for (var i = 0; i < products.length; i++) {
+    for (
+        var i = 0;
+        i < products.length;
+        i++
+    ) {
 
         if (products[i].id === id) {
             return products[i];
@@ -1715,15 +1827,25 @@ function findProduct(id) {
 
 }
 
+
 function updateCartCount() {
 
     var count = 0;
 
-    for (var i = 0; i < cart.length; i++) {
 
-        count += Number(cart[i].quantity || 0);
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
+
+        count +=
+            Number(
+                cart[i].quantity || 0
+            );
 
     }
+
 
     document.getElementById(
         "cartCount"
@@ -1731,10 +1853,14 @@ function updateCartCount() {
 
 }
 
+
 function renderCart() {
 
     var container =
-        document.getElementById("cartContent");
+        document.getElementById(
+            "cartContent"
+        );
+
 
     if (cart.length === 0) {
 
@@ -1746,7 +1872,9 @@ function renderCart() {
 
                 '<h2>ยังไม่มีสินค้าในรถเข็น</h2>' +
 
-                '<p>เลือกสินค้าที่ต้องการเพื่อเพิ่มลงรถเข็น</p>' +
+                '<p>' +
+                    'เลือกสินค้าที่ต้องการเพื่อเพิ่มลงรถเข็น' +
+                '</p>' +
 
             '</div>';
 
@@ -1754,34 +1882,49 @@ function renderCart() {
 
     }
 
+
     var html =
         '<div class="cart-list">';
+
 
     var totalItems = 0;
     var totalPrice = 0;
 
-    for (var i = 0; i < cart.length; i++) {
 
-        var item = cart[i];
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
+
+        var item =
+            cart[i];
+
 
         var product =
             findProduct(item.id);
+
 
         if (!product) {
             continue;
         }
 
+
         var itemTotal =
             product.price *
             item.quantity;
 
+
         totalItems +=
             item.quantity;
+
 
         totalPrice +=
             itemTotal;
 
+
         var imageHTML = "";
+
 
         if (product.image) {
 
@@ -1795,9 +1938,12 @@ function renderCart() {
         } else {
 
             imageHTML =
-                '<div class="image-placeholder">รูป</div>';
+                '<div class="image-placeholder">' +
+                'รูป' +
+                '</div>';
 
         }
+
 
         html +=
 
@@ -1849,7 +1995,9 @@ function renderCart() {
 
                 '<div class="cart-total">' +
 
-                    '<div class="cart-total-label">รวม</div>' +
+                    '<div class="cart-total-label">' +
+                        'รวม' +
+                    '</div>' +
 
                     '<div class="cart-total-price">' +
                         formatPrice(itemTotal) +
@@ -1870,7 +2018,9 @@ function renderCart() {
 
     }
 
+
     html += '</div>';
+
 
     html +=
 
@@ -1927,27 +2077,42 @@ function renderCart() {
 
         '</div>';
 
-    container.innerHTML = html;
+
+    container.innerHTML =
+        html;
 
 }
 
+
 function changeQuantity(id, amount) {
 
-    for (var i = 0; i < cart.length; i++) {
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
 
         if (cart[i].id === id) {
 
-            cart[i].quantity += amount;
+            cart[i].quantity +=
+                amount;
 
-            if (cart[i].quantity <= 0) {
+
+            if (
+                cart[i].quantity <= 0
+            ) {
+
                 cart.splice(i, 1);
+
             }
+
 
             break;
 
         }
 
     }
+
 
     saveCart();
 
@@ -1957,9 +2122,14 @@ function changeQuantity(id, amount) {
 
 }
 
+
 function removeFromCart(id) {
 
-    for (var i = 0; i < cart.length; i++) {
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
 
         if (cart[i].id === id) {
 
@@ -1971,6 +2141,7 @@ function removeFromCart(id) {
 
     }
 
+
     saveCart();
 
     updateCartCount();
@@ -1979,63 +2150,87 @@ function removeFromCart(id) {
 
 }
 
+
 function showProducts() {
 
     hideAllPages();
+
 
     document
         .getElementById("productPage")
         .classList.add("active");
 
-    currentPage = "products";
+
+    currentPage =
+        "products";
+
 
     document
         .getElementById("backButton")
-        .style.display = "none";
+        .style.display =
+        "none";
+
 
     window.scrollTo(0, 0);
 
 }
+
 
 function showCart() {
 
     hideAllPages();
 
+
     document
         .getElementById("cartPage")
         .classList.add("active");
 
-    currentPage = "cart";
+
+    currentPage =
+        "cart";
+
 
     document
         .getElementById("backButton")
-        .style.display = "block";
+        .style.display =
+        "block";
+
 
     renderCart();
+
 
     window.scrollTo(0, 0);
 
 }
+
 
 function openAccount() {
 
     hideAllPages();
 
+
     document
         .getElementById("accountPage")
         .classList.add("active");
 
-    currentPage = "account";
+
+    currentPage =
+        "account";
+
 
     document
         .getElementById("backButton")
-        .style.display = "block";
+        .style.display =
+        "block";
+
 
     renderAccount();
+
 
     window.scrollTo(0, 0);
 
 }
+
 
 function hideAllPages() {
 
@@ -2043,9 +2238,11 @@ function hideAllPages() {
         .getElementById("productPage")
         .classList.remove("active");
 
+
     document
         .getElementById("cartPage")
         .classList.remove("active");
+
 
     document
         .getElementById("accountPage")
@@ -2053,25 +2250,32 @@ function hideAllPages() {
 
 }
 
+
 function goBackPage() {
 
-    if (currentPage === "cart" ||
-        currentPage === "account") {
+    if (
+        currentPage === "cart" ||
+        currentPage === "account"
+    ) {
 
         showProducts();
 
         return;
+
     }
+
 
     showProducts();
 
 }
+
 
 function checkout() {
 
     if (cart.length === 0) {
         return;
     }
+
 
     if (!currentUser) {
 
@@ -2080,9 +2284,12 @@ function checkout() {
         switchAuth("login");
 
         return;
+
     }
 
+
     renderCheckout();
+
 
     document
         .getElementById("checkoutOverlay")
@@ -2090,26 +2297,39 @@ function checkout() {
 
 }
 
+
 function renderCheckout() {
 
     var html = "";
 
     var total = 0;
 
-    for (var i = 0; i < cart.length; i++) {
+
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
 
         var product =
-            findProduct(cart[i].id);
+            findProduct(
+                cart[i].id
+            );
+
 
         if (!product) {
             continue;
         }
 
+
         var itemTotal =
             product.price *
             cart[i].quantity;
 
-        total += itemTotal;
+
+        total +=
+            itemTotal;
+
 
         html +=
 
@@ -2130,6 +2350,7 @@ function renderCheckout() {
 
     }
 
+
     html +=
 
         '<div class="checkout-item" ' +
@@ -2144,11 +2365,14 @@ function renderCheckout() {
 
         '</div>';
 
+
     document.getElementById(
         "checkoutItems"
-    ).innerHTML = html;
+    ).innerHTML =
+        html;
 
 }
+
 
 function closeCheckout() {
 
@@ -2158,67 +2382,85 @@ function closeCheckout() {
 
 }
 
+
 function createOrder() {
 
     if (!currentUser) {
+
         closeCheckout();
+
         openAuth();
+
         return;
+
     }
+
 
     var name =
         document.getElementById(
             "customerName"
         ).value.trim();
 
+
     var phone =
         document.getElementById(
             "customerPhone"
         ).value.trim();
+
 
     var province =
         document.getElementById(
             "customerProvince"
         ).value.trim();
 
+
     var district =
         document.getElementById(
             "customerDistrict"
         ).value.trim();
+
 
     var subdistrict =
         document.getElementById(
             "customerSubdistrict"
         ).value.trim();
 
+
     var deliveryDate =
         document.getElementById(
             "deliveryDate"
         ).value;
+
 
     var round =
         document.getElementById(
             "deliveryRound"
         ).value;
 
+
     var paymentMethod =
         document.getElementById(
             "paymentMethod"
         ).value;
+
 
     var message =
         document.getElementById(
             "checkoutMessage"
         );
 
+
     hideMessage(message);
 
-    if (!name ||
+
+    if (
+        !name ||
         !phone ||
         !province ||
         !district ||
         !subdistrict ||
-        !deliveryDate) {
+        !deliveryDate
+    ) {
 
         showMessage(
             message,
@@ -2227,54 +2469,106 @@ function createOrder() {
         );
 
         return;
+
     }
+
 
     var items = [];
 
     var total = 0;
 
-    for (var i = 0; i < cart.length; i++) {
+
+    for (
+        var i = 0;
+        i < cart.length;
+        i++
+    ) {
 
         var product =
-            findProduct(cart[i].id);
+            findProduct(
+                cart[i].id
+            );
+
 
         if (!product) {
             continue;
         }
 
+
         var itemTotal =
             product.price *
             cart[i].quantity;
 
-        total += itemTotal;
+
+        total +=
+            itemTotal;
+
 
         items.push({
-            product_id: product.id,
-            name: product.name,
-            quantity: cart[i].quantity,
-            price: product.price,
-            total: itemTotal
+
+            product_id:
+                product.id,
+
+            name:
+                product.name,
+
+            quantity:
+                cart[i].quantity,
+
+            price:
+                product.price,
+
+            total:
+                itemTotal
+
         });
 
     }
 
+
     api(
         "create_order",
         {
-            customer_name: name,
-            customer_phone: phone,
-            province: province,
-            district: district,
-            subdistrict: subdistrict,
-            delivery_date: deliveryDate,
-            round_no: Number(round),
-            payment_method: paymentMethod,
-            items: items,
-            total: total
-        },
-        function(networkOK, result) {
+            customer_name:
+                name,
 
-            if (!networkOK || !result.ok) {
+            customer_phone:
+                phone,
+
+            province:
+                province,
+
+            district:
+                district,
+
+            subdistrict:
+                subdistrict,
+
+            delivery_date:
+                deliveryDate,
+
+            round_no:
+                Number(round),
+
+            payment_method:
+                paymentMethod,
+
+            items:
+                items,
+
+            total:
+                total
+        },
+
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 showMessage(
                     message,
@@ -2284,9 +2578,12 @@ function createOrder() {
                 );
 
                 return;
+
             }
 
+
             cart = [];
+
 
             saveCart();
 
@@ -2294,10 +2591,12 @@ function createOrder() {
 
             closeCheckout();
 
+
             alert(
                 "สั่งซื้อสำเร็จ\nเลขที่คำสั่งซื้อ " +
                 result.order_no
             );
+
 
             showProducts();
 
@@ -2305,6 +2604,7 @@ function createOrder() {
     );
 
 }
+
 
 function openAuth() {
 
@@ -2314,6 +2614,7 @@ function openAuth() {
 
 }
 
+
 function closeAuth() {
 
     document
@@ -2322,39 +2623,75 @@ function closeAuth() {
 
 }
 
+
 function switchAuth(type) {
 
     var loginTab =
-        document.getElementById("loginTab");
+        document.getElementById(
+            "loginTab"
+        );
+
 
     var registerTab =
-        document.getElementById("registerTab");
+        document.getElementById(
+            "registerTab"
+        );
+
 
     var loginBox =
-        document.getElementById("loginBox");
+        document.getElementById(
+            "loginBox"
+        );
+
 
     var registerBox =
-        document.getElementById("registerBox");
+        document.getElementById(
+            "registerBox"
+        );
+
 
     if (type === "register") {
 
-        loginTab.classList.remove("active");
-        registerTab.classList.add("active");
+        loginTab.classList.remove(
+            "active"
+        );
 
-        loginBox.classList.remove("active");
-        registerBox.classList.add("active");
+        registerTab.classList.add(
+            "active"
+        );
+
+
+        loginBox.classList.remove(
+            "active"
+        );
+
+        registerBox.classList.add(
+            "active"
+        );
 
     } else {
 
-        loginTab.classList.add("active");
-        registerTab.classList.remove("active");
+        loginTab.classList.add(
+            "active"
+        );
 
-        loginBox.classList.add("active");
-        registerBox.classList.remove("active");
+        registerTab.classList.remove(
+            "active"
+        );
+
+
+        loginBox.classList.add(
+            "active"
+        );
+
+        registerBox.classList.remove(
+            "active"
+        );
 
     }
 
 }
+
 
 function registerRequest() {
 
@@ -2363,26 +2700,33 @@ function registerRequest() {
             "registerEmail"
         ).value.trim();
 
+
     var password =
         document.getElementById(
             "registerPassword"
         ).value;
+
 
     var confirmPassword =
         document.getElementById(
             "registerPasswordConfirm"
         ).value;
 
+
     var message =
         document.getElementById(
             "registerMessage"
         );
 
+
     hideMessage(message);
 
-    if (!email ||
+
+    if (
+        !email ||
         !password ||
-        !confirmPassword) {
+        !confirmPassword
+    ) {
 
         showMessage(
             message,
@@ -2391,7 +2735,9 @@ function registerRequest() {
         );
 
         return;
+
     }
+
 
     if (password.length < 6) {
 
@@ -2402,9 +2748,14 @@ function registerRequest() {
         );
 
         return;
+
     }
 
-    if (password !== confirmPassword) {
+
+    if (
+        password !==
+        confirmPassword
+    ) {
 
         showMessage(
             message,
@@ -2413,17 +2764,29 @@ function registerRequest() {
         );
 
         return;
+
     }
+
 
     api(
         "register_request",
         {
-            email: email,
-            password: password
-        },
-        function(networkOK, result) {
+            email:
+                email,
 
-            if (!networkOK || !result.ok) {
+            password:
+                password
+        },
+
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 showMessage(
                     message,
@@ -2433,15 +2796,21 @@ function registerRequest() {
                 );
 
                 return;
+
             }
 
-            pendingRegisterEmail = email;
+
+            pendingRegisterEmail =
+                email;
+
 
             document.getElementById(
                 "otpCode"
             ).value = "";
 
+
             closeAuth();
+
 
             document
                 .getElementById("otpOverlay")
@@ -2452,6 +2821,7 @@ function registerRequest() {
 
 }
 
+
 function registerVerify() {
 
     var code =
@@ -2459,12 +2829,15 @@ function registerVerify() {
             "otpCode"
         ).value.trim();
 
+
     var message =
         document.getElementById(
             "otpMessage"
         );
 
+
     hideMessage(message);
+
 
     if (!pendingRegisterEmail) {
 
@@ -2475,9 +2848,13 @@ function registerVerify() {
         );
 
         return;
+
     }
 
-    if (!/^[0-9]{6}$/.test(code)) {
+
+    if (
+        !/^[0-9]{6}$/.test(code)
+    ) {
 
         showMessage(
             message,
@@ -2486,17 +2863,29 @@ function registerVerify() {
         );
 
         return;
+
     }
+
 
     api(
         "register_verify",
         {
-            email: pendingRegisterEmail,
-            code: code
-        },
-        function(networkOK, result) {
+            email:
+                pendingRegisterEmail,
 
-            if (!networkOK || !result.ok) {
+            code:
+                code
+        },
+
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 showMessage(
                     message,
@@ -2506,12 +2895,18 @@ function registerVerify() {
                 );
 
                 return;
+
             }
 
-            currentUser =
-                result.user || null;
 
-            pendingRegisterEmail = "";
+            currentUser =
+                result.user ||
+                null;
+
+
+            pendingRegisterEmail =
+                "";
+
 
             closeOtp();
 
@@ -2524,6 +2919,7 @@ function registerVerify() {
 
 }
 
+
 function closeOtp() {
 
     document
@@ -2532,6 +2928,7 @@ function closeOtp() {
 
 }
 
+
 function login() {
 
     var email =
@@ -2539,17 +2936,21 @@ function login() {
             "loginEmail"
         ).value.trim();
 
+
     var password =
         document.getElementById(
             "loginPassword"
         ).value;
+
 
     var message =
         document.getElementById(
             "loginMessage"
         );
 
+
     hideMessage(message);
+
 
     if (!email || !password) {
 
@@ -2560,17 +2961,29 @@ function login() {
         );
 
         return;
+
     }
+
 
     api(
         "login",
         {
-            email: email,
-            password: password
-        },
-        function(networkOK, result) {
+            email:
+                email,
 
-            if (!networkOK || !result.ok) {
+            password:
+                password
+        },
+
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 showMessage(
                     message,
@@ -2580,10 +2993,14 @@ function login() {
                 );
 
                 return;
+
             }
 
+
             currentUser =
-                result.user || null;
+                result.user ||
+                null;
+
 
             closeAuth();
 
@@ -2596,14 +3013,18 @@ function login() {
 
 }
 
+
 function logout() {
 
     api(
         "logout",
         {},
+
         function() {
 
-            currentUser = null;
+            currentUser =
+                null;
+
 
             renderAccount();
 
@@ -2614,25 +3035,34 @@ function logout() {
 
 }
 
+
 function loadCurrentUser(callback) {
 
     api(
         "me",
         {},
-        function(networkOK, result) {
 
-            if (networkOK &&
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                networkOK &&
                 result.ok &&
-                result.user) {
+                result.user
+            ) {
 
                 currentUser =
                     result.user;
 
             } else {
 
-                currentUser = null;
+                currentUser =
+                    null;
 
             }
+
 
             if (callback) {
                 callback();
@@ -2643,12 +3073,14 @@ function loadCurrentUser(callback) {
 
 }
 
+
 function renderAccount() {
 
     var container =
         document.getElementById(
             "accountContent"
         );
+
 
     if (!currentUser) {
 
@@ -2683,32 +3115,46 @@ function renderAccount() {
             '</div>';
 
         return;
+
     }
 
+
     var sellerStatus =
-        Number(currentUser.is_seller) === 1;
+        Number(
+            currentUser.is_seller
+        ) === 1;
+
 
     var html =
 
         '<div class="profile-card">' +
 
             '<div class="profile-email">' +
-                escapeHTML(currentUser.email) +
+                escapeHTML(
+                    currentUser.email
+                ) +
             '</div>' +
 
             '<div class="status ' +
-                (sellerStatus ? "seller" : "") +
+                (
+                    sellerStatus
+                    ? "seller"
+                    : ""
+                ) +
                 '">' +
 
-                (sellerStatus ?
-                    "✓ เซลล์" :
-                    "สมาชิก") +
+                (
+                    sellerStatus
+                    ? "✓ เซลล์"
+                    : "สมาชิก"
+                ) +
 
             '</div>' +
 
             '<div class="account-actions">' +
 
-                (!sellerStatus ?
+                (
+                    !sellerStatus ?
 
                     '<button ' +
                         'class="modal-button primary" ' +
@@ -2720,7 +3166,8 @@ function renderAccount() {
                         'class="modal-button primary" ' +
                         'onclick="loadSellerPanel()">' +
                         'จัดการพื้นที่เซลล์' +
-                    '</button>') +
+                    '</button>'
+                ) +
 
                 '<button ' +
                     'class="modal-button secondary" ' +
@@ -2742,18 +3189,28 @@ function renderAccount() {
 
         '</div>';
 
-    container.innerHTML = html;
+
+    container.innerHTML =
+        html;
 
 }
+
 
 function enableSeller() {
 
     api(
         "enable_seller",
         {},
-        function(networkOK, result) {
 
-            if (!networkOK || !result.ok) {
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 alert(
                     result.message ||
@@ -2761,15 +3218,21 @@ function enableSeller() {
                 );
 
                 return;
+
             }
 
-            currentUser.is_seller = 1;
+
+            currentUser.is_seller =
+                1;
+
 
             renderAccount();
+
 
             alert(
                 "เปิดใช้งานระบบเซลล์แล้ว"
             );
+
 
             loadSellerPanel();
 
@@ -2778,20 +3241,34 @@ function enableSeller() {
 
 }
 
+
 function loadSellerPanel() {
 
-    if (!currentUser ||
-        Number(currentUser.is_seller) !== 1) {
+    if (
+        !currentUser ||
+        Number(
+            currentUser.is_seller
+        ) !== 1
+    ) {
 
         return;
+
     }
+
 
     api(
         "seller_areas",
         {},
-        function(networkOK, result) {
 
-            if (!networkOK || !result.ok) {
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 alert(
                     result.message ||
@@ -2799,7 +3276,9 @@ function loadSellerPanel() {
                 );
 
                 return;
+
             }
+
 
             renderSellerPanel(
                 result.areas || []
@@ -2810,12 +3289,14 @@ function loadSellerPanel() {
 
 }
 
+
 function renderSellerPanel(areas) {
 
     var container =
         document.getElementById(
             "accountContent"
         );
+
 
     var html =
 
@@ -2869,6 +3350,7 @@ function renderSellerPanel(areas) {
 
         '</div>';
 
+
     if (!areas.length) {
 
         html +=
@@ -2883,9 +3365,16 @@ function renderSellerPanel(areas) {
 
     }
 
-    for (var i = 0; i < areas.length; i++) {
 
-        var area = areas[i];
+    for (
+        var i = 0;
+        i < areas.length;
+        i++
+    ) {
+
+        var area =
+            areas[i];
+
 
         html +=
 
@@ -2893,11 +3382,21 @@ function renderSellerPanel(areas) {
 
                 '<div class="seller-area-title">' +
 
-                    escapeHTML(area.province) +
+                    escapeHTML(
+                        area.province
+                    ) +
+
                     ' / ' +
-                    escapeHTML(area.district) +
+
+                    escapeHTML(
+                        area.district
+                    ) +
+
                     ' / ' +
-                    escapeHTML(area.subdistrict) +
+
+                    escapeHTML(
+                        area.subdistrict
+                    ) +
 
                 '</div>' +
 
@@ -2942,14 +3441,24 @@ function renderSellerPanel(areas) {
 
                 '</div>';
 
-        html += '<div class="route-list">';
+
+        html +=
+            '<div class="route-list">';
+
 
         var routes =
             area.routes || [];
 
-        for (var r = 0; r < routes.length; r++) {
 
-            var route = routes[r];
+        for (
+            var r = 0;
+            r < routes.length;
+            r++
+        ) {
+
+            var route =
+                routes[r];
+
 
             html +=
 
@@ -2960,6 +3469,7 @@ function renderSellerPanel(areas) {
                     ) +
 
                     ' · รอบ ' +
+
                     route.round_no +
 
                     ' ' +
@@ -2976,7 +3486,10 @@ function renderSellerPanel(areas) {
 
         }
 
-        html += '</div>';
+
+        html +=
+            '</div>';
+
 
         html +=
 
@@ -2989,13 +3502,18 @@ function renderSellerPanel(areas) {
                 'ลบพื้นที่นี้' +
             '</button>';
 
-        html += '</div>';
+
+        html +=
+            '</div>';
 
     }
 
-    container.innerHTML = html;
+
+    container.innerHTML =
+        html;
 
 }
+
 
 function saveSellerArea() {
 
@@ -3004,37 +3522,56 @@ function saveSellerArea() {
             "sellerProvince"
         ).value.trim();
 
+
     var district =
         document.getElementById(
             "sellerDistrict"
         ).value.trim();
+
 
     var subdistrict =
         document.getElementById(
             "sellerSubdistrict"
         ).value.trim();
 
-    if (!province ||
+
+    if (
+        !province ||
         !district ||
-        !subdistrict) {
+        !subdistrict
+    ) {
 
         alert(
             "กรุณากรอก จังหวัด อำเภอ และตำบล"
         );
 
         return;
+
     }
+
 
     api(
         "seller_area_save",
         {
-            province: province,
-            district: district,
-            subdistrict: subdistrict
-        },
-        function(networkOK, result) {
+            province:
+                province,
 
-            if (!networkOK || !result.ok) {
+            district:
+                district,
+
+            subdistrict:
+                subdistrict
+        },
+
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 alert(
                     result.message ||
@@ -3042,7 +3579,9 @@ function saveSellerArea() {
                 );
 
                 return;
+
             }
+
 
             loadSellerPanel();
 
@@ -3051,22 +3590,36 @@ function saveSellerArea() {
 
 }
 
+
 function deleteSellerArea(id) {
 
-    if (!confirm(
-        "ต้องการลบพื้นที่นี้หรือไม่"
-    )) {
+    if (
+        !confirm(
+            "ต้องการลบพื้นที่นี้หรือไม่"
+        )
+    ) {
+
         return;
+
     }
+
 
     api(
         "seller_area_delete",
         {
-            id: id
+            id:
+                id
         },
-        function(networkOK, result) {
 
-            if (!networkOK || !result.ok) {
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 alert(
                     result.message ||
@@ -3074,7 +3627,9 @@ function deleteSellerArea(id) {
                 );
 
                 return;
+
             }
+
 
             loadSellerPanel();
 
@@ -3082,6 +3637,25 @@ function deleteSellerArea(id) {
     );
 
 }
+
+
+/*
+====================================================
+SELLER ROUTE
+====================================================
+
+จุดที่แก้:
+
+เดิม:
+seller_area_id: areaId
+
+เปลี่ยนเป็น:
+area_id: areaId
+
+เพราะ api.php รับค่า:
+$data['area_id']
+====================================================
+*/
 
 function saveSellerRoute(areaId) {
 
@@ -3090,21 +3664,35 @@ function saveSellerRoute(areaId) {
             "day_" + areaId
         ).value;
 
+
     var round =
         document.getElementById(
             "round_" + areaId
         ).value;
 
+
     api(
         "seller_route_save",
         {
-            seller_area_id: areaId,
-            day_of_week: Number(day),
-            round_no: Number(round)
-        },
-        function(networkOK, result) {
+            area_id:
+                Number(areaId),
 
-            if (!networkOK || !result.ok) {
+            day_of_week:
+                Number(day),
+
+            round_no:
+                Number(round)
+        },
+
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 alert(
                     result.message ||
@@ -3112,7 +3700,9 @@ function saveSellerRoute(areaId) {
                 );
 
                 return;
+
             }
+
 
             loadSellerPanel();
 
@@ -3121,22 +3711,36 @@ function saveSellerRoute(areaId) {
 
 }
 
+
 function deleteSellerRoute(id) {
 
-    if (!confirm(
-        "ต้องการลบรอบนี้หรือไม่"
-    )) {
+    if (
+        !confirm(
+            "ต้องการลบรอบนี้หรือไม่"
+        )
+    ) {
+
         return;
+
     }
+
 
     api(
         "seller_route_delete",
         {
-            id: id
+            id:
+                id
         },
-        function(networkOK, result) {
 
-            if (!networkOK || !result.ok) {
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 alert(
                     result.message ||
@@ -3144,7 +3748,9 @@ function deleteSellerRoute(id) {
                 );
 
                 return;
+
             }
+
 
             loadSellerPanel();
 
@@ -3153,14 +3759,22 @@ function deleteSellerRoute(id) {
 
 }
 
+
 function loadOrders() {
 
     api(
         "my_orders",
         {},
-        function(networkOK, result) {
 
-            if (!networkOK || !result.ok) {
+        function(
+            networkOK,
+            result
+        ) {
+
+            if (
+                !networkOK ||
+                !result.ok
+            ) {
 
                 alert(
                     result.message ||
@@ -3168,7 +3782,9 @@ function loadOrders() {
                 );
 
                 return;
+
             }
+
 
             renderOrders(
                 result.orders || []
@@ -3179,12 +3795,14 @@ function loadOrders() {
 
 }
 
+
 function renderOrders(orders) {
 
     var container =
         document.getElementById(
             "accountContent"
         );
+
 
     var html =
 
@@ -3198,6 +3816,7 @@ function renderOrders(orders) {
 
         '</div>';
 
+
     if (!orders.length) {
 
         html +=
@@ -3210,14 +3829,25 @@ function renderOrders(orders) {
 
             '</div>';
 
-        container.innerHTML = html;
+
+        container.innerHTML =
+            html;
+
 
         return;
+
     }
 
-    for (var i = 0; i < orders.length; i++) {
 
-        var order = orders[i];
+    for (
+        var i = 0;
+        i < orders.length;
+        i++
+    ) {
+
+        var order =
+            orders[i];
+
 
         html +=
 
@@ -3225,33 +3855,50 @@ function renderOrders(orders) {
 
                 '<div class="order-number">' +
                     '#' +
-                    escapeHTML(order.order_no) +
+                    escapeHTML(
+                        order.order_no
+                    ) +
                 '</div>' +
 
                 '<div class="order-status">' +
-                    escapeHTML(order.status || "pending") +
+                    escapeHTML(
+                        order.status ||
+                        "pending"
+                    ) +
                 '</div>' +
 
                 '<div class="order-info">' +
 
                     'ยอดรวม: ' +
-                    formatPrice(order.total) +
+                    formatPrice(
+                        order.total
+                    ) +
                     ' ฿<br>' +
 
                     'พื้นที่: ' +
-                    escapeHTML(order.province) +
+                    escapeHTML(
+                        order.province
+                    ) +
                     ' / ' +
-                    escapeHTML(order.district) +
+                    escapeHTML(
+                        order.district
+                    ) +
                     ' / ' +
-                    escapeHTML(order.subdistrict) +
+                    escapeHTML(
+                        order.subdistrict
+                    ) +
                     '<br>' +
 
                     'วันที่รับ: ' +
-                    escapeHTML(order.delivery_date) +
+                    escapeHTML(
+                        order.delivery_date
+                    ) +
                     '<br>' +
 
                     'รอบ: ' +
-                    escapeHTML(order.round_no) +
+                    escapeHTML(
+                        order.round_no
+                    ) +
 
                 '</div>' +
 
@@ -3259,77 +3906,151 @@ function renderOrders(orders) {
 
     }
 
-    container.innerHTML = html;
+
+    container.innerHTML =
+        html;
 
 }
+
 
 function getDayName(day) {
 
     var days = {
-        1: "จันทร์",
-        2: "อังคาร",
-        3: "พุธ",
-        4: "พฤหัสบดี",
-        5: "ศุกร์",
-        6: "เสาร์"
+
+        1:
+            "จันทร์",
+
+        2:
+            "อังคาร",
+
+        3:
+            "พุธ",
+
+        4:
+            "พฤหัสบดี",
+
+        5:
+            "ศุกร์",
+
+        6:
+            "เสาร์"
+
     };
 
-    return days[Number(day)] || "";
+
+    return (
+        days[
+            Number(day)
+        ] ||
+        ""
+    );
 
 }
 
-function showMessage(element, text, error) {
 
-    element.innerText = text;
+function showMessage(
+    element,
+    text,
+    error
+) {
 
-    element.classList.add("show");
+    element.innerText =
+        text;
+
+
+    element.classList.add(
+        "show"
+    );
+
 
     if (error) {
-        element.classList.add("error");
+
+        element.classList.add(
+            "error"
+        );
+
     } else {
-        element.classList.remove("error");
+
+        element.classList.remove(
+            "error"
+        );
+
     }
 
 }
 
+
 function hideMessage(element) {
 
-    element.innerText = "";
+    element.innerText =
+        "";
 
-    element.classList.remove("show");
-    element.classList.remove("error");
+
+    element.classList.remove(
+        "show"
+    );
+
+
+    element.classList.remove(
+        "error"
+    );
 
 }
+
 
 function escapeHTML(value) {
 
-    value = String(
-        value === undefined ||
-        value === null ?
-        "" :
-        value
-    );
+    value =
+        String(
+            value === undefined ||
+            value === null
+                ? ""
+                : value
+        );
+
 
     return value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
+
 function formatPrice(price) {
 
-    return Number(price).toLocaleString(
+    return Number(
+        price
+    ).toLocaleString(
         "th-TH",
         {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
+            minimumFractionDigits:
+                0,
+
+            maximumFractionDigits:
+                2
         }
     );
 
 }
+
 
 function setTodayMinDate() {
 
@@ -3338,25 +4059,37 @@ function setTodayMinDate() {
             "deliveryDate"
         );
 
+
     if (!input) {
         return;
     }
 
+
     var now =
         new Date();
+
 
     var year =
         now.getFullYear();
 
+
     var month =
         String(
             now.getMonth() + 1
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
+
 
     var day =
         String(
             now.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
+
 
     input.min =
         year +
@@ -3366,6 +4099,7 @@ function setTodayMinDate() {
         day;
 
 }
+
 
 document.getElementById(
     "deliveryDate"
@@ -3377,13 +4111,17 @@ document.getElementById(
             return;
         }
 
+
         var date =
             new Date(
-                this.value + "T00:00:00"
+                this.value +
+                "T00:00:00"
             );
+
 
         var day =
             date.getDay();
+
 
         if (day === 0) {
 
@@ -3391,12 +4129,15 @@ document.getElementById(
                 "วันอาทิตย์เป็นวันหยุดของเซลล์ กรุณาเลือกวันจันทร์ถึงวันเสาร์"
             );
 
-            this.value = "";
+
+            this.value =
+                "";
 
         }
 
     }
 );
+
 
 document.getElementById(
     "authOverlay"
@@ -3404,12 +4145,17 @@ document.getElementById(
     "click",
     function(event) {
 
-        if (event.target === this) {
+        if (
+            event.target === this
+        ) {
+
             closeAuth();
+
         }
 
     }
 );
+
 
 document.getElementById(
     "otpOverlay"
@@ -3417,12 +4163,17 @@ document.getElementById(
     "click",
     function(event) {
 
-        if (event.target === this) {
+        if (
+            event.target === this
+        ) {
+
             closeOtp();
+
         }
 
     }
 );
+
 
 document.getElementById(
     "checkoutOverlay"
@@ -3430,12 +4181,17 @@ document.getElementById(
     "click",
     function(event) {
 
-        if (event.target === this) {
+        if (
+            event.target === this
+        ) {
+
             closeCheckout();
+
         }
 
     }
 );
+
 
 renderProducts();
 
@@ -3443,9 +4199,12 @@ updateCartCount();
 
 setTodayMinDate();
 
+
 loadCurrentUser(
     function() {
+
         renderAccount();
+
     }
 );
 
